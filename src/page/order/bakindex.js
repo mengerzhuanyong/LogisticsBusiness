@@ -93,9 +93,9 @@ export default class Home extends Component {
 
     loadNetData = () => {
         let url = NetApi.index + this.state.store.sid;
-        this.netRequest.fetchGet(url, true)
+        this.netRequest.fetchGet(url)
             .then(result => {
-                console.log(result);
+                // console.log(result);
                 if (result && result.code == 1) {
                     this.setState({
                         audited: result.data.audited,
@@ -322,13 +322,13 @@ export class OrderDetailTab extends Component {
         // status 0 未付款 1 待接单 2 运输中 3 待评价 4 已完成 5 退款申请中 6 退款成功 7 等待取货 8 待收货 9 已关闭
         let {sid, status} = this.state;
         let url = NetApi.orderList + sid + '/status/' + status + '/page/' + page;
-        return this.netRequest.fetchGet(url, true)
+        return this.netRequest.fetchGet(url)
             .then(result => {
-                console.log(result);
+                // console.log(result);
                 return result;
             })
             .catch(error => {
-                console.log(error);
+                // console.log(error);
                 toastShort('error');
             })
     };

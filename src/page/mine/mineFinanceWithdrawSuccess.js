@@ -81,7 +81,7 @@ export default class MineFinanceWithDrawSuccess extends Component {
     };
 
     showActionSheet = () => {
-        console.log('show');
+        // console.log('show');
     };
 
     submitFoo = () => {

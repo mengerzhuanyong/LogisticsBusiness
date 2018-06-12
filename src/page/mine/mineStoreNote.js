@@ -78,7 +78,6 @@ export default class MineStoreNote extends Component {
         let url = NetApi.index + store.sid;
         this.netRequest.fetchGet(url, true)
             .then(result => {
-                console.log(result);
                 if (result && result.code == 1) {
                     this.setState({
                         content: result.data.hot_note,
@@ -138,7 +137,7 @@ export default class MineStoreNote extends Component {
                 <NavigationBar
                     title = {'门店公告'}
                     leftButton = {UtilsView.getLeftButton(() => { this.state.canBack && this.onBack()})}
-                    rightButton = {<RightButton title={store.isStore == 1 ? '保存' : ''} titleStyle={{color: '#fff'}} submitChange = {() => this.submitChange()} />}
+                    rightButton = {<RightButton title={store.isStore == 1 ? '保存' : ''} titleStyle={{color: '#fff'}} submitFoo = {() => this.submitChange()} />}
                 />
                 <View style={styles.content}>
                     {store.isStore == 0 ?
@@ -174,7 +173,7 @@ const styles = StyleSheet.create({
         padding: 15,
     },
     noteContext: {
-        fontSize: 14,
+        fontSize: 15,
         color: '#333',
         lineHeight: 20,
     },
@@ -191,7 +190,7 @@ const styles = StyleSheet.create({
         // height: 200,
         fontSize: 14,
         color: '#333',
-        lineHeight: 26,
+        lineHeight: 30,
         borderRadius: 5,
         textAlignVertical: 'top',
         backgroundColor: '#fafafa',

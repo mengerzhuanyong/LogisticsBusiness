@@ -104,7 +104,7 @@ export default class MineDeposit2 extends Component {
 
     loadNetData = () => {
         let url = NetApi.mineDepositTips;
-        this.netRequest.fetchGet(url, true)
+        this.netRequest.fetchGet(url)
             .then(result => {
                 if (result && result.code == 1) {
                     this.setState({
@@ -140,7 +140,7 @@ export default class MineDeposit2 extends Component {
                 .then((isInstalled) => {
                     if(isInstalled) {
                         let url = NetApi.wechatPay;
-                        this.netRequest.fetchPost(url, data, true)
+                        this.netRequest.fetchPost(url, data)
                             .then( result => {
                                 // console.log(result);
                                 this.submitWechatPay(result.data);
@@ -159,7 +159,7 @@ export default class MineDeposit2 extends Component {
             let url = NetApi.mineDepositPay;
             this.netRequest.fetchPost(url, data)
                 .then( result => {
-                    console.log(result);
+                    // console.log(result);
                     if (result && result.code == 1) {
                         this.submitAlipay(result.data);
                     }
@@ -181,9 +181,9 @@ export default class MineDeposit2 extends Component {
                 package: data.package,            // 商家根据财付通文档填写的数据和签名
                 sign: data.sign                   // 商家根据微信开放平台文档对数据做的签名
             });
-            console.log(Pay);
+            // console.log(Pay);
         } catch (error) {
-            console.log('付款失败：' + error);
+            // console.log('付款失败：' + error);
         }
     }
 
@@ -197,9 +197,9 @@ export default class MineDeposit2 extends Component {
                     state.params.reloadData();
                     goBack();
                 }, 500);
-                console.log(data);
+                // console.log(data);
             }, function(err) {
-                console.log(err);
+                // console.log(err);
                 toastShort(err.domain);
             });
     }
@@ -210,9 +210,9 @@ export default class MineDeposit2 extends Component {
         this.setState({
             canPress: false
         })
-        this.netRequest.fetchGet(url, true)
+        this.netRequest.fetchGet(url)
             .then(result => {
-                console.log(result);
+                // console.log(result);
                 if (result && result.code == 1) {
                     toastShort(result.msg);
                     this.timer = setTimeout(() => {

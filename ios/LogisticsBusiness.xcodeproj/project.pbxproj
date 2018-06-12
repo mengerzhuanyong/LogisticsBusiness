@@ -292,13 +292,6 @@
 			remoteGlobalIDString = D90E664D2068C5F70042E443;
 			remoteInfo = "RNSVG-tvOS";
 		};
-		D923F5CD20A33DBF0016D2B5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D923F58D20A33D5A0016D2B5;
-			remoteInfo = 123;
-		};
 		D924781E20555B1E00AE0BCB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A1731CDBAE6C4F71A95D1E32 /* RNSpinkit.xcodeproj */;
@@ -625,7 +618,6 @@
 			children = (
 				5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */,
 				5E9157351DD0AC6500FF2AA8 /* libRCTAnimation.a */,
-				D923F5CE20A33DBF0016D2B5 /* 123.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -825,7 +817,7 @@
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = VW3Z98PMN9;
+						DevelopmentTeam = DC4CZ2DV9J;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -1176,13 +1168,6 @@
 			remoteRef = D90E667F2068C5F80042E443 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		D923F5CE20A33DBF0016D2B5 /* 123.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = 123.xctest;
-			remoteRef = D923F5CD20A33DBF0016D2B5 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		D924781F20555B1E00AE0BCB /* libRNSpinkit.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1343,7 +1328,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = VW3Z98PMN9;
+				DEVELOPMENT_TEAM = DC4CZ2DV9J;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
@@ -1377,7 +1362,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = VW3Z98PMN9;
+				DEVELOPMENT_TEAM = DC4CZ2DV9J;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",

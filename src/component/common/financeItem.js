@@ -72,7 +72,7 @@ export default class FinanceItem extends Component {
 
     render(){
         const { item, index } = this.state;
-        console.log(item);
+        // console.log(item);
         const { onPushToBusiness } = this.props;
         return (
             <View style = {styles.container}>

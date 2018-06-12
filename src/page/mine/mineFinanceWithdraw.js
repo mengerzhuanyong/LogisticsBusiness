@@ -81,12 +81,12 @@ export default class MineFinanceWithDraw extends Component {
     };
 
     showActionSheet = () => {
-        console.log('show');
+        // console.log('show');
     };
 
     submitWithdraw = () => {
         let { store, money, alipayAccount, alipayName, minMoney } = this.state;
-        console.log(money);
+        // console.log(money);
         let url = NetApi.withdraw;
         let data = {
             sid: store.sid,
@@ -109,7 +109,7 @@ export default class MineFinanceWithDraw extends Component {
         money = parseFloat(money).toFixed(2);
         minMoney = parseFloat(minMoney).toFixed(2);
         let status =  money - minMoney;
-        console.log(money, minMoney, status);
+        // console.log(money, minMoney, status);
         if (status < 0) {
             let msg = '最低提现金额为' + minMoney + '元，请重新输入';
             toastShort(msg);
@@ -119,11 +119,11 @@ export default class MineFinanceWithDraw extends Component {
         this.setState({
             canPress: false
         })
-        console.log(data);
+        // console.log(data);
         // return;
-        this.netRequest.fetchPost(url, data, true)
+        this.netRequest.fetchPost(url, data)
             .then( result => {
-                console.log(result);
+                // console.log(result);
                 toastShort(result.msg);
                 if (result && result.code == 1 ) {
                     this.timer = setTimeout(() => {

@@ -75,7 +75,7 @@ export default class Mine extends Component {
     loadNetData = () => {
         let {store} = this.state;
         let url = NetApi.mine + store.sid;
-        this.netRequest.fetchGet(url, true)
+        this.netRequest.fetchGet(url)
             .then(result => {
                 if (result && result.code == 1) {
                     this.setState({
@@ -145,7 +145,7 @@ export default class Mine extends Component {
 
     render(){
         let {storeData, isRefreshing, store} = this.state;
-        console.log(storeData);
+        // console.log(storeData);
         return (
             <ScrollView
                 style={styles.container}

@@ -162,7 +162,7 @@ export default class OrderDetal extends Component {
 
     confirmFoo = (type) => {
         this.showModal(0);
-        console.log(type);
+        // console.log(type);
         let api = '/';
         switch(type){
             case 0:
@@ -193,7 +193,7 @@ export default class OrderDetal extends Component {
         this.setState({
             canPress: false
         });
-        this.netRequest.fetchGet(url, true)
+        this.netRequest.fetchGet(url)
             .then(result => {
                 toastShort(result.msg);
                 if (result && result.code == 1) {
@@ -216,7 +216,7 @@ export default class OrderDetal extends Component {
 
     loadNetData = () => {
         let url = NetApi.orderDetail + this.state.orderId;
-        this.netRequest.fetchGet(url, true)
+        this.netRequest.fetchGet(url)
             .then(result => {
                 if (result && result.code == 1) {
                     this.setState({
@@ -337,7 +337,7 @@ export default class OrderDetal extends Component {
                             onPress = {() => {canPress && this.showModal(7)}}
                         >
                             <Image source={GlobalIcons.images_bg_btn} style={GlobalStyles.buttonImage} />
-                            <Text style={[styles.orderDetailBtnName, styles.orderDetailBtnNameCurrent]}>确认取货</Text>
+                            <Text style={[styles.orderDetailBtnName, styles.orderDetailBtnNameCurrent]}>确认且打印</Text>
                         </TouchableOpacity>
                     </View>;
                 break;
@@ -415,7 +415,7 @@ export default class OrderDetal extends Component {
                 <NavigationBar
                     title = {'订单详情'}
                     leftButton = {UtilsView.getLeftButton(() => { this.state.canBack && this.onBack()})}
-                    // rightButton = {(orderInfo.status == 6 || orderInfo.status == 9) ? <RightButton title = {'删除'} submitChange = {() => this.showModal(-1)} /> : <View />}
+                    // rightButton = {(orderInfo.status == 6 || orderInfo.status == 9) ? <RightButton title = {'删除'} submitFoo = {() => this.showModal(-1)} /> : <View />}
                 />
                 {ready ?
                     <ScrollView style={[GlobalStyles.hasFixedContainer, styles.scrollViewContainer, noMarginBottom && styles.noMarginBottom]}>

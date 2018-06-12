@@ -81,13 +81,13 @@ export default class MineDriver extends Component {
     loadNetData = (page) => {
         let {sid, style, name} = this.state;
         let url = NetApi.staffList + sid + '/style/' + style + '/page/' + page + '/name/' + name;
-        return this.netRequest.fetchGet(url, true)
+        return this.netRequest.fetchGet(url)
             .then(result => {
-                console.log(result);
+                // console.log(result);
                 return result;
             })
             .catch(error => {
-                console.log(error);
+                // console.log(error);
                 toastShort('error');
             })
     };
@@ -128,7 +128,7 @@ export default class MineDriver extends Component {
     }
 
     onPushEdit = ({item}) => {
-        console.log(item);
+        // console.log(item);
         const { navigate } = this.props.navigation;
         navigate('MineDriverEdit', {
             item: item,

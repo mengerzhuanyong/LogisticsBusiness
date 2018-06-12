@@ -30,10 +30,10 @@ export default class PermissionAndroidView extends Component {
                     lng: location.coords.longitude,
                     lat: location.coords.latitude
                 };
-                console.log("获取位置：", result)
+                // console.log("获取位置：", result)
             },
             error => {
-                console.log("获取位置失败：", error)
+                // console.log("获取位置失败：", error)
             },
             para
         );
@@ -191,7 +191,7 @@ export default class PermissionAndroidView extends Component {
             } else {
                 data = data + "否\n"
             }
-            console.log(granteds);
+            // console.log(granteds);
             this.show(data)
         } catch (err) {
             this.show(err.toString())

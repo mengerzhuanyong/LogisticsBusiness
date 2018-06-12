@@ -64,7 +64,7 @@ export default class CommonWebView extends Component {
 
     loadNetData = () => {
         let {api} = this.state;
-        this.netRequest.fetchGet(api, true)
+        this.netRequest.fetchGet(api)
             .then(result => {
                 if (result && result.code === 1) {
                     this.setState({

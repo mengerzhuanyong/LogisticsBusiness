@@ -110,7 +110,7 @@ export default class RePassword extends Component {
         });
         this.netRequest.fetchPost(url, data)
             .then(result => {
-                console.log('登录', result);
+                // console.log('登录', result);
                 if (result && result.code == 1) {
                     toastShort('成功找回密码，请重新登录');
                     this.timer = setTimeout(() => {
@@ -119,7 +119,7 @@ export default class RePassword extends Component {
                 }
             })
             .catch(error => {
-                console.log('登录出错', error);
+                // console.log('登录出错', error);
                 this.setState({
                     canPress: true
                 });

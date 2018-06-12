@@ -75,7 +75,7 @@ export default class EmployeeItem extends Component {
         this.showModalView();
         let {item} = this.state;
         let url = NetApi.staffDel + item.id;
-        this.netRequest.fetchGet(url, true)
+        this.netRequest.fetchGet(url)
             .then(result => {
                 toastShort(result.msg);
                 if (result && result.code == 1) {
@@ -88,7 +88,7 @@ export default class EmployeeItem extends Component {
     }
 
     onPushEdit = (item) => {
-        console.log(123);
+        // console.log(123);
         const { navigate } = this.props.navigation;
         navigate('MineEmployeeEdit', {
             item: item,

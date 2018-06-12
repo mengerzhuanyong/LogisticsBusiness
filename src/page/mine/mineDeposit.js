@@ -50,18 +50,19 @@ export default class MineDeposit extends Component {
     constructor(props) {
         super(props);
         let {params} = this.props.navigation.state;
-        this.state =  {
+        this.state = {
             store: global.store.storeData,
             ready: false,
             loadMore: false,
             refreshing: false,
             paymentType: '2',
             // item: '',
-            item: params ? params.item : {},
+            item: params && params.item ? params.item : {},
+            remark: params && params.remark ? params.remark : {title: '', content: [],},
             canPress: true,
             modalShow: false,
             canBack: false,
-        }
+        };
         this.netRequest = new NetRequest();
     }
 
@@ -155,7 +156,7 @@ export default class MineDeposit extends Component {
                 .then((isInstalled) => {
                     if(isInstalled) {
                         let url = NetApi.wechatPay;
-                        this.netRequest.fetchPost(url, data, true)
+                        this.netRequest.fetchPost(url, data)
                             .then( result => {
                                 // console.log(result);
                                 this.submitWechatPay(result.data);
@@ -174,7 +175,7 @@ export default class MineDeposit extends Component {
             let url = NetApi.mineDepositPay;
             this.netRequest.fetchPost(url, data)
                 .then( result => {
-                    console.log(result);
+                    // console.log(result);
                     if (result && result.code == 1) {
                         this.submitAlipay(result.data);
                     }
@@ -196,9 +197,9 @@ export default class MineDeposit extends Component {
                 package: data.package,            // 商家根据财付通文档填写的数据和签名
                 sign: data.sign                   // 商家根据微信开放平台文档对数据做的签名
             });
-            console.log(Pay);
+            // console.log(Pay);
         } catch (error) {
-            console.log('付款失败：' + error);
+            // console.log('付款失败：' + error);
         }
     }
 
@@ -212,9 +213,9 @@ export default class MineDeposit extends Component {
                     state.params.reloadData();
                     goBack();
                 }, 500);
-                console.log(data);
+                // console.log(data);
             }, function(err) {
-                console.log(err);
+                // console.log(err);
                 toastShort(err.domain);
             });
     }
@@ -225,9 +226,9 @@ export default class MineDeposit extends Component {
         this.setState({
             canPress: false
         })
-        this.netRequest.fetchGet(url, true)
+        this.netRequest.fetchGet(url)
             .then(result => {
-                console.log(result);
+                // console.log(result);
                 if (result && result.code == 1) {
                     toastShort(result.msg);
                     this.timer = setTimeout(() => {
@@ -246,10 +247,20 @@ export default class MineDeposit extends Component {
                     canPress: true
                 })
             })
-    }
+    };
+
+    renderRemarkContent = (data) => {
+        if (!data || data.length < 1) {
+            return;
+        }
+        let content = data.map((item, index) => {
+            return <Text key={'rule'+item.id} style={styles.rulesContext}>{item.value}</Text>;
+        });
+        return content;
+    };
 
     render(){
-        const { ready, refreshing, item, paymentType, canPress, modalShow } = this.state;
+        const { ready, refreshing, item, paymentType, canPress, modalShow, remark } = this.state;
         const { params } = this.props.navigation.state;
         let depositStatus = item.name == '押金' && item.status == 1;
         let tips = depositStatus ? '已' : '';
@@ -316,6 +327,10 @@ export default class MineDeposit extends Component {
                             <Text style={GlobalStyles.btnItem}>立即交纳</Text>
                         </TouchableOpacity>
                     }
+                </View>
+                <View style={styles.rulesContent}>
+                    <Text style={styles.rulesTitle}>{remark.title}</Text>
+                    {this.renderRemarkContent(remark.content)}
                 </View>
                 {modalShow && <ModalView
                     show = {modalShow}
@@ -464,5 +479,19 @@ const styles = StyleSheet.create({
     },
     mineBtnView: {
         marginTop: 20,
+    },
+    rulesContent: {
+        padding: 10,
+    },
+    rulesTitle: {
+        fontSize: 14,
+        color: '#333',
+        marginBottom: 10,
+    },
+    rulesContext: {
+        fontSize: 13,
+        color: '#666',
+        lineHeight: 25,
+        marginHorizontal: 14,
     },
 });

@@ -103,9 +103,9 @@ export default class Login extends Component {
         this.setState({
             canPress: false,
         })
-        this.netRequest.fetchPost(url, data, true)
+        this.netRequest.fetchPost(url, data)
             .then( result => {
-                console.log('登录', result);
+                // console.log('登录', result);
                 if (result && result.code == '1') {
                     toastShort("登录成功");
                     let store = result.data;

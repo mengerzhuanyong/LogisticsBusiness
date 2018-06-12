@@ -81,7 +81,7 @@ export default class Register extends Component {
             password: password,
             repassword: repassword,
         };
-        this.netRequest.fetchPost(url, data, true)
+        this.netRequest.fetchPost(url, data)
             .then( result => {
                 // console.log('登录', result);
             })

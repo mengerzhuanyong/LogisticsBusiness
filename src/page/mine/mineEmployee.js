@@ -81,13 +81,13 @@ export default class MineEmployee extends Component {
     loadNetData = (page) => {
         let {sid, style, name} = this.state;
         let url = NetApi.staffList + sid + '/style/' + style + '/page/' + page + '/name/' + name;
-        return this.netRequest.fetchGet(url, true)
+        return this.netRequest.fetchGet(url)
             .then(result => {
-                console.log(result);
+                // console.log(result);
                 return result;
             })
             .catch(error => {
-                console.log(error);
+                // console.log(error);
                 toastShort('error');
             })
     };
@@ -128,7 +128,7 @@ export default class MineEmployee extends Component {
     }
 
     onPushEdit = ({item}) => {
-        console.log(123);
+        // console.log(123);
         const { navigate } = this.props.navigation;
         navigate('MineEmployeeEdit', {
             item: item,

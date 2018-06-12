@@ -165,7 +165,7 @@ export default class RegisterUser extends Component {
         this.setState({
             canPress: false,
         });
-        this.netRequest.fetchPost(url, data, true)
+        this.netRequest.fetchPost(url, data)
             .then(result => {
                 if (result && result.code == 1) {
                     toastShort('注册成功');
@@ -216,7 +216,7 @@ export default class RegisterUser extends Component {
                         canPress: true,
                     });
                 }
-                console.log('个人注册', result);
+                // console.log('个人注册', result);
             })
             .catch(error => {
                 toastShort('服务器请求失败，请稍后重试！');
@@ -233,7 +233,7 @@ export default class RegisterUser extends Component {
         let data = {
             mobile: mobile,
         };
-        this.netRequest.fetchPost(url, data, true)
+        this.netRequest.fetchPost(url, data)
             .then(result => {
                 if (result && result.code == 1) {
                     this.countDownTimer();
@@ -241,7 +241,7 @@ export default class RegisterUser extends Component {
                 } else {
                     toastShort(result.msg);
                 }
-                console.log('验证码', result);
+                // console.log('验证码', result);
             })
             .catch(error => {
                 toastShort('服务器请求失败，请稍后重试！');
@@ -296,7 +296,7 @@ export default class RegisterUser extends Component {
                 this.setState({
                     area: pickedValue
                 });
-                console.log(pickedValue);
+                // console.log(pickedValue);
             },
             onPickerCancel: pickedValue => {
 
@@ -326,7 +326,7 @@ export default class RegisterUser extends Component {
         }
         SYImagePicker.removeAllPhoto();
         SYImagePicker.showImagePicker({imageCount: 1, isRecordSelected: true, enableBase64: true}, (err, img) => {
-            console.log(img);
+            // console.log(img);
             if (!err) {
                 this.setState({
                     uploading: true,
@@ -340,7 +340,7 @@ export default class RegisterUser extends Component {
         let data = {
             image: source,
         };
-        this.netRequest.fetchPost(url, data, true)
+        this.netRequest.fetchPost(url, data)
             .then(result => {
                 if (result && result.code == 1) {
                     if (type == 0) {
@@ -362,26 +362,26 @@ export default class RegisterUser extends Component {
                 } else {
                     toastShort(result.msg);
                 }
-                console.log(result);
+                // console.log(result);
             })
             .catch(error => {
-                console.log(error);
+                // console.log(error);
             })
     };
 
     pickerImages = (type) => {
         ImagePicker.showImagePicker(pickPhotoOptions, (response) => {
 
-            console.log('Response = ', response);
+            // console.log('Response = ', response);
 
             if (response.didCancel) {
-                console.log('User cancelled image picker');
+                // console.log('User cancelled image picker');
             }
             else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
+                // console.log('ImagePicker Error: ', response.error);
             }
             else if (response.customButton) {
-                console.log('User tapped custom button: ', response.customButton);
+                // console.log('User tapped custom button: ', response.customButton);
             }
             else {
 
@@ -418,7 +418,7 @@ export default class RegisterUser extends Component {
 
     render(){
         let { seconds, codeAlreadySend, area, uploading, idcard, obverseIdcard, license, canPress,uploadType } = this.state;
-        console.log(uploading && idcard == '');
+        // console.log(uploading && idcard == '');
         return (
             <KeyboardAwareScrollView>
                 <CustomKeyboard.AwareCusKeyBoardScrollView>

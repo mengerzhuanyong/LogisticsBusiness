@@ -92,7 +92,7 @@ export default class MineFinance extends Component {
     loadNetData = (page) => {
         let {store} = this.state;
         let url = NetApi.mineAccount + store.sid + '/page/' + page;
-        return this.netRequest.fetchGet(url, true)
+        return this.netRequest.fetchGet(url)
             .then(result => {
                 return result;
             })

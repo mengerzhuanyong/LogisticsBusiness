@@ -34,7 +34,7 @@ export default class MineDepositIndex extends Component {
 
     constructor(props) {
         super(props);
-        this.state =  {
+        this.state = {
             ready: false,
             loadMore: false,
             refreshing: false,
@@ -42,10 +42,11 @@ export default class MineDepositIndex extends Component {
             companyListData: [],
             store: global.store.storeData,
             deposit: {name: '押金', money: '', status: '', style: '1'},
-            topDeposit: {name: '置顶费用', money: '', status: '', style: '2'},
-            rankDeposit: {name: '评级费用', money: '', status: '', style: '3'},
+            topDeposit: {name: '扶持费用', money: '', status: '', style: '2'},
+            // rankDeposit: {name: '评级费用', money: '', status: '', style: '3'},
             canBack: false,
-        }
+            remark: '',
+        };
         this.netRequest = new NetRequest();
     }
 
@@ -68,25 +69,26 @@ export default class MineDepositIndex extends Component {
         goBack();
     };
 
-    updateState= (state) => {
+    updateState = (state) => {
         if (!this) {
             return;
         }
         this.setState(state);
-    }
+    };
 
     loadNetData = () => {
         let url = NetApi.mineDeposit + this.state.store.sid;
         this.netRequest.fetchGet(url, true)
             .then(result => {
-                console.log(result);
+                // console.log(result);
                 this.setState({
+                    remark: result.data.remark,
                     deposit: result.data.deposit,
                     topDeposit: result.data.topDeposit,
                     rankDeposit: result.data.rankDeposit,
                 })
             })
-    }
+    };
 
     onPushNavigator = (webTitle, compent, item) => {
         const { navigate } = this.props.navigation;
@@ -96,6 +98,7 @@ export default class MineDepositIndex extends Component {
         navigate(compent, {
             webTitle: webTitle,
             item: item,
+            remark: this.state.remark,
             reloadData: () => this.loadNetData(),
         })
     }
@@ -122,13 +125,13 @@ export default class MineDepositIndex extends Component {
                         // rightText = {topDeposit.status == 1 ? '已交' : '未交'}
                         onPushNavigator = {() => this.onPushNavigator(topDeposit.name, 'MineDeposit', topDeposit)}
                     />
-                    <View style={[GlobalStyles.horLine, styles.horLine]} />
-                    <NavigatorItem
+                    {1 > 2 && <NavigatorItem
+                        // <View style={[GlobalStyles.horLine, styles.horLine]} />
                         leftIcon = {false}
                         leftTitle = {rankDeposit.name}
                         // rightText = {rankDeposit.status == 1 ? '已交' : '未交'}
                         onPushNavigator = {() => this.onPushNavigator(rankDeposit.name, 'MineDeposit', rankDeposit)}
-                    />
+                    />}
                 </View>
             </View>
         );

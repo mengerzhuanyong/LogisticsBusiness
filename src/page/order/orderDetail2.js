@@ -114,7 +114,7 @@ export default class OrderDetail extends Component {
 
     loadNetData = () => {
         let url = NetApi.orderDetail + this.state.orderId;
-        this.netRequest.fetchGet(url, true)
+        this.netRequest.fetchGet(url)
             .then(result => {
                 if (result && result.code == 1) {
                     this.setState({
@@ -145,7 +145,7 @@ export default class OrderDetail extends Component {
     };
 
     renderGoodsPic = (data) => {
-        console.log(data);
+        // console.log(data);
         let images = data.map((obj, index) => {
             return (
                 <TouchableOpacity
@@ -166,7 +166,7 @@ export default class OrderDetail extends Component {
 
     render(){
         let { images, imageIndex } = this.state;
-        console.log(GlobalStyles.noPicture);
+        // console.log(GlobalStyles.noPicture);
         return (
             <View style={styles.container}>
                 <NavigationBar

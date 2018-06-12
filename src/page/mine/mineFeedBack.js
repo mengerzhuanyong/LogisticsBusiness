@@ -142,7 +142,7 @@ export default class MineFeedBack extends Component {
     handleOpenImagePicker = () => {
         SYImagePicker.removeAllPhoto();
         SYImagePicker.showImagePicker({imageCount: 1, isRecordSelected: true, enableBase64: true}, (err, img) => {
-            console.log(img);
+            // console.log(img);
             if (!err) {
                 this.setState({
                     uploading: true,
@@ -158,7 +158,7 @@ export default class MineFeedBack extends Component {
         };
         this.netRequest.fetchPost(url, data)
             .then(result => {
-                console.log(result);
+                // console.log(result);
                 if (result && result.code == 1) {
                     this.updateState({
                         img: result.data,

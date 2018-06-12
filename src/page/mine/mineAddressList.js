@@ -117,7 +117,7 @@ export default class MineAddressList extends Component {
         let url = NetApi.storeDel + data;
         this.netRequest.fetchGet(url)
             .then( result => {
-                console.log('删除成功', result);
+                // console.log('删除成功', result);
                 if (result && result.code == 1) {
                     toastShort(result.msg);
                     this.freshNetData();
@@ -132,9 +132,9 @@ export default class MineAddressList extends Component {
     loadNetData = (page) => {
         let { sid, style } = this.state;
         let url = NetApi.store + sid + '/page/' + page;
-        return this.netRequest.fetchGet(url, true)
+        return this.netRequest.fetchGet(url)
             .then( result => {
-                console.log('', result);
+                // console.log('', result);
                 return result;
             })
             .catch( error => {

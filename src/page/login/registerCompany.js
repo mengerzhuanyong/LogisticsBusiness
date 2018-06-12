@@ -168,7 +168,7 @@ export default class RegisterCompany extends Component {
         this.setState({
             canPress: false,
         });
-        this.netRequest.fetchPost(url, data, true)
+        this.netRequest.fetchPost(url, data)
             .then( result => {
                 if (result && result.code == 1) {
                     toastShort('注册成功');
@@ -219,7 +219,7 @@ export default class RegisterCompany extends Component {
                         canPress: true,
                     });
                 }
-                console.log('验证码', result);
+                // console.log('验证码', result);
             })
             .catch( error => {
                 toastShort('服务器请求失败，请稍后重试！');
@@ -305,7 +305,7 @@ export default class RegisterCompany extends Component {
                         area: pickedValue
                     })
                 }
-                console.log(pickedValue);
+                // console.log(pickedValue);
             },
             onPickerCancel: pickedValue => {
 
@@ -341,7 +341,7 @@ export default class RegisterCompany extends Component {
         }
         SYImagePicker.removeAllPhoto();
         SYImagePicker.showImagePicker({imageCount: 1, isRecordSelected: true, enableBase64: true}, (err, img) => {
-            console.log(img);
+            // console.log(img);
             if (!err) {
                 this.setState({
                     uploading: true,
@@ -355,7 +355,7 @@ export default class RegisterCompany extends Component {
         let data = {
             image: source,
         };
-        this.netRequest.fetchPost(url, data, true)
+        this.netRequest.fetchPost(url, data)
             .then(result => {
                 if (type == 0) {
                     this.setState({
@@ -373,26 +373,26 @@ export default class RegisterCompany extends Component {
                         uploading: false,
                     })
                 }
-                console.log(result);
+                // console.log(result);
             })
             .catch(error => {
-                console.log(error);
+                // console.log(error);
             })
     }
 
     pickerImages = (type) => {
         ImagePicker.showImagePicker(pickPhotoOptions, (response) => {
 
-            console.log('Response = ', response);
+            // console.log('Response = ', response);
 
             if (response.didCancel) {
-                console.log('User cancelled image picker');
+                // console.log('User cancelled image picker');
             }
             else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
+                // console.log('ImagePicker Error: ', response.error);
             }
             else if (response.customButton) {
-                console.log('User tapped custom button: ', response.customButton);
+                // console.log('User tapped custom button: ', response.customButton);
             }
             else {
 

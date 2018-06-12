@@ -73,7 +73,7 @@ export default class MineDiscount extends Component {
             sid: this.state.store.sid,
             is_store: this.state.store.isStore,
         };
-        this.netRequest.fetchPost(url, data, true)
+        this.netRequest.fetchPost(url, data)
             .then(result => {
                 if (result && result.code == 1) {
                     this.setState({

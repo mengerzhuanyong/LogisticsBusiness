@@ -32,20 +32,22 @@ export default class MineStoreSetting extends Component {
 
     constructor(props) {
         super(props);
-        this.state =  {
+        this.state = {
             store: global.store.storeData,
             features: [
                 {name: '零担', value: '1'},
                 {name: '整车', value: '0'},
                 {name: '冷藏', value: '0'},
                 {name: '国际', value: '0'},
+                {name: '河运', value: '0'},
+                {name: '当日到', value: '0'},
             ],
             deliveryFee: [
                 {name: '取件费', value: ''},
                 {name: '送件费', value: ''},
             ],
             canBack: false,
-        }
+        };
         this.netRequest = new NetRequest();
     }
 
@@ -68,12 +70,12 @@ export default class MineStoreSetting extends Component {
         goBack();
     };
 
-    updateState= (state) => {
+    updateState = (state) => {
         if (!this) {
             return;
         }
         this.setState(state);
-    }
+    };
 
     submit = (submit) => {
         let url = NetApi.mineStoreSetting;
@@ -87,7 +89,7 @@ export default class MineStoreSetting extends Component {
         this.setState({
             canPress: false
         });
-        this.netRequest.fetchPost(url, data, true)
+        this.netRequest.fetchPost(url, data)
             .then( result => {
                 if (result && result.code === 1) {
                     if (submit === 1) {

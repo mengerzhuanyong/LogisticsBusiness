@@ -33,7 +33,7 @@ export default class MineDriverEdit extends Component {
     constructor(props) {
         super(props);
         let {params} = this.props.navigation.state;
-        console.log(params);
+        // console.log(params);
         this.state = {
             style: 2,
             id: params.item ? params.item.id : '',
@@ -106,9 +106,9 @@ export default class MineDriverEdit extends Component {
         this.setState({
             canPress: false
         });
-        this.netRequest.fetchPost(url, data, true)
+        this.netRequest.fetchPost(url, data)
             .then(result => {
-                console.log(result);
+                // console.log(result);
                 toastShort(result.msg);
                 if (result && result.code == 1) {
                     this.timer = setTimeout(() => {

@@ -14,6 +14,7 @@ import {
     StyleSheet,
     TouchableOpacity
 } from 'react-native'
+import {Select, PullPicker} from 'teaset'
 import Picker from 'react-native-picker'
 import * as CustomKeyboard from 'react-native-yusha-customkeyboard'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -22,6 +23,7 @@ import NetApi from '../../constant/GlobalApi'
 import GlobalStyles from '../../constant/GlobalStyle'
 import GlobalIcons from '../../constant/GlobalIcon'
 import NavigationBar from '../../component/common/NavigationBar'
+import NavigationButton from '../../component/common/headerRightButton'
 import UtilsView from '../../util/utilsView'
 import {toastShort, consoleLog} from '../../util/utilsToast'
 import { formatPrice } from '../../util/utilsRegularMatch'
@@ -36,7 +38,7 @@ export default class ServiceEdit extends Component {
     constructor(props) {
         super(props);
         let {params} = this.props.navigation.state;
-        console.log('服务详情',params);
+        // console.log('服务详情',params);
         this.state =  {
             item: params.item,
             volumeViewCount: params.item.volmon.length > 0 ? params.item.volmon.length : 1,
@@ -50,6 +52,8 @@ export default class ServiceEdit extends Component {
             prices: params.item.volmon,
             carPrices: params.item.car,
             canPress: true,
+            storeServices: [],
+            selectedServicesName: '',
         };
         this.netRequest = new NetRequest();
     }
@@ -90,8 +94,24 @@ export default class ServiceEdit extends Component {
         this.setState(state);
     };
 
-    loadNetData = () => {
+    onPushToNextPage = (pageTitle, page, params = {}) => {
+        let {navigate} = this.props.navigation;
+        navigate(page, {
+            pageTitle: pageTitle,
+            ...params,
+        });
+    };
 
+    loadNetData = () => {
+        let url = NetApi.storeServices;
+        this.netRequest.fetchGet(url, true)
+            .then(result => {
+                if (result && result.code == 1) {
+                    this.updateState({
+                        storeServices: result.data,
+                    });
+                }
+            })
     };
 
     showTimePicker = (type) => {
@@ -142,7 +162,7 @@ export default class ServiceEdit extends Component {
             wheelFlex: [1, 1],
             onPickerConfirm: pickedValue => {
                 pickedValue = `${pickedValue[0]} : ${pickedValue[1]}`;
-                console.log(pickedValue);
+                // console.log(pickedValue);
                 if (type == 'start') {
                     this.setState({
                         beginTime: pickedValue
@@ -157,7 +177,7 @@ export default class ServiceEdit extends Component {
             },
             onPickerSelect: pickedValue => {
                 pickedValue = `${pickedValue[0]} : ${pickedValue[1]}`;
-                console.log(pickedValue);
+                // console.log(pickedValue);
                 if (type == 'start') {
                     this.setState({
                         beginTime: pickedValue
@@ -208,7 +228,7 @@ export default class ServiceEdit extends Component {
                         endArea: pickedValue
                     })
                 }
-                console.log(pickedValue);
+                // console.log(pickedValue);
             },
             onPickerCancel: pickedValue => {
 
@@ -251,7 +271,7 @@ export default class ServiceEdit extends Component {
                                         this.setState({
                                             prices: prices
                                         })
-                                        console.log(prices);
+                                        // console.log(prices);
                                     }}
                                 />
                                 <Text style={styles.orderMoneyInfoConNum}>至</Text>
@@ -267,7 +287,7 @@ export default class ServiceEdit extends Component {
                                         this.setState({
                                             prices: prices
                                         })
-                                        console.log(prices);
+                                        // console.log(prices);
                                     }}
                                 />
                                 <Text style={styles.orderMoneyInfoConNum}>m³</Text>
@@ -288,7 +308,7 @@ export default class ServiceEdit extends Component {
                                         this.setState({
                                             prices: prices
                                         })
-                                        console.log(prices);
+                                        // console.log(prices);
                                     }}
                                 />
                                 <Text style={styles.orderMoneyInfoConNum}>元</Text>
@@ -361,7 +381,7 @@ export default class ServiceEdit extends Component {
         });
         this.netRequest.fetchPost(url, data, true)
             .then(result => {
-                console.log(result);
+                // console.log(result);
                 if (result && result.code == 1) {
                     toastShort('修改成功');
                     this.timer = setTimeout(() => {
@@ -386,7 +406,7 @@ export default class ServiceEdit extends Component {
     compare_hms = (a, b) => {
         var i = a.getHours() * 60 * 60 + a.getMinutes() * 60;
         var n = b.getHours() * 60 * 60 + b.getMinutes() * 60;
-        console.log(i, n);
+        // console.log(i, n);
         // if (i > n) {
         //     alert("a大");
         // } else if (i < n) {
@@ -397,12 +417,15 @@ export default class ServiceEdit extends Component {
     }
 
     render(){
-        let { startArea, endArea, serviceType, serviceSort, beginTime, endTime, duration, canPress, carPrices } = this.state;
+        let { startArea, endArea, serviceType, serviceSort,
+        beginTime, endTime, duration, canPress, selectedServicesName,
+        carPrices, storeServices } = this.state;
         return (
             <View style={styles.container}>
                 <NavigationBar
                     title = {'编辑服务信息'}
                     leftButton = {UtilsView.getLeftButton(() => { this.state.canBack && this.onBack()})}
+                    rightButton = {<NavigationButton icon={GlobalIcons.icon_help} iconStyle={{tintColor: '#fff'}} type={'right'} submitFoo={() => this.onPushToNextPage('服务示例', 'WebViewPage', {api: NetApi.serviceHelp})} />}
                 />
                 <KeyboardAwareScrollView style={[GlobalStyles.hasFixedContainer, styles.scrollViewContainer]}>
                     <CustomKeyboard.AwareCusKeyBoardScrollView>
@@ -554,7 +577,24 @@ export default class ServiceEdit extends Component {
                                 <View style={[GlobalStyles.horLine, styles.horLine]} />
                                 <View style={styles.orderMoneyInfoItem}>
                                     <Text style={styles.orderMoneyInfoTitle}>服务类型：</Text>
-                                    <View style={styles.serviceTypeBtnView}>
+                                    <Select
+                                        style={{width: 200, borderWidth: 0,}}
+                                        value={selectedServicesName, serviceType}
+                                        valueStyle={{flex: 1, color: '#555', textAlign: 'right'}}
+                                        items={storeServices}
+                                        getItemValue={(item, index) => item.value}
+                                        getItemText={(item, index) => item.name}
+                                        iconTintColor='#8a6d3b'
+                                        placeholder='请选择服务类型'
+                                        pickerTitle='服务类型选择'
+                                        onSelected={(item, index) => this.setState({
+                                            serviceType: item.value,
+                                            selectedServicesName: item.name
+                                        })}
+                                    />
+                                    {/*
+                                        // 暂存
+                                        <View style={styles.serviceTypeBtnView}>
                                         <TouchableOpacity
                                             style = {styles.serviceTypeBtnItem}
                                             onPress = {() => {
@@ -588,7 +628,7 @@ export default class ServiceEdit extends Component {
                                             <Text style={styles.serviceTypeBtnName}>航空</Text>
                                             <Image source={serviceType == '3' ? checkedIcon : checkIcon} style={GlobalStyles.checkedIcon} />
                                         </TouchableOpacity>
-                                    </View>
+                                    </View>*/}
                                 </View>
                             </View>
                         </View>

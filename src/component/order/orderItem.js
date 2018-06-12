@@ -86,7 +86,7 @@ export default class OrderItem extends Component {
     }
 
     onPushToDetail = (item) => {
-        console.log(123);
+        // console.log(123);
         const { navigate } = this.props.navigation;
         navigate('OrderDetail', {
             webTitle: '订单详情',
@@ -101,7 +101,7 @@ export default class OrderItem extends Component {
         this.setState({
             canPress: false
         });
-        this.netRequest.fetchGet(url, true)
+        this.netRequest.fetchGet(url)
             .then(result => {
                 toastShort(result.msg);
                 if (result && result.code == 1) {

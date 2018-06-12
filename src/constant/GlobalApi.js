@@ -51,6 +51,8 @@ module.exports = {
     storeEdit: 'home/store/edit/',
     storeDel: 'home/store/storeDel/id/',
 
+    storeServices: 'home/service/service_type',
+
     orderList: 'home/order/index/sid/',
     orderDetail: 'home/order/detail/id/',
     orderCancel: 'user/order/cancelOrder/oid/',

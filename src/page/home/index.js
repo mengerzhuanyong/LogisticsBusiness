@@ -69,7 +69,7 @@ export default class Home extends Component {
         this.loadNetData();
         this.getBannerData();
         // this.getCurrentPosition();
-        console.log(global.store.storeData);
+        // console.log(global.store.storeData);
         if (global.store && global.store.loginState) {
             this.setState({
                 store: global.store.storeData
@@ -113,11 +113,11 @@ export default class Home extends Component {
                     lng: location.coords.longitude,
                     lat: location.coords.latitude
                 };
-                console.log("获取位置：", result)
+                // console.log("获取位置：", result)
             },
             error => {
                 toastShort('获取当前位置失败，请稍后重试！');
-                console.log("获取位置失败：", error)
+                // console.log("获取位置失败：", error)
             },
             para
         );
@@ -125,9 +125,9 @@ export default class Home extends Component {
 
     getBannerData = () => {
         let url = NetApi.getBanner;
-        this.netRequest.fetchGet(url, true)
+        this.netRequest.fetchGet(url)
             .then(result => {
-                console.log(result);
+                // console.log(result);
                 if (result && result.code == 1) {
                     this.setState({
                         bannerData: result.data.banner,
@@ -165,9 +165,9 @@ export default class Home extends Component {
         // console.log(this.state.store);
         this.getBannerData();
         let url = NetApi.index + this.state.store.sid;
-        this.netRequest.fetchGet(url, true)
+        this.netRequest.fetchGet(url)
             .then(result => {
-                console.log(result);
+                // console.log(result);
                 if (result && result.code == 1) {
                     this.setState({
                         status: result.data.storeStatus,
@@ -250,10 +250,10 @@ export default class Home extends Component {
             status: data
         });
         let url = NetApi.workStatus + store.sid + '/status/' + data;
-        console.log(url);
-        this.netRequest.fetchGet(url, true)
+        // console.log(url);
+        this.netRequest.fetchGet(url)
             .then( result => {
-                console.log(result);
+                // console.log(result);
                 if (result && result.code == 1) {
                     let msg = data == 1 ? '您已上班，开始接单啦' : '您已下班，暂停接单中';
                     toastShort(msg);
@@ -353,12 +353,12 @@ export default class Home extends Component {
                         {store.isStore == 1 && <NavigatorItem
                             navigatorName = {"员工管理"}
                             navigatorIcon = {GlobalIcons.icon_employee}
-                            onPushNavigator = {() => this.onPushNavigator('员工管理', 'MineEmployee')}
+                            onPushNavigator = {() => this.onPushNavigator('员工账号添加', 'MineEmployee')}
                         />}
                         {store.isStore == 1 && <NavigatorItem
                             navigatorName = {"司机管理"}
                             navigatorIcon = {GlobalIcons.icon_drivers}
-                            onPushNavigator = {() => this.onPushNavigator('司机管理', 'MineDriver')}
+                            onPushNavigator = {() => this.onPushNavigator('司机账号添加', 'MineDriver')}
                             />
                         }
                     </View>
@@ -418,7 +418,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     hotNewsTitle: {
-        fontSize: 15,
+        fontSize: 14,
         color: '#666',
     },
     homeNavigationView: {

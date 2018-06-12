@@ -75,13 +75,13 @@ export default class PickerTest extends Component {
             pickerData: this._createDateData(),
             pickerFontColor: [255, 0 ,0, 1],
             onPickerConfirm: (pickedValue, pickedIndex) => {
-                console.log('date', pickedValue, pickedIndex);
+                // console.log('date', pickedValue, pickedIndex);
             },
             onPickerCancel: (pickedValue, pickedIndex) => {
-                console.log('date', pickedValue, pickedIndex);
+                // console.log('date', pickedValue, pickedIndex);
             },
             onPickerSelect: (pickedValue, pickedIndex) => {
-                console.log('date', pickedValue, pickedIndex);
+                // console.log('date', pickedValue, pickedIndex);
             }
         });
         Picker.show();
@@ -92,14 +92,14 @@ export default class PickerTest extends Component {
             pickerData: this._createAreaData(),
             selectedValue: ['河北', '唐山', '古冶区'],
             onPickerConfirm: pickedValue => {
-                console.log('area', pickedValue);
+                // console.log('area', pickedValue);
             },
             onPickerCancel: pickedValue => {
-                console.log('area', pickedValue);
+                // console.log('area', pickedValue);
             },
             onPickerSelect: pickedValue => {
                 //Picker.select(['山东', '青岛', '黄岛区'])
-                console.log('area', pickedValue);
+                // console.log('area', pickedValue);
             }
         });
         Picker.show();
@@ -141,10 +141,10 @@ export default class PickerTest extends Component {
             pickerTitleText: 'Select Date and Time',
             wheelFlex: [2, 1, 1, 2, 1, 1],
             onPickerConfirm: pickedValue => {
-                console.log('area', pickedValue);
+                // console.log('area', pickedValue);
             },
             onPickerCancel: pickedValue => {
-                console.log('area', pickedValue);
+                // console.log('area', pickedValue);
             },
             onPickerSelect: pickedValue => {
                 let targetValue = [...pickedValue];

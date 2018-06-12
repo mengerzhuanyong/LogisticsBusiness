@@ -117,9 +117,9 @@ export default class MineDriverAdd extends Component {
         this.setState({
             canPress: false
         });
-        this.netRequest.fetchPost(url, data, true)
+        this.netRequest.fetchPost(url, data)
             .then(result => {
-                console.log(result);
+                // console.log(result);
                 toastShort(result.msg);
                 if (result && result.code == 1) {
                     this.timer = setTimeout(() => {

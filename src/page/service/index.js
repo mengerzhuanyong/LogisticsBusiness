@@ -85,11 +85,11 @@ export default class Service extends Component {
         let url = NetApi.serviceList + sid + '/start/' + start + '/end/' + end + '/page/' + page;
         return this.netRequest.fetchGet(url, true)
             .then(result => {
-                console.log(result);
+                // console.log(result);
                 return result;
             })
             .catch(error => {
-                console.log(error);
+                // console.log(error);
                 toastShort('error');
             })
     };
@@ -123,9 +123,9 @@ export default class Service extends Component {
         //     start: start,
         //     end: end,
         // };
-        // this.netRequest.fetchPost(url, data, true)
+        // this.netRequest.fetchPost(url, data)
         //     .then(result => {
-        //         console.log(result);
+        //         // console.log(result);
         //         if (result && result.code == 1) {
 
         //         } else {
@@ -210,7 +210,6 @@ export default class Service extends Component {
                         backgroundColor: '#123',
                     }}
                     leftButton = {UtilsView.getLeftButton(() => { this.state.canBack && this.onBack()})}
-                    rightButton = {<NavigationButton icon={GlobalIcons.icon_help} iconStyle={{tintColor: '#fff'}} type={'right'} submitFoo={() => this.onPushToNextPage('服务示例', 'WebViewPage', {api: NetApi.serviceHelp})} />}
                 />
                 <View style={styles.searchView}>
                     <View style={styles.searchInputView}>

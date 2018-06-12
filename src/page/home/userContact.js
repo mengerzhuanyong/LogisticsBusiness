@@ -80,7 +80,7 @@ export default class UserContact extends Component {
         let data = {
             sid: 1,
         };
-        this.netRequest.fetchPost(url, data, true)
+        this.netRequest.fetchPost(url, data)
             .then(result => {
                 if (result && result.code === 1) {
                     this.setState({
@@ -119,12 +119,12 @@ export default class UserContact extends Component {
                                         this.setState({
                                             contact: contact
                                         });
-                                        console.log(contact);
+                                        // console.log(contact);
                                     }}
                                 />
                             </View>
                             <View style={[GlobalStyles.verLine, styles.verLine]} />
-                            <View style={styles.orderMoneyInfoItem}>
+                            <View style={[styles.orderMoneyInfoItem]}>
                                 <CustomKeyboard.CustomTextInput
                                         customKeyboardType = "numberKeyBoardWithDot"
                                     style = {[styles.inputItemCon, styles.volumeInput]}
@@ -138,12 +138,12 @@ export default class UserContact extends Component {
                                         this.setState({
                                             contact: contact
                                         });
-                                        console.log(contact);
+                                        // console.log(contact);
                                     }}
                                 />
                             </View>
                             <View style={[GlobalStyles.verLine, styles.verLine]} />
-                            <View style={styles.orderMoneyInfoItem}>
+                            <View style={[styles.orderMoneyInfoItem, {flex: 3}]}>
                                 <TextInput
                                     style = {[styles.inputItemCon, styles.volumeInput]}
                                     placeholder = "请输入备注"
@@ -156,7 +156,7 @@ export default class UserContact extends Component {
                                         this.setState({
                                             contact: contact
                                         });
-                                        console.log(contact);
+                                        // console.log(contact);
                                     }}
                                 />
                             </View>
@@ -189,7 +189,7 @@ export default class UserContact extends Component {
             sid: 1,
             contact
         };
-        this.netRequest.fetchPost(url, data, true)
+        this.netRequest.fetchPost(url, data)
             .then(result => {
                 if (result && result.code === 1) {
                     toastShort('添加成功');
@@ -216,7 +216,7 @@ export default class UserContact extends Component {
                     <View style={[GlobalStyles.verLine, styles.verLine]} />
                     <Text style={styles.orderMoneyInfoTitle}>电话</Text>
                     <View style={[GlobalStyles.verLine, styles.verLine]} />
-                    <Text style={styles.orderMoneyInfoTitle}>备注</Text>
+                    <Text style={[styles.orderMoneyInfoTitle, {flex: 3}]}>备注</Text>
                 </View>
                 <KeyboardAwareScrollView style={[styles.scrollViewContainer]}>
                     <CustomKeyboard.AwareCusKeyBoardScrollView>
@@ -286,14 +286,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     orderMoneyInfoItem: {
-        flex: 1,
+        flex: 2,
         height: 40,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
     },
     orderMoneyInfoTitle: {
-        flex: 1,
+        flex: 2,
         fontSize: 15,
         color: '#333',
         textAlign: 'center',

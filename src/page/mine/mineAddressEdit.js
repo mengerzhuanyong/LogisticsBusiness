@@ -139,7 +139,7 @@ export default class MineAddressEdit extends Component {
                 this.setState({
                     area: pickedValue
                 });
-                console.log(pickedValue);
+                // console.log(pickedValue);
             },
             onPickerCancel: pickedValue => {
 
@@ -158,7 +158,7 @@ export default class MineAddressEdit extends Component {
         let data = {
             image: source,
         };
-        this.netRequest.fetchPost(url, data, true)
+        this.netRequest.fetchPost(url, data)
             .then(result => {
                 if (result && result.code == 1) {
                     if (type == 1) {
@@ -175,26 +175,26 @@ export default class MineAddressEdit extends Component {
                 } else {
                     toastShort(result.msg);
                 }
-                console.log(result);
+                // console.log(result);
             })
             .catch(error => {
-                console.log(error);
+                // console.log(error);
             })
     };
 
     pickerImages = (type) => {
         ImagePicker.showImagePicker(pickPhotoOptions, (response) => {
 
-            console.log('Response = ', response);
+            // console.log('Response = ', response);
 
             if (response.didCancel) {
-                console.log('User cancelled image picker');
+                // console.log('User cancelled image picker');
             }
             else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
+                // console.log('ImagePicker Error: ', response.error);
             }
             else if (response.customButton) {
-                console.log('User tapped custom button: ', response.customButton);
+                // console.log('User tapped custom button: ', response.customButton);
             }
             else {
 
@@ -253,7 +253,7 @@ export default class MineAddressEdit extends Component {
         this.setState({
             canPress: false
         })
-        this.netRequest.fetchPost(url, data, true)
+        this.netRequest.fetchPost(url, data)
             .then(result => {
                 toastShort(result.msg);
                 if (result && result.code == 1) {

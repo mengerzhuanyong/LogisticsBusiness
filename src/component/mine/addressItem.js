@@ -51,7 +51,7 @@ export default class MineAddressItem extends Component {
     }
 
     componentDidMount() {
-        console.log("接受参数", this.props.item);
+        // console.log("接受参数", this.props.item);
     }
 
     componentWillReceiveProps(nextProps){
@@ -75,9 +75,9 @@ export default class MineAddressItem extends Component {
         this.showModalView();
         let {item} = this.state;
         let url = NetApi.storeDel + item.id;
-        this.netRequest.fetchGet(url, true)
+        this.netRequest.fetchGet(url)
             .then(result => {
-                console.log(result);
+                // console.log(result);
                 toastShort(result.msg);
                 if (result && result.code == 1) {
                     this.props.reloadData();
@@ -95,7 +95,7 @@ export default class MineAddressItem extends Component {
     setDefaultAddress = (item) => {
         const { updateContent } = this.state;
         let url = NetApi.mineAddressDefault + item.id + '/uid/' + global.user.storeData.uid;
-        this.netRequest.fetchGet(url, true)
+        this.netRequest.fetchGet(url)
             .then( result => {
                 if (result && result.code == 1) {
                     updateContent('address', item);
