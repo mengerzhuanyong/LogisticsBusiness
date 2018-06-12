@@ -99,6 +99,7 @@ export default class Order extends Component {
                 if (result && result.code == 1) {
                     this.setState({
                         audited: result.data.audited,
+                        // navigations: result.data.navigations,
                     })
                 }
             })

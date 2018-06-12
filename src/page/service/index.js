@@ -83,7 +83,7 @@ export default class Service extends Component {
     loadNetData = (page) => {
         let {sid, start, end} = this.state;
         let url = NetApi.serviceList + sid + '/start/' + start + '/end/' + end + '/page/' + page;
-        return this.netRequest.fetchGet(url, true)
+        return this.netRequest.fetchGet(url)
             .then(result => {
                 // console.log(result);
                 return result;

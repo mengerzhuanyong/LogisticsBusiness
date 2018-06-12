@@ -76,7 +76,7 @@ export default class MineStoreNote extends Component {
     loadNetData = () => {
         let {store} = this.state;
         let url = NetApi.index + store.sid;
-        this.netRequest.fetchGet(url, true)
+        this.netRequest.fetchGet(url)
             .then(result => {
                 if (result && result.code == 1) {
                     this.setState({
@@ -103,7 +103,7 @@ export default class MineStoreNote extends Component {
         this.setState({
             canPress: false
         });
-        this.netRequest.fetchPost(url, data, true)
+        this.netRequest.fetchPost(url, data)
             .then( result => {
                 if (result && result.code == 1) {
                     toastShort('提交成功');

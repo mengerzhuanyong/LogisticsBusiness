@@ -104,7 +104,7 @@ export default class ServiceEdit extends Component {
 
     loadNetData = () => {
         let url = NetApi.storeServices;
-        this.netRequest.fetchGet(url, true)
+        this.netRequest.fetchGet(url)
             .then(result => {
                 if (result && result.code == 1) {
                     this.updateState({
@@ -379,7 +379,7 @@ export default class ServiceEdit extends Component {
         this.setState({
             canPress: false,
         });
-        this.netRequest.fetchPost(url, data, true)
+        this.netRequest.fetchPost(url, data)
             .then(result => {
                 // console.log(result);
                 if (result && result.code == 1) {
@@ -563,7 +563,7 @@ export default class ServiceEdit extends Component {
                                         customKeyboardType = "numberKeyBoard"
                                         style = {[styles.inputItemCon, styles.itemRightCon]}
                                         defaultValue = {duration}
-                                        placeholder = "请输入所需时间"
+                                        placeholder = "请输入多少天能够到达"
                                         placeholderTextColor = '#888'
                                         underlineColorAndroid = {'transparent'}
                                         onChangeText = {(text)=> {
@@ -660,11 +660,17 @@ export default class ServiceEdit extends Component {
                             {this.renderVolumeView()}
                         </View>
                         <TouchableOpacity
-                            style = {[GlobalStyles.listAddBtnView, {marginBottom: 20,}]}
+                            style = {[GlobalStyles.listAddBtnView, {marginBottom: 20, position: 'absolute', right: 10, bottom: 30, zIndex: 99}]}
                             onPress = {() => this.addVolumeView()}
                         >
                             <Image source={GlobalIcons.icon_add} style={GlobalStyles.listAddBtnIcon} />
                         </TouchableOpacity>
+                        <View style={{padding: 20,}}>
+                            <Text style={{fontSize: 15, color: '#333', marginBottom: 5,}}>注意事项:</Text>
+                            <Text style={{fontSize: 14, color: '#555', marginBottom: 5,}}>①体积间数字切勿重复</Text>
+                            <Text style={{fontSize: 14, color: '#555', marginBottom: 5,}}>②体积间数字切勿有间隔</Text>
+                            <Text style={{fontSize: 14, color: '#555', marginBottom: 5,}}>③体积间数字切勿重合</Text>
+                        </View>
                     </CustomKeyboard.AwareCusKeyBoardScrollView>
                 </KeyboardAwareScrollView>
                 <View style={[GlobalStyles.fixedBtnView, styles.orderDetalBtnView]}>
