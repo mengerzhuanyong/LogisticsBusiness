@@ -41,7 +41,7 @@ export default class MineDepositIndex extends Component {
             // companyListData: '',
             companyListData: [],
             store: global.store.storeData,
-            deposit: {name: '押金', money: '', status: '', style: '1'},
+            deposit: {name: '保证金', money: '', status: '', style: '1'},
             topDeposit: {name: '扶持费用', money: '', status: '', style: '2'},
             // rankDeposit: {name: '评级费用', money: '', status: '', style: '3'},
             canBack: false,
@@ -108,7 +108,7 @@ export default class MineDepositIndex extends Component {
         return (
             <View style={styles.container}>
                 <NavigationBar
-                    title = {'押金'}
+                    title = {'保证金'}
                     leftButton = {UtilsView.getLeftButton(() => { this.state.canBack && this.onBack()})}
                 />
                 <View style={styles.mineNavigatorContainer}>

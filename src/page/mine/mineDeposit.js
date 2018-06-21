@@ -36,7 +36,7 @@ import ShopData from '../../asset/json/homeBusiness.json'
 
 const MODAL_CONFIG = {
     title: '退款提醒',
-    modalText: '您确定要将押金退回吗？',
+    modalText: '您确定要将保证金退回吗？',
     cancelBtnName: '取消',
     confirmBtnName: '确定',
 };
@@ -262,7 +262,7 @@ export default class MineDeposit extends Component {
     render(){
         const { ready, refreshing, item, paymentType, canPress, modalShow, remark } = this.state;
         const { params } = this.props.navigation.state;
-        let depositStatus = item.name == '押金' && item.status == 1;
+        let depositStatus = item.name == '保证金' && item.status == 1;
         let tips = depositStatus ? '已' : '';
         return (
             <View style={styles.container}>
@@ -317,7 +317,7 @@ export default class MineDeposit extends Component {
                             style = {[GlobalStyles.btnView, {backgroundColor: '#ccc'}]}
                             onPress = {() => {canPress && this.showModalView()}}
                         >
-                            <Text style={[GlobalStyles.btnItem, {color: '#555'}]}>退回押金</Text>
+                            <Text style={[GlobalStyles.btnItem, {color: '#555'}]}>退回保证金</Text>
                         </TouchableOpacity>
                         :
                         <TouchableOpacity

@@ -11,6 +11,7 @@ import {
     Alert,
     Image,
     Modal,
+    Linking,
     Platform,
     TextInput,
     ScrollView,
@@ -216,7 +217,7 @@ export default class OrderDetal extends Component {
 
     loadNetData = () => {
         let url = NetApi.orderDetail + this.state.orderId;
-        this.netRequest.fetchGet(url)
+        this.netRequest.fetchGet(url, true)
             .then(result => {
                 if (result && result.code == 1) {
                     this.setState({
@@ -233,12 +234,32 @@ export default class OrderDetal extends Component {
             })
     };
 
+    makeCall = (mobile) => {
+        let url = 'tel: ' + mobile;
+        Linking.canOpenURL(url)
+            .then(supported => {
+                if (!supported) {
+                    // console.log('Can\'t handle url: ' + url);
+                } else {
+                    return Linking.openURL(url);
+                }
+            })
+            .catch((err)=>{
+                // console.log('An error occurred', err)
+            });
+    }
+
     renderOrderUserInfo = (type, orderUser) => {
         return (
             <View style={styles.addressDetailView}>
                 <View style={styles.addressDetailItemView}>
                     <Text style={styles.addressUserInfo}>{type}人：</Text>
-                    <Text style={styles.addressUserName}>{orderUser.name} <Text style={styles.addressUserPhone}>{orderUser.phone}</Text></Text>
+                    <TouchableOpacity
+                        // style = {{backgroundColor: '#123'}}
+                        onPress={() => this.makeCall(orderUser.phone)}
+                    >
+                        <Text style={styles.addressUserName}>{orderUser.name} <Text style={styles.addressUserPhone}>{orderUser.phone}</Text></Text>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.addressDetailItemView}>
                     <Text style={styles.addressDetailCon}>{type}地址：</Text>
@@ -406,6 +427,21 @@ export default class OrderDetal extends Component {
         }
     }
 
+    renderOrderCargoInfo = (data) => {
+        if (!data || data.length < 1) {
+            return;
+        }
+        let cargoInfo = data.map((item, index) => {
+            return (
+                <View style={styles.orderCargoInfoCon} key={item.id}>
+                    <Text style={styles.orderCargoInfoConText}>{item.title}：</Text>
+                    <Text style={styles.orderCargoInfoConText}>{item.value}</Text>
+                </View>
+            );
+        })
+        return cargoInfo;
+    }
+
     render(){
         let { orderInfo, paymentType, images, imageIndex, ready, modalVisiable, showModal, MODAL_CONFIG, fooType } = this.state;
         let noMarginBottom = orderInfo.status == 0 || orderInfo.status == 3 || orderInfo.status == 4 || orderInfo.status == 5 || orderInfo.status == 6 || orderInfo.status == 9;
@@ -444,10 +480,10 @@ export default class OrderDetal extends Component {
                                         <Text style={styles.orderCompanyInfoTitle}>订单状态：</Text>
                                         <Text style={[styles.orderCompanyInfoCon, styles.orderStatus]}>{orderInfo.statusName}</Text>
                                     </View>
-                                    <View style={styles.orderCompanyInfoItem}>
+                                    {1 > 2 && <View style={styles.orderCompanyInfoItem}>
                                         <Text style={styles.orderCompanyInfoTitle}>包车状态：</Text>
                                         <Text style={[styles.orderCompanyInfoCon, {alignItems: 'flex-start'}]} numberOfLines={2}>{orderInfo.is_car == 1 ? '包车' : '不包车'}</Text>
-                                    </View>
+                                    </View>}
                                     <View style={styles.orderCompanyInfoItem}>
                                         <Text style={styles.orderCompanyInfoTitle}>物流订单号：</Text>
                                         <Text style={styles.orderCompanyInfoCon}>{orderInfo.code}</Text>
@@ -457,37 +493,40 @@ export default class OrderDetal extends Component {
                             <View style={[GlobalStyles.horLine, styles.horLine]} />
                             <View style={[styles.orderCargoInfoView]}>
                                 <View style={styles.orderCargoInfoItem}>
-                                    {orderInfo.cargo_name ? <View style={styles.orderCargoInfoCon}>
-                                        <Text style={styles.orderCargoInfoConText}>货物名称：</Text>
-                                        <Text style={styles.orderCargoInfoConText}>{orderInfo.cargo_name}</Text>
-                                    </View> : null }
-                                    <View style={styles.orderCargoInfoCon}>
-                                        <Text style={styles.orderCargoInfoConText}>路线：</Text>
-                                        <Text style={styles.orderCargoInfoConText}>{orderInfo.service}</Text>
-                                    </View>
-                                    <View style={styles.orderCargoInfoCon}>
-                                        <Text style={styles.orderCargoInfoConText}>班次：</Text>
-                                        <Text style={styles.orderCargoInfoConText}>{orderInfo.time}</Text>
-                                    </View>
-                                    {orderInfo.weight ? <View style={styles.orderCargoInfoCon}>
-                                        <Text style={styles.orderCargoInfoConText}>重量：</Text>
-                                        <Text style={styles.orderCargoInfoConText}>{orderInfo.weight}kg</Text>
-                                    </View> : null}
-                                    {orderInfo.num ? <View style={styles.orderCargoInfoCon}>
-                                        <Text style={styles.orderCargoInfoConText}>数量：</Text>
-                                        <Text style={styles.orderCargoInfoConText}>{orderInfo.num}</Text>
-                                    </View> : null}
-                                    {orderInfo.volume ? <View style={styles.orderCargoInfoCon}>
-                                        <Text style={styles.orderCargoInfoConText}>体积：</Text>
-                                        <Text style={styles.orderCargoInfoConText}>{orderInfo.volume}m³</Text>
-                                    </View> : null}
-                                    {orderInfo.cate ? <View style={styles.orderCargoInfoCon}>
-                                        <Text style={styles.orderCargoInfoConText}>货物类型：</Text>
-                                        <Text style={styles.orderCargoInfoConText}>{orderInfo.cate}</Text>
-                                    </View> : null}
-                                    {orderInfo.carVisible &&<View style={styles.orderCargoInfoCon}>
-                                        <Text style={styles.orderCargoInfoConText}>代取/送服务车型：</Text>
-                                        <Text style={styles.orderCargoInfoConText}>{orderInfo.serviceCar}</Text>
+                                    {this.renderOrderCargoInfo(orderInfo.cargo_info)}
+                                    {1 > 2 && <View>
+                                        {orderInfo.cargo_name ? <View style={styles.orderCargoInfoCon}>
+                                            <Text style={styles.orderCargoInfoConText}>货物名称：</Text>
+                                            <Text style={styles.orderCargoInfoConText}>{orderInfo.cargo_name}</Text>
+                                        </View> : null }
+                                        <View style={styles.orderCargoInfoCon}>
+                                            <Text style={styles.orderCargoInfoConText}>路线：</Text>
+                                            <Text style={styles.orderCargoInfoConText}>{orderInfo.service}</Text>
+                                        </View>
+                                        <View style={styles.orderCargoInfoCon}>
+                                            <Text style={styles.orderCargoInfoConText}>班次：</Text>
+                                            <Text style={styles.orderCargoInfoConText}>{orderInfo.time}</Text>
+                                        </View>
+                                        {orderInfo.weight ? <View style={styles.orderCargoInfoCon}>
+                                            <Text style={styles.orderCargoInfoConText}>重量：</Text>
+                                            <Text style={styles.orderCargoInfoConText}>{orderInfo.weight}kg</Text>
+                                        </View> : null}
+                                        {orderInfo.num ? <View style={styles.orderCargoInfoCon}>
+                                            <Text style={styles.orderCargoInfoConText}>数量：</Text>
+                                            <Text style={styles.orderCargoInfoConText}>{orderInfo.num}</Text>
+                                        </View> : null}
+                                        {orderInfo.volume ? <View style={styles.orderCargoInfoCon}>
+                                            <Text style={styles.orderCargoInfoConText}>体积：</Text>
+                                            <Text style={styles.orderCargoInfoConText}>{orderInfo.volume}m³</Text>
+                                        </View> : null}
+                                        {orderInfo.cate ? <View style={styles.orderCargoInfoCon}>
+                                            <Text style={styles.orderCargoInfoConText}>货物类型：</Text>
+                                            <Text style={styles.orderCargoInfoConText}>{orderInfo.cate}</Text>
+                                        </View> : null}
+                                        {orderInfo.carVisible && 1 > 2 &&<View style={styles.orderCargoInfoCon}>
+                                            <Text style={styles.orderCargoInfoConText}>代取/送服务车型：</Text>
+                                            <Text style={styles.orderCargoInfoConText}>{orderInfo.serviceCar}</Text>
+                                        </View>}
                                     </View>}
                                 </View>
                             </View>

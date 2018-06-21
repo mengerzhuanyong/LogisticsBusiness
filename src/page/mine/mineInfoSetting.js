@@ -395,13 +395,14 @@ export default class MineInfoSetting extends Component {
                             </View>
                             <View style={[GlobalStyles.horLine, styles.horLine]} />
                             <TouchableOpacity
+                                activeOpacity = {0.8}
                                 style = {styles.uploadItemView}
                                 onPress = {() => store.isStore == 1 && this.handleOpenImagePicker('1', GlobalStyles.width * 0.8, GlobalStyles.width * 0.8)}
                             >
                                 {logo == '' ?
                                     <Image source={GlobalIcons.images_bg_upload} style={styles.uploadBtn} />
                                     :
-                                    <Image source={{uri: logo}} style={styles.uploadImages} />
+                                    <Image source={{uri: logo}} style={styles.uploadImagesLogo} />
                                 }
                             </TouchableOpacity>
                         </View>
@@ -411,8 +412,9 @@ export default class MineInfoSetting extends Component {
                             </View>
                             <View style={[GlobalStyles.horLine, styles.horLine]} />
                             <TouchableOpacity
+                                activeOpacity = {0.8}
                                 style = {styles.uploadItemView}
-                                onPress = {() => store.isStore == 1 && this.handleOpenImagePicker('2', GlobalStyles.width * 0.95, GlobalStyles.width * 0.6)}
+                                onPress = {() => store.isStore == 1 && this.handleOpenImagePicker('2', GlobalStyles.width * 0.95, 220)}
                             >
                                 {banner == '' ?
                                     <Image source={GlobalIcons.images_bg_upload} style={styles.uploadBtn} />
@@ -528,7 +530,7 @@ const styles = StyleSheet.create({
         // width: (GlobalStyles.width - 60) / 2,
         // height: 120,
         // backgroundColor: '#f7f7f7',
-        alignItems: 'flex-start',
+        alignItems: 'center',
         justifyContent: 'center',
         marginTop: 10,
         borderRadius: 5,
@@ -552,7 +554,12 @@ const styles = StyleSheet.create({
     uploadImages: {
         width: GlobalStyles.width - 30,
         // flex: 1,
-        height: GlobalStyles.width / 2,
+        height: 220,
+        resizeMode: 'contain',
+    },
+    uploadImagesLogo: {
+        width: 220,
+        height: 220,
         resizeMode: 'contain',
     },
     titleView: {

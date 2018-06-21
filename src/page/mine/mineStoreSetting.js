@@ -40,7 +40,11 @@ export default class MineStoreSetting extends Component {
                 {name: '冷藏', value: '0'},
                 {name: '国际', value: '0'},
                 {name: '河运', value: '0'},
-                {name: '当日到', value: '0'},
+                {name: '日达', value: '0'},
+                {name: '整柜', value: '0'},
+                {name: '拼箱', value: '0'},
+                {name: '铁路', value: '0'},
+                {name: '联运', value: '0'},
             ],
             deliveryFee: [
                 {name: '取件费', value: ''},
@@ -52,7 +56,7 @@ export default class MineStoreSetting extends Component {
     }
 
     componentDidMount(){
-        this.submit(0);
+        this.submit(0); // 0 请求数据 1 提交数据
         this.backTimer = setTimeout(() => {
             this.setState({
                 canBack: true
@@ -89,7 +93,7 @@ export default class MineStoreSetting extends Component {
         this.setState({
             canPress: false
         });
-        this.netRequest.fetchPost(url, data)
+        this.netRequest.fetchPost(url, data, true)
             .then( result => {
                 if (result && result.code === 1) {
                     if (submit === 1) {
@@ -196,33 +200,26 @@ export default class MineStoreSetting extends Component {
                     title = {'门店服务设置'}
                     leftButton = {UtilsView.getLeftButton(() => { this.state.canBack && this.onBack()})}
                 />
-                {store.isStore == 1 ?
-                    <ScrollView style={styles.containerView}>
-                        <View style={styles.paymentMethodView}>
-                            <View style={styles.contentItemTitleView}>
-                                <Text style={styles.contentItemTitle}>门店服务特色</Text>
-                            </View>
-                            {this.renderFeatures(features)}
+                <ScrollView style={styles.containerView}>
+                    <View style={styles.paymentMethodView}>
+                        <View style={styles.contentItemTitleView}>
+                            <Text style={styles.contentItemTitle}>门店服务特色</Text>
                         </View>
-                        <View style={[styles.paymentMethodView]}>
-                            <View style={styles.contentItemTitleView}>
-                                <Text style={styles.contentItemTitle}>小件取送费</Text>
-                            </View>
-                            {this.renderDeliveryFee(deliveryFee)}
-                        </View>
-                        <TouchableOpacity
-                            style = {[GlobalStyles.btnView, styles.btnView]}
-                            onPress = {()=>this.submit(1)}
-                        >
-                            <Text style={[GlobalStyles.btnItem, styles.btnItem]}>确认修改</Text>
-                        </TouchableOpacity>
-                    </ScrollView>
-                    :
-                    <View style={[styles.contentView, styles.flexRow]}>
-                        <Text style={styles.contentText}>优惠形式:</Text>
-                        <Text style={styles.contentTextCon}>{features}</Text>
+                        {this.renderFeatures(features)}
                     </View>
-                }
+                    <View style={[styles.paymentMethodView]}>
+                        <View style={styles.contentItemTitleView}>
+                            <Text style={styles.contentItemTitle}>小件取送费</Text>
+                        </View>
+                        {this.renderDeliveryFee(deliveryFee)}
+                    </View>
+                    {store.isStore == 1 && <TouchableOpacity
+                        style = {[GlobalStyles.btnView, styles.btnView]}
+                        onPress = {()=>this.submit(1)}
+                    >
+                        <Text style={[GlobalStyles.btnItem, styles.btnItem]}>确认修改</Text>
+                    </TouchableOpacity>}
+                </ScrollView>
             </View>
         );
     }

@@ -37,7 +37,7 @@ import ShopData from '../../asset/json/homeBusiness.json'
 
 const MODAL_CONFIG = {
     title: '退款提醒',
-    modalText: '您确定要将押金退回吗？',
+    modalText: '您确定要将保证金退回吗？',
     cancelBtnName: '取消',
     confirmBtnName: '确定',
 };
@@ -64,6 +64,8 @@ export default class MineDeposit2 extends Component {
             canBack: false,
             depositTips: '',
             mobile: '',
+            link: '',
+            agree: 0,
         }
         this.netRequest = new NetRequest();
     }
@@ -102,6 +104,14 @@ export default class MineDeposit2 extends Component {
         })
     }
 
+    onPushToNextPage = (pageTitle, page, params = {}) => {
+        let {navigate} = this.props.navigation;
+        navigate(page, {
+            pageTitle: pageTitle,
+            ...params,
+        });
+    };
+
     loadNetData = () => {
         let url = NetApi.mineDepositTips;
         this.netRequest.fetchGet(url)
@@ -110,6 +120,7 @@ export default class MineDeposit2 extends Component {
                     this.setState({
                         depositTips: result.data.tips,
                         mobile: result.data.mobile,
+                        link: result.data.link,
                     })
                 }
             })
@@ -128,12 +139,16 @@ export default class MineDeposit2 extends Component {
     }
 
     submit = () => {
-        let { store, item, paymentType } = this.state;
+        let { store, item, paymentType, agree} = this.state;
 
         let data = {
             sid: store.sid,
             style: item.style,
         };
+        if (agree !== 1) {
+            toastShort('请认真阅读并选择同意保证金协议');
+            return false;
+        }
         // console.log(paymentType);
         if (paymentType == 1) {
             wechat.isWXAppInstalled()
@@ -250,9 +265,9 @@ export default class MineDeposit2 extends Component {
     }
 
     render(){
-        const { ready, refreshing, item, paymentType, canPress, modalShow, depositType, depositTips, mobile } = this.state;
+        const { ready, refreshing, item, paymentType, canPress, modalShow, depositType, depositTips, mobile, link } = this.state;
         const { params } = this.props.navigation.state;
-        let depositStatus = item.name == '押金' && item.status == 1;
+        let depositStatus = item.name == '保证金' && item.status == 1;
         let tips = depositStatus ? '已' : '';
         return (
             <View style={styles.container}>
@@ -337,13 +352,34 @@ export default class MineDeposit2 extends Component {
                         <Image source={paymentType == '2' ? selectedIcon : selectIcon} style={GlobalStyles.checkedIcon} />
                     </TouchableOpacity>
                 </View>}
+                <View style={[styles.containerItemView, styles.flowProtocolView]}>
+                    <TouchableOpacity
+                        style={styles.flowProtocolBtnView}
+                        onPress={() => {
+                            let state = this.state.agree == '1' ? 0 : 1;
+                            this.setState({
+                                agree: state,
+                            })
+                        }}
+                    >
+                        <Image source={this.state.agree == '1' ? selectedIcon : selectIcon}
+                               style={GlobalStyles.checkedIcon}/>
+                        <Text style={styles.flowProtocolBtnCon}>我已阅读并同意</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.flowProtocolBtnView}
+                        onPress={() => this.onPushToNextPage('保证金协议', 'CommonWeb', {url: link})}
+                    >
+                        <Text style={styles.flowProtocolName}>《保证金协议》</Text>
+                    </TouchableOpacity>
+                </View>
                 {depositType === 1 && <View style={styles.mineBtnView}>
                     {depositStatus ?                        
                         <TouchableOpacity
                             style = {[GlobalStyles.btnView, {backgroundColor: '#ccc'}]}
                             onPress = {() => {canPress && this.showModalView()}}
                         >
-                            <Text style={[GlobalStyles.btnItem, {color: '#555'}]}>退回押金</Text>
+                            <Text style={[GlobalStyles.btnItem, {color: '#555'}]}>退回保证金</Text>
                         </TouchableOpacity>
                         :
                         <TouchableOpacity
@@ -530,5 +566,22 @@ const styles = StyleSheet.create({
     phone: {
         fontSize: 16,
         color: '#555',
+    },
+    flowProtocolView: {
+        marginTop: 20,
+        marginLeft: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: 'transparent',
+    },
+    flowProtocolBtnView: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    flowProtocolBtnCon: {
+        marginLeft: 10,
+    },
+    flowProtocolName: {
+        color: GlobalStyles.themeColor
     },
 });

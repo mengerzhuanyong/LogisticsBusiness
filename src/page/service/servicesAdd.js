@@ -54,6 +54,9 @@ export default class ServiceAdd extends Component {
             serviceType: '1',
             storeServices: [],
             selectedServicesName: '当日达',
+            prices_tips: '',
+            prices_tips_example: '',
+            prices_tips_title: '',
         };
         this.netRequest = new NetRequest();
     }
@@ -106,7 +109,10 @@ export default class ServiceAdd extends Component {
             .then(result => {
                 if (result && result.code == 1) {
                     this.updateState({
-                        storeServices: result.data,
+                        storeServices: result.data.category,
+                        prices_tips: result.data.prices_tips,
+                        prices_tips_example: result.data.prices_tips_example,
+                        prices_tips_title: result.data.prices_tips_title,
                     });
                 }
             })
@@ -397,9 +403,25 @@ export default class ServiceAdd extends Component {
 
     }
 
+    renderPricesTips = (data) => {
+        if (!data || data.length < 1) {
+            return;
+        }
+        let tips = data.map((item, index) => {
+            return (
+                <Text key={item.id} style={{fontSize: 14, color: '#555', marginBottom: 5,}}>
+                    {item.value}
+                    <Text style={{fontSize: 14, color: '#f00', marginBottom: 5,}}>{item.tips}</Text>
+                </Text>
+            );
+        });
+        return tips;
+    }
+
     render(){
         let { startArea, endArea, serviceType, serviceSort, beginTime,
-        endTime, duration, canPress, carPrices, storeServices, selectedServicesName } = this.state;
+        endTime, duration, canPress, carPrices, storeServices, selectedServicesName,
+        prices_tips, prices_tips_example, prices_tips_title, } = this.state;
         return (
             <View style={styles.container}>
                 <NavigationBar
@@ -611,8 +633,8 @@ export default class ServiceAdd extends Component {
                             <View style={styles.orderInfoItemView}>
                                 <Text style={styles.orderCompanyInfoTitle}>价格设定</Text>
                             </View>
-                            <View style={[GlobalStyles.horLine, styles.horLine]} />
-                            <View style={styles.orderMoneyInfoItem}>
+                            {1 > 2 && <View style={styles.orderMoneyInfoItem}>
+                                <View style={[GlobalStyles.horLine, styles.horLine]} />
                                     <Text style={styles.orderMoneyInfoTitle}>包车价格：</Text>
                                     <CustomKeyboard.CustomTextInput
                                         customKeyboardType = "numberKeyBoardWithDot"
@@ -628,7 +650,7 @@ export default class ServiceAdd extends Component {
                                         }}
                                     />
                                     <Text style={styles.timeUnit}>元</Text>
-                                </View>
+                                </View>}
                             {this.renderVolumeView()}
                         </View>
                         <TouchableOpacity
@@ -638,10 +660,9 @@ export default class ServiceAdd extends Component {
                             <Image source={GlobalIcons.icon_add} style={GlobalStyles.listAddBtnIcon} />
                         </TouchableOpacity>
                         <View style={{padding: 20,}}>
-                            <Text style={{fontSize: 15, color: '#333', marginBottom: 5,}}>注意事项:</Text>
-                            <Text style={{fontSize: 14, color: '#555', marginBottom: 5,}}>①体积间数字切勿重复</Text>
-                            <Text style={{fontSize: 14, color: '#555', marginBottom: 5,}}>②体积间数字切勿有间隔</Text>
-                            <Text style={{fontSize: 14, color: '#555', marginBottom: 5,}}>③体积间数字切勿重合</Text>
+                            <Text style={{fontSize: 15, color: '#333', marginBottom: 5,}}>{prices_tips_example}</Text>
+                            <Text style={{fontSize: 15, color: '#333', marginBottom: 5,}}>{prices_tips_title}</Text>
+                            {this.renderPricesTips(prices_tips)}
                         </View>
                     </CustomKeyboard.AwareCusKeyBoardScrollView>
                 </KeyboardAwareScrollView>

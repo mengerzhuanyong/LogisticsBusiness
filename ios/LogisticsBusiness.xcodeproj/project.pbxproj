@@ -817,7 +817,7 @@
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = DC4CZ2DV9J;
+						DevelopmentTeam = CFW822LSCJ;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -1328,7 +1328,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = DC4CZ2DV9J;
+				DEVELOPMENT_TEAM = CFW822LSCJ;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
@@ -1347,7 +1347,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.SuyaShop;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Suya56Shop;
 				PRODUCT_NAME = "速芽物流商家端";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1362,7 +1362,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = DC4CZ2DV9J;
+				DEVELOPMENT_TEAM = CFW822LSCJ;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
@@ -1381,7 +1381,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.SuyaShop;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Suya56Shop;
 				PRODUCT_NAME = "速芽物流商家端";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";

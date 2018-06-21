@@ -26,6 +26,7 @@ import Order from '../page/order'
 import Mine from '../page/mine'
 
 import WebViewPage from '../page/common/webview'
+import CommonWeb from '../page/common/commonWeb'
 
 import UserContact from '../page/home/userContact'
 
@@ -159,6 +160,9 @@ const App = StackNavigator(
         },
         WebViewPage: {
             screen: WebViewPage,
+        },
+        CommonWeb: {
+            screen: CommonWeb,
         },
         UserContact: {
             screen: UserContact,

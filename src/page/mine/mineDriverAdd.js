@@ -91,11 +91,11 @@ export default class MineDriverAdd extends Component {
             iscall: iscall,
         };
         if (!name) {
-            toastShort('');
+            toastShort('请输入司机姓名');
             return;
         }
         if (!mobile) {
-            toastShort('');
+            toastShort('请输入司机手机号');
             return;
         }
         if (!checkPhone(mobile)) {
@@ -103,15 +103,11 @@ export default class MineDriverAdd extends Component {
             return;
         }
         if (!password) {
-            toastShort('');
+            toastShort('请输入密码');
             return;
         }
         if (!rePassword) {
-            toastShort('');
-            return;
-        }
-        if (!iscall) {
-            toastShort('');
+            toastShort('请再次输入密码');
             return;
         }
         this.setState({
@@ -244,7 +240,7 @@ export default class MineDriverAdd extends Component {
                                 <View style={styles.paymentMethodTitleView}>
                                     <Text style={styles.paymentMethodTitle}>是否接受短信提醒</Text>
                                 </View>
-                                <Image source={iscall ? checkedIcon : checkIcon} style={GlobalStyles.checkedIcon} />
+                                <Image source={iscall == '1' ? checkedIcon : checkIcon} style={GlobalStyles.checkedIcon} />
                             </TouchableOpacity>
                         </View>
 

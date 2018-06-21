@@ -96,13 +96,21 @@ export default class MineDriverEdit extends Component {
             return;
         }
         if (!mobile) {
-            toastShort('请输入司机账号');
+            toastShort('请输入司机手机号');
             return;
         }
         if (!checkPhone(mobile)) {
             toastShort('手机号格式不正确，请重新输入');
             return;
         }
+        // if (!password) {
+        //     toastShort('请输入密码');
+        //     return;
+        // }
+        // if (!rePassword) {
+        //     toastShort('请再次输入密码');
+        //     return;
+        // }
         this.setState({
             canPress: false
         });
