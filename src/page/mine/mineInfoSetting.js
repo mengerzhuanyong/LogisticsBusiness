@@ -17,7 +17,7 @@ import {
 } from 'react-native'
 import Picker from 'react-native-picker'
 import SYImagePicker from 'react-native-syan-image-picker'
-import ImagePicker from 'react-native-image-picker'
+// import ImagePicker from 'react-native-image-picker'
 import * as CustomKeyboard from 'react-native-yusha-customkeyboard'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import ScrollableTabView, { ScrollableTabBar, DefaultTabBar } from 'react-native-scrollable-tab-view'
