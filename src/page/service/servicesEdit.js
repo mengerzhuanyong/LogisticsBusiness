@@ -265,8 +265,10 @@ export default class ServiceEdit extends Component {
                         <View style={styles.orderMoneyInfoItem}>
                             <View style={styles.orderMoneyInfoItem}>
                                 <Text style={styles.orderMoneyInfoTitle}>体积：</Text>
-                                <CustomKeyboard.CustomTextInput
-                                        customKeyboardType = "numberKeyBoardWithDot"
+                                <TextInput
+                                    // CustomKeyboard.CustomTextInput
+                                    // customKeyboardType = "numberKeyBoardWithDot"
+                                    keyboardType = {'numeric'}
                                     style = {[styles.inputItemCon, styles.volumeInput]}
                                     placeholder = "请输入"
                                     placeholderTextColor = '#888'
@@ -281,8 +283,10 @@ export default class ServiceEdit extends Component {
                                     }}
                                 />
                                 <Text style={styles.orderMoneyInfoConNum}>至</Text>
-                                <CustomKeyboard.CustomTextInput
-                                        customKeyboardType = "numberKeyBoardWithDot"
+                                <TextInput
+                                    // CustomKeyboard.CustomTextInput
+                                    // customKeyboardType = "numberKeyBoardWithDot"
+                                    keyboardType = {'numeric'}
                                     style = {[styles.inputItemCon, styles.volumeInput]}
                                     placeholder = "请输入"
                                     placeholderTextColor = '#888'
@@ -301,8 +305,10 @@ export default class ServiceEdit extends Component {
                             <View style={[GlobalStyles.verLine, styles.verLine]} />
                             <View style={styles.orderMoneyInfoItem}>
                                 <Text style={styles.orderMoneyInfoTitle}>价格：</Text>
-                                <CustomKeyboard.CustomTextInput
-                                        customKeyboardType = "numberKeyBoardWithDot"
+                                <TextInput
+                                    // CustomKeyboard.CustomTextInput
+                                    // customKeyboardType = "numberKeyBoardWithDot"
+                                    keyboardType = {'numeric'}
                                     style = {[styles.inputItemCon, styles.volumeInput]}
                                     placeholder = "请输入"
                                     placeholderTextColor = '#888'
@@ -458,6 +464,7 @@ export default class ServiceEdit extends Component {
                                     </View>
                                     <TextInput
                                         // customKeyboardType = "numberKeyBoardWithDot"
+                                        // keyboardType = {'numeric'}
                                         style = {[styles.inputItemCon, styles.addressDetailItemView]}
                                         defaultValue = {startArea}
                                         placeholder = "请输入出发地"
@@ -483,6 +490,7 @@ export default class ServiceEdit extends Component {
                                     </View>
                                     <TextInput
                                         // customKeyboardType = "numberKeyBoardWithDot"
+                                        // keyboardType = {'numeric'}
                                         style = {[styles.inputItemCon, styles.addressDetailItemView]}
                                         defaultValue = {endArea}
                                         placeholder = "请输入目的地"
@@ -512,8 +520,10 @@ export default class ServiceEdit extends Component {
                             <View style={[styles.orderRemarkInfoView]}>
                                 <View style={styles.orderMoneyInfoItem}>
                                     <Text style={styles.orderMoneyInfoTitle}>排序：</Text>
-                                    <CustomKeyboard.CustomTextInput
-                                        customKeyboardType = "numberKeyBoard"
+                                    <TextInput
+                                        // CustomKeyboard.CustomTextInput
+                                        // customKeyboardType = "numberKeyBoard"
+                                        keyboardType = {'numeric'}
                                         style = {[styles.inputItemCon, styles.itemRightCon]}
                                         defaultValue = {serviceSort}
                                         placeholder = "请输入序号"
@@ -529,8 +539,9 @@ export default class ServiceEdit extends Component {
                                 <View style={[GlobalStyles.horLine, styles.horLine]} />
                                 {/*<View style={styles.orderMoneyInfoItem}>
                                     <Text style={styles.orderMoneyInfoTitle}>发车时间：</Text>
-                                    <CustomKeyboard.CustomTextInput
-                                        customKeyboardType = "numberKeyBoardWithDot"
+                                    <TextInput
+                                        // CustomKeyboard.CustomTextInput
+                                        // customKeyboardType = "numberKeyBoardWithDot"
                                         style = {[styles.inputItemCon, styles.itemRightCon]}
                                         defaultValue = {beginTime}
                                         placeholder = "请输入发车时间"
@@ -547,8 +558,10 @@ export default class ServiceEdit extends Component {
                                 <View style={[GlobalStyles.horLine, styles.horLine]} />
                                 <View style={styles.orderMoneyInfoItem}>
                                     <Text style={styles.orderMoneyInfoTitle}>抵达时间：</Text>
-                                    <CustomKeyboard.CustomTextInput
-                                        customKeyboardType = "numberKeyBoardWithDot"
+                                    <TextInput
+                                        // CustomKeyboard.CustomTextInput
+                                        // customKeyboardType = "numberKeyBoardWithDot"
+                                        keyboardType = {'numeric'}
                                         style = {[styles.inputItemCon, styles.itemRightCon]}
                                         defaultValue = {endTime}
                                         placeholder = "请输入抵达时间"
@@ -580,8 +593,10 @@ export default class ServiceEdit extends Component {
                                 <View style={[GlobalStyles.horLine, styles.horLine]} />
                                 <View style={styles.orderMoneyInfoItem}>
                                     <Text style={styles.orderMoneyInfoTitle}>运输时长：</Text>
-                                    <CustomKeyboard.CustomTextInput
-                                        customKeyboardType = "numberKeyBoard"
+                                    <TextInput
+                                        // CustomKeyboard.CustomTextInput
+                                        // customKeyboardType = "numberKeyBoard"
+                                        keyboardType = {'numeric'}
                                         style = {[styles.inputItemCon, styles.itemRightCon]}
                                         defaultValue = {duration}
                                         placeholder = "请输入多少天能够到达"
@@ -661,8 +676,10 @@ export default class ServiceEdit extends Component {
                             {1 > 2 && <View style={styles.orderMoneyInfoItem}>
                             <View style={[GlobalStyles.horLine, styles.horLine]} />
                                     <Text style={styles.orderMoneyInfoTitle}>包车价格：</Text>
-                                    <CustomKeyboard.CustomTextInput
-                                        customKeyboardType = "numberKeyBoardWithDot"
+                                    <TextInput
+                                        // CustomKeyboard.CustomTextInput
+                                        // customKeyboardType = "numberKeyBoardWithDot"
+                                        keyboardType = {'numeric'}
                                         style = {[styles.inputItemCon, styles.itemRightCon]}
                                         defaultValue = {parseFloat(carPrices).toFixed(2)}
                                         placeholder = "请输入包车价格"

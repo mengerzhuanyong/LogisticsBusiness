@@ -152,7 +152,7 @@ export default class UserContact extends Component {
                                     underlineColorAndroid = {'transparent'}
                                     value = {contact[i].remark}
                                     onChangeText = {(text)=> {
-                                        contact[i].remark = formatPrice(text);
+                                        contact[i].remark = text;
                                         this.setState({
                                             contact: contact
                                         });

@@ -7,6 +7,8 @@
     "test": "jest"
   },
   "dependencies": {
+    "jcore-react-native": "^1.2.6",
+    "jpush-react-native": "^2.2.5",
     "react": "16.2.0",
     "react-native": "0.52.1",
     "react-native-actionsheet": "^2.3.0",

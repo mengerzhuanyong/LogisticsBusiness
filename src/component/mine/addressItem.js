@@ -126,8 +126,8 @@ export default class MineAddressItem extends Component {
                 }
                 <View style={styles.addressInfoView}>
                     <View style={styles.addressInfoItem}>
-                        <Text style={styles.addressInfoName}>{item.name}</Text>
-                        <Text style={styles.addressInfophone}>{item.mobile}</Text>
+                        <Text style={styles.addressInfoName}>{item.name}    <Text style={styles.addressInfophone}>{item.mobile}</Text></Text>
+
                     </View>
                     <View style={styles.addressInfoItem}>
                         <Text style={styles.addressInfoDetail}>{item.address}</Text>

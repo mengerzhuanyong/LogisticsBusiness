@@ -117,6 +117,7 @@ export default class BusinessItem extends Component {
 
 const styles = StyleSheet.create({
     container: {
+        height: 120,
         paddingVertical: 15,
         alignItems: 'center',
         flexDirection: 'row',

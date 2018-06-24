@@ -435,6 +435,7 @@
 		D93B0325208594010021EFC6 /* TZImagePickerController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = TZImagePickerController.bundle; path = "../node_modules/react-native-syan-image-picker/ios/TZImagePickerController/TZImagePickerController.bundle"; sourceTree = "<group>"; };
 		D973DA7620721B3E0003300A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		D97AB53929274D3D8F50036C /* libthird-party.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = "libthird-party.a"; sourceTree = "<group>"; };
+		D996916720DFB3CF0089B81F /* 速芽物流商家端.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "速芽物流商家端.entitlements"; path = "LogisticsBusiness/速芽物流商家端.entitlements"; sourceTree = "<group>"; };
 		DE2D13B288A0407FB1045BFD /* libRNSVG.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNSVG.a; sourceTree = "<group>"; };
 		ED86C358E4C0456F95E8748B /* libRNSyanImagePicker.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNSyanImagePicker.a; sourceTree = "<group>"; };
 		F5F11BC286D04D548EF5C41F /* SplashScreen.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = SplashScreen.xcodeproj; path = "../node_modules/react-native-splash-screen/ios/SplashScreen.xcodeproj"; sourceTree = "<group>"; };
@@ -564,6 +565,7 @@
 		13B07FAE1A68108700A75B9A /* LogisticsBusiness */ = {
 			isa = PBXGroup;
 			children = (
+				D996916720DFB3CF0089B81F /* 速芽物流商家端.entitlements */,
 				D92C57E520502DE100268117 /* assets */,
 				D92C57E420502DE000268117 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -819,6 +821,11 @@
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = CFW822LSCJ;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};

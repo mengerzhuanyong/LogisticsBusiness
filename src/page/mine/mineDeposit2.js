@@ -259,10 +259,20 @@ export default class MineDeposit2 extends Component {
                     return Linking.openURL(url);
                 }
             })
-            .catch((err)=>{
+            .catch((err) => {
                 // console.log('An error occurred', err)
             });
-    }
+    };
+
+    renderTipsView = (data) => {
+        if (!data || data.length < 1) {
+            return;
+        }
+        let tipsView = data.map((item, index) => {
+            return <Text key={item.id} style={styles.depositTipsCon}>{item.value}</Text>;
+        });
+        return tipsView;
+    };
 
     render(){
         const { ready, refreshing, item, paymentType, canPress, modalShow, depositType, depositTips, mobile, link } = this.state;
@@ -324,18 +334,6 @@ export default class MineDeposit2 extends Component {
                         <Text style={[styles.mineAccountInfoTitle, depositType === 4 && styles.mineAccountInfoTitleCur]}>100000.00元</Text>
                     </TouchableOpacity>
                 </View>
-                {depositType !== 1 &&
-                    <View style={styles.depositTipsView}>
-                        <Text style={styles.depositTipsCon}>{depositTips}</Text>
-                        <TouchableOpacity
-                            style = {styles.phoneView}
-                            onPress = {() => this.makeCall(mobile)}
-                        >
-                            <Text style={styles.depositTipsCon}>联系电话：</Text>
-                            <Text style={styles.phone}>{mobile}</Text>
-                        </TouchableOpacity>
-                    </View>
-                }
                 {!depositStatus && depositType === 1 && <View style={styles.mineNavigatorContainer}>
                     <TouchableOpacity
                         style = {styles.paymentMethodItem}
@@ -352,7 +350,7 @@ export default class MineDeposit2 extends Component {
                         <Image source={paymentType == '2' ? selectedIcon : selectIcon} style={GlobalStyles.checkedIcon} />
                     </TouchableOpacity>
                 </View>}
-                <View style={[styles.containerItemView, styles.flowProtocolView]}>
+                {!depositStatus && depositType === 1 && <View style={[styles.containerItemView, styles.flowProtocolView]}>
                     <TouchableOpacity
                         style={styles.flowProtocolBtnView}
                         onPress={() => {
@@ -372,7 +370,19 @@ export default class MineDeposit2 extends Component {
                     >
                         <Text style={styles.flowProtocolName}>《保证金协议》</Text>
                     </TouchableOpacity>
-                </View>
+                </View>}
+                {depositType !== 1 &&
+                    <View style={styles.depositTipsView}>
+                        {this.renderTipsView(depositTips)}
+                        {1 > 2 && <TouchableOpacity
+                            style = {styles.phoneView}
+                            onPress = {() => this.makeCall(mobile)}
+                        >
+                            <Text style={styles.depositTipsCon}>联系电话：</Text>
+                            <Text style={styles.phone}>{mobile}</Text>
+                        </TouchableOpacity>}
+                    </View>
+                }
                 {depositType === 1 && <View style={styles.mineBtnView}>
                     {depositStatus ?                        
                         <TouchableOpacity
@@ -552,12 +562,12 @@ const styles = StyleSheet.create({
     depositTipsView: {
         marginTop: 20,
         padding: 15,
-        alignItems: 'center',
-        // backgroundColor: '#fff',
+        alignItems: 'flex-start',
     },
     depositTipsCon: {
         fontSize: 16,
         color: '#555',
+        lineHeight: 25,
     },
     phoneView: {
         marginTop: 10,

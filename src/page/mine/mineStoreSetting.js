@@ -39,12 +39,11 @@ export default class MineStoreSetting extends Component {
                 {name: '整车', value: '0'},
                 {name: '冷藏', value: '0'},
                 {name: '国际', value: '0'},
-                {name: '河运', value: '0'},
                 {name: '日达', value: '0'},
                 {name: '整柜', value: '0'},
                 {name: '拼箱', value: '0'},
-                {name: '铁路', value: '0'},
                 {name: '联运', value: '0'},
+                {name: '集装箱', value: '0'},
             ],
             deliveryFee: [
                 {name: '取件费', value: ''},
