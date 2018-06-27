@@ -1,10 +1,13 @@
 package com.logisticsbusiness;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.facebook.react.ReactActivity;
 
 import org.devio.rn.splashscreen.SplashScreen;
+
+import cn.jpush.android.api.JPushInterface;
 
 public class MainActivity extends ReactActivity {
 
@@ -21,5 +24,28 @@ public class MainActivity extends ReactActivity {
     protected void onCreate(Bundle savedInstanceState) {
         SplashScreen.show(this, true);  // here
         super.onCreate(savedInstanceState);
+        JPushInterface.init(this);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

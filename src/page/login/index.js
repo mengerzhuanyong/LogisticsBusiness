@@ -14,6 +14,7 @@ import {
     StyleSheet,
     TouchableOpacity,
 } from 'react-native'
+import JPushModule from 'jpush-react-native'
 import * as CustomKeyboard from 'react-native-yusha-customkeyboard'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { NavigationActions } from 'react-navigation'
@@ -26,13 +27,16 @@ import UtilsView from '../../util/utilsView'
 import {toastShort, consoleLog} from '../../util/utilsToast'
 import { checkPhone } from '../../util/utilsRegularMatch'
 
+import SendSMS from '../../component/common/newSendSMS'
+
 export default class Login extends Component {
 
     constructor(props) {
         super(props);
         this.state =  {
-            mobile: '15066886007',
-            password: '123123',
+            mobile: '15066886007', // '15066886007',
+            password: '123123', // '123123',
+            code: '123123', // '123123',
             loginState: '',
             canPress: true,
         };
@@ -80,12 +84,25 @@ export default class Login extends Component {
         })
     }
 
+    setAlias = (alias) => {
+        alias = 'store_id_' + alias;
+        // console.log(alias);
+        JPushModule.setAlias(alias, map => {
+            if (map.errorCode === 0) {
+                console.log('set alias succeed')
+            } else {
+                console.log('set alias failed, errorCode: ', map.errorCode)
+            }
+        })
+    }
+
     doLogin = () => {
-        let { mobile, password } = this.state;
+        let { mobile, password, code } = this.state;
         let url = NetApi.loginIn;
         let data = {
             mobile: mobile,
             password: password,
+            code: code,
         };
 
         if (!mobile) {
@@ -100,16 +117,20 @@ export default class Login extends Component {
             toastShort('密码不能为空');
             return;
         }
+        if (!code) {
+            toastShort('验证码不能为空');
+            return;
+        }
         this.setState({
             canPress: false,
         })
-        this.netRequest.fetchPost(url, data)
+        this.netRequest.fetchPost(url, data, true)
             .then( result => {
                 // console.log('登录', result);
                 if (result && result.code == '1') {
                     toastShort("登录成功");
                     let store = result.data;
-
+                    this.setAlias(store.sid);
                     this.setState({
                         store: store
                     });
@@ -165,7 +186,7 @@ export default class Login extends Component {
     }
 
     render(){
-        let {canPress} = this.state;
+        let {canPress, mobile} = this.state;
         return (
             <View style={styles.container}>
                 <NavigationBar
@@ -209,6 +230,30 @@ export default class Login extends Component {
                                             password: text
                                         })
                                     }}
+                                />
+                            </View>
+                            <View style={GlobalStyles.horLine} />
+                            <View style={styles.signItem}>
+                                <TextInput
+                                    style = {styles.inputItemCon}
+                                    placeholder = "验证码"
+                                    // secureTextEntry = {true}
+                                    placeholderTextColor = '#fff'
+                                    keyboardType = {'numeric'}
+                                    underlineColorAndroid = {'transparent'}
+                                    onChangeText = {(text)=>{
+                                        this.setState({
+                                            code: text
+                                        })
+                                    }}
+                                />
+                                <SendSMS
+                                    mobile={mobile}
+                                    type={'public'}
+                                    lineStyle={styles.verLine}
+                                    btnViewStyle={styles.getCodeView}
+                                    btnStyle={styles.getCodeCon}
+                                    {...this.props}
                                 />
                             </View>
                             <View style={GlobalStyles.horLine} />
@@ -344,11 +389,24 @@ const styles = StyleSheet.create({
         height: 45,
         resizeMode: 'contain',
     },
+    signBotView: {
+        marginBottom: 40,
+    },
     btnView: {
         backgroundColor: '#fff',
     },
     btnItem: {
         fontSize: 18,
         color: GlobalStyles.themeColor,
+    },
+    getCodeView: {
+        position: 'absolute',
+        right: 0,
+    },
+    getCodeCon: {
+        color: '#fff',
+    },
+    verLine: {
+        backgroundColor: '#fff',
     }
 });

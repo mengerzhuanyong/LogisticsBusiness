@@ -70,6 +70,7 @@ import MineEmployeeEdit from '../page/mine/mineEmployeeEdit'
 import MineDriver from '../page/mine/mineDriver'
 import MineDriverAdd from '../page/mine/mineDriverAdd'
 import MineDriverEdit from '../page/mine/mineDriverEdit'
+import MinePassword from '../page/mine/minePassword'
 
 import SverviceList from '../page/service/index'
 import ServicesAdd from '../page/service/servicesAdd'
@@ -271,6 +272,9 @@ const App = StackNavigator(
         },
         MineDriverEdit: {
             screen: MineDriverEdit,
+        },
+        MinePassword: {
+            screen: MinePassword,
         },
         MineStoreNote: {
             screen: MineStoreNote,

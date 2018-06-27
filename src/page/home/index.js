@@ -17,6 +17,7 @@ import {
     RefreshControl,
     TouchableOpacity
 } from 'react-native'
+import JPushModule from 'jpush-react-native'
 import Geolocation from 'Geolocation'
 import NetRequest from '../../util/utilsRequest'
 import NetApi from '../../constant/GlobalApi'
@@ -74,6 +75,7 @@ export default class Home extends Component {
             this.setState({
                 store: global.store.storeData
             })
+            this.setAlias(global.store.storeData.sid);
         }
         this.timer = setTimeout(() => {
             this.setState({
@@ -91,6 +93,27 @@ export default class Home extends Component {
         state.params && state.params.reloadData && state.params.reloadData();
         goBack();
     };
+
+    setAlias = (alias) => {
+        alias = 'store_id_' + alias;
+        console.log(alias);
+        getAlias = () => {
+            JPushModule.getAlias(map => {
+                if (map.errorCode === 0) {
+                    console.log('Get alias succeed, alias: ' + map.alias)
+                } else {
+                    // console.log('Get alias failed, errorCode: ' + map.errorCode)
+                    JPushModule.setAlias(alias, map => {
+                        if (map.errorCode === 0) {
+                            console.log('set alias succeed', map)
+                        } else {
+                            console.log('set alias failed, errorCode: ', map.errorCode)
+                        }
+                    })
+                }
+            })
+        }
+    }
 
     onPushToNextPage = (pageTitle, page, params = {}) => {
         let {navigate} = this.props.navigation;

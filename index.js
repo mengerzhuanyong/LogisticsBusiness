@@ -6,7 +6,7 @@
 
 import { AppRegistry } from 'react-native';
 import App from './src/index';
-// import App from './src/test';
+// import App from './src/test1';
 // import App from './App'
 
 /**

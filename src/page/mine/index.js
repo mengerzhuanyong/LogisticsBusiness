@@ -41,6 +41,7 @@ export default class Mine extends Component {
             storeData: '',
             isRefreshing: false,
             canBack: false,
+            is_online: true,
         }
         this.netRequest = new NetRequest();
     }
@@ -75,11 +76,12 @@ export default class Mine extends Component {
     loadNetData = () => {
         let {store} = this.state;
         let url = NetApi.mine + store.sid;
-        this.netRequest.fetchGet(url)
+        this.netRequest.fetchGet(url, true)
             .then(result => {
                 if (result && result.code == 1) {
                     this.setState({
-                        storeData: result.data
+                        storeData: result.data,
+                        is_online: result.data.is_online,
                     })
                 } else {
                     toastShort(result.msg);
@@ -172,12 +174,12 @@ export default class Mine extends Component {
                     </View>
                 </View>
                 <View style={styles.mineNavigatorContainer}>
-                    {store.isStore == 1 && <NavigatorItem
+                    {store.isStore == 1 && store.is_online && <NavigatorItem
                         leftIcon = {GlobalIcons.icon_mine_crash}
                         leftTitle = {'保证金'}
                         onPushNavigator = {() => this.onPushNavigator('保证金', 'MineDepositIndex')}
                     />}
-                    {store.isStore == 1 && <View style={[GlobalStyles.horLine, styles.horLine]} />}
+                    {store.isStore == 1 && store.is_online && <View style={[GlobalStyles.horLine, styles.horLine]} />}
                     <NavigatorItem
                         leftIcon = {GlobalIcons.icon_mine_userinfo}
                         leftTitle = {'门店信息'}
@@ -202,11 +204,22 @@ export default class Mine extends Component {
                         onPushNavigator = {() => this.onPushNavigator('有奖建议', 'MineFeedBackReward')}
                     />
                 </View>
-                <View style={{marginVertical: 10,}}>
+                <View style={{marginVertical: 10, backgroundColor: '#fff'}}>
                     <NavigatorItem
                         leftIcon = {GlobalIcons.icon_setting}
                         leftTitle = {'门店设置'}
                         onPushNavigator = {() => this.onPushNavigator('门店设置', 'MineStoreSetting')}
+                    />
+                    <View style={[GlobalStyles.horLine, styles.horLine]} />
+                    <NavigatorItem
+                        leftIcon = {GlobalIcons.icon_pwd}
+                        leftTitle = {'密码修改'}
+                        onPushNavigator = {() => this.onPushNavigator('密码修改', 'MinePassword', {
+                            user: {
+                                uid: storeData.id,
+                                phone: storeData.mobile,
+                            }
+                        })}
                     />
                 </View>
                 <View style={styles.mineBtnView}>

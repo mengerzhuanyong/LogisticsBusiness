@@ -63,6 +63,7 @@ module.exports = {
     orderDelete: 'home/order/orderDelete/oid/',
 
     mine: 'home/personal/index/sid/',
+    mineEditPwd: 'home/login/updatePwd/',
     mineStoreEdit: 'home/personal/edit/',
     mineStoreNote: 'home/index/update_hot_note',
     mineStoreSetting: 'home/Personal/set_store_service',

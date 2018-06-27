@@ -19,6 +19,8 @@ import com.facebook.soloader.SoLoader;
 import java.util.Arrays;
 import java.util.List;
 
+import cn.jpush.reactnativejpush.JPushPackage;
+
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
@@ -38,6 +40,7 @@ public class MainApplication extends Application implements ReactApplication {
             new RNCustomKeyboardPackage(),
             new RNSpinkitPackage(),
             new PickerViewPackage(),
+            new JPushPackage(true, true),
             new SplashScreenReactPackage()
       );
     }
