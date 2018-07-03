@@ -382,49 +382,60 @@ export default class OrderDetal extends Component {
     }
 
     renderPayment = (data) => {
-        type = parseInt(data.pay_class);
-        reBack = parseInt(data.status);
-        let {paymentType} = this.state;
-        if (reBack == 6) {
-            if (type == 1) {
-                return (
-                    <View style={[styles.containerItemView, styles.orderMoneyInfoView]}>
-                        <View style={styles.orderMoneyInfoItem}>
-                            <Text style={styles.orderMoneyInfoTitle}>退款方式</Text>
-                            <Text style={styles.orderMoneyInfoCon, {color: GlobalStyles.themeColor}}>退款至微信</Text>
-                        </View>
-                    </View>
-                );
-            } else {
-                return (
-                    <View style={[styles.containerItemView, styles.orderMoneyInfoView]}>
-                        <View style={styles.orderMoneyInfoItem}>
-                            <Text style={styles.orderMoneyInfoTitle}>退款方式</Text>
-                            <Text style={styles.orderMoneyInfoCon, {color: GlobalStyles.themeColor}}>退款至支付宝</Text>
-                        </View>
-                    </View>
-                );
-            }
+        if (!data) {
+            return;
         }
-        if (type === 1) {
-            return (
-                <View style={[styles.containerItemView, styles.orderMoneyInfoView]}>
-                    <View style={styles.orderMoneyInfoItem}>
-                        <Text style={styles.orderMoneyInfoTitle}>支付方式</Text>
-                        <Text style={styles.orderMoneyInfoCon, {color: GlobalStyles.themeColor}}>微信支付</Text>
-                    </View>
+        return (
+            <View style={[styles.containerItemView, styles.orderMoneyInfoView]}>
+                <View style={styles.orderMoneyInfoItem}>
+                    <Text style={styles.orderMoneyInfoTitle}>{data.title}</Text>
+                    <Text style={styles.orderMoneyInfoCon, {color: GlobalStyles.themeColor}}>{data.value}</Text>
                 </View>
-            );
-        } else {
-            return (
-                <View style={[styles.containerItemView, styles.orderMoneyInfoView]}>
-                    <View style={styles.orderMoneyInfoItem}>
-                        <Text style={styles.orderMoneyInfoTitle}>支付方式</Text>
-                        <Text style={styles.orderMoneyInfoCon, {color: GlobalStyles.themeColor}}>支付宝支付</Text>
-                    </View>
-                </View>
-            );
-        }
+            </View>
+        );
+        // type = parseInt(data.pay_class);
+        // reBack = parseInt(data.status);
+        // let {paymentType} = this.state;
+        // if (reBack == 6) {
+        //     if (type == 1) {
+        //         return (
+        //             <View style={[styles.containerItemView, styles.orderMoneyInfoView]}>
+        //                 <View style={styles.orderMoneyInfoItem}>
+        //                     <Text style={styles.orderMoneyInfoTitle}>退款方式</Text>
+        //                     <Text style={styles.orderMoneyInfoCon, {color: GlobalStyles.themeColor}}>退款至微信</Text>
+        //                 </View>
+        //             </View>
+        //         );
+        //     } else {
+        //         return (
+        //             <View style={[styles.containerItemView, styles.orderMoneyInfoView]}>
+        //                 <View style={styles.orderMoneyInfoItem}>
+        //                     <Text style={styles.orderMoneyInfoTitle}>退款方式</Text>
+        //                     <Text style={styles.orderMoneyInfoCon, {color: GlobalStyles.themeColor}}>退款至支付宝</Text>
+        //                 </View>
+        //             </View>
+        //         );
+        //     }
+        // }
+        // if (type === 1) {
+        //     return (
+        //         <View style={[styles.containerItemView, styles.orderMoneyInfoView]}>
+        //             <View style={styles.orderMoneyInfoItem}>
+        //                 <Text style={styles.orderMoneyInfoTitle}>支付方式</Text>
+        //                 <Text style={styles.orderMoneyInfoCon, {color: GlobalStyles.themeColor}}>微信支付</Text>
+        //             </View>
+        //         </View>
+        //     );
+        // } else {
+        //     return (
+        //         <View style={[styles.containerItemView, styles.orderMoneyInfoView]}>
+        //             <View style={styles.orderMoneyInfoItem}>
+        //                 <Text style={styles.orderMoneyInfoTitle}>支付方式</Text>
+        //                 <Text style={styles.orderMoneyInfoCon, {color: GlobalStyles.themeColor}}>支付宝支付</Text>
+        //             </View>
+        //         </View>
+        //     );
+        // }
     }
 
     renderOrderCargoInfo = (data) => {
@@ -541,7 +552,7 @@ export default class OrderDetal extends Component {
                                 {this.renderGoodsPic(orderInfo.images)}
                             </View>
                         </View>
-                        {this.renderPayment(orderInfo)}
+                        {this.renderPayment(orderInfo.pay_status)}
 
                         <View style={[styles.containerItemView, styles.orderRemarkInfoView]}>
                             <View style={styles.orderInfoItemView}>

@@ -78,25 +78,25 @@ export default class Index extends Component {
             })
         }
 
-        JPushModule.addReceiveCustomMsgListener(map => {
-            this.setState({
-                pushMsg: map.message
-            })
-            console.log('extras: ' + map.extras)
-        })
+        // JPushModule.addReceiveCustomMsgListener(map => {
+        //     // this.setState({
+        //     //     pushMsg: map.message
+        //     // })
+        //     console.log('extras: ' + map.extras)
+        // })
 
         JPushModule.addReceiveNotificationListener(map => {
             // console.log('alertContent: ' + map.alertContent)
             // console.log('extras: ' + map.extras)
-            var extra = JSON.parse(map.extras);
+            // var extra = JSON.parse(map.extras);
             // console.log(extra.key + ": " + extra.value);
         })
 
         JPushModule.addReceiveOpenNotificationListener(map => {
             // console.log('Opening notification!')
             // console.log('map.extra: ' + map.extras)
-            this.jumpSecondActivity();
-            this.setBadge();
+            // this.jumpSecondActivity();
+            __IOS__ && this.setBadge();
             // JPushModule.jumpToPushActivity("SecondActivity");
         })
 
