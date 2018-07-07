@@ -23,7 +23,12 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
-  entity.types = UNAuthorizationOptionAlert|UNAuthorizationOptionBadge|UNAuthorizationOptionSound;
+  entity.types = JPAuthorizationOptionAlert|JPAuthorizationOptionBadge|JPAuthorizationOptionSound;
+  //  if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+  //    // 可以添加自定义categories
+  //    // NSSet<UNNotificationCategory *> *categories for iOS10 or later
+  //    // NSSet<UIUserNotificationCategory *> *categories for iOS8 and iOS9
+  //  }
   [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
   [JPUSHService setupWithOption:launchOptions appKey:@"cec69bb5666c393281bb60f4"
                         channel:nil apsForProduction:true];
@@ -79,7 +84,7 @@
   
   completionHandler();
 }
-- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
-  [[NSNotificationCenter defaultCenter] postNotificationName:kJPFDidReceiveRemoteNotification object:notification.userInfo];
-}
+//- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+//  [[NSNotificationCenter defaultCenter] postNotificationName:kJPFDidReceiveRemoteNotification object:notification.userInfo];
+//}
 @end

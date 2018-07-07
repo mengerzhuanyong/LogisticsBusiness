@@ -23,6 +23,7 @@ import GlobalIcons from '../../constant/GlobalIcon'
 import NavigationBar from '../../component/common/NavigationBar'
 import UtilsView from '../../util/utilsView'
 import {toastShort, consoleLog} from '../../util/utilsToast'
+import * as CustomKeyboard from 'react-native-yusha-customkeyboard'
 
 import NavigationButton from '../../component/common/headerRightButton'
 import ActivityIndicatorItem from '../../component/common/ActivityIndicatorItem'
@@ -218,6 +219,8 @@ export default class Service extends Component {
                                 <Text style={GlobalStyles.placeText}>发</Text>
                             </View>
                             <TextInput
+                                // CustomKeyboard.CustomTextInput
+                                // customKeyboardType = "numberKeyBoardWithDot"
                                 style = {styles.searchInputItem}
                                 placeholder = "请输入发货地"
                                 placeholderTextColor = '#888'
@@ -235,6 +238,8 @@ export default class Service extends Component {
                                 <Text style={GlobalStyles.placeText}>收</Text>
                             </View>
                             <TextInput
+                                // CustomKeyboard.CustomTextInput
+                                // customKeyboardType = "numberKeyBoardWithDot"
                                 style = {styles.searchInputItem}
                                 placeholder = "请输入目的地"
                                 placeholderTextColor = '#888'
