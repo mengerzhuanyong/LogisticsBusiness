@@ -108,7 +108,7 @@ export default class DrawerView extends React.PureComponent {
     this._screenNavigationProp = addNavigationHelpers({
       dispatch: navigation.dispatch,
       state: navigationState,
-      isFocused: this._isRouteFocused.bind(this, navigationState),
+      isFocused: () => this._isRouteFocused(navigationState),
       addListener: this._childEventSubscribers[navigationState.key],
     });
   };
@@ -132,17 +132,24 @@ export default class DrawerView extends React.PureComponent {
     return navigationState;
   };
 
-  _renderNavigationView = () => (
-    <DrawerSidebar
-      screenProps={this.props.screenProps}
-      navigation={this._screenNavigationProp}
-      router={this.props.router}
-      contentComponent={this.props.contentComponent}
-      contentOptions={this.props.contentOptions}
-      drawerPosition={this.props.drawerPosition}
-      style={this.props.style}
-    />
-  );
+  _renderNavigationView = () => {
+    const { drawerOpenRoute, drawerCloseRoute, drawerToggleRoute } = this.props;
+
+    return (
+      <DrawerSidebar
+        screenProps={this.props.screenProps}
+        navigation={this._screenNavigationProp}
+        router={this.props.router}
+        contentComponent={this.props.contentComponent}
+        contentOptions={this.props.contentOptions}
+        drawerPosition={this.props.drawerPosition}
+        style={this.props.style}
+        drawerOpenRoute={drawerOpenRoute}
+        drawerCloseRoute={drawerCloseRoute}
+        drawerToggleRoute={drawerToggleRoute}
+      />
+    );
+  };
 
   render() {
     const DrawerScreen = this.props.router.getComponentForRouteName(
