@@ -75,10 +75,10 @@ export default class UserContact extends Component {
     };
 
     loadNetData = () => {
-        let {contact} = this.state;
+        let {contact, } = this.state;
         let url = NetApi.contact;
         let data = {
-            sid: 1,
+            sid: store.sid,
         };
         this.netRequest.fetchPost(url, data)
             .then(result => {
