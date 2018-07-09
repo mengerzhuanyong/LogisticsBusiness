@@ -15,6 +15,7 @@ import {
     TouchableOpacity
 } from 'react-native'
 import ActionSheet from 'react-native-actionsheet'
+import JPushModule from 'jpush-react-native'
 import { NavigationActions } from 'react-navigation'
 import NetRequest from '../../util/utilsRequest'
 import NetApi from '../../constant/GlobalApi'
@@ -113,6 +114,7 @@ export default class Mine extends Component {
                 .then( result => {
                     // console.log(result);
                     this.removeLoginState();
+                    this.deleteAlias();
                     if (result && result.code == 1) {
                         toastShort("退出成功");
                     }
@@ -139,6 +141,16 @@ export default class Mine extends Component {
             })
             this.props.navigation.dispatch(resetAction)
         }, 500);
+    }
+
+    deleteAlias = () => {
+        JPushModule.deleteAlias(map => {
+            if (map.errorCode === 0) {
+                console.log('delete alias succeed')
+            } else {
+                console.log('delete alias failed, errorCode: ', map.errorCode)
+            }
+        })
     }
 
     showActionSheet() {

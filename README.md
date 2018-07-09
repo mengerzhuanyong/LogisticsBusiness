@@ -1,4 +1,9 @@
 # LogisticsBusiness
 速芽物流商家端
 
-### 已完成项目开发，提交最新可运行版本
+###scrolltabview高亮问题
+
+    // scrolltabbar.js 第62行
+    if (offset.value === undefined) {
+      offset.value = this.props.activeTab;
+    }

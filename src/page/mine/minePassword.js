@@ -16,6 +16,7 @@ import {
 } from 'react-native'
 
 import NetRequest from '../../util/utilsRequest'
+import JPushModule from 'jpush-react-native'
 import NetApi from '../../constant/GlobalApi'
 import GlobalStyles from '../../constant/GlobalStyle'
 import GlobalIcons from '../../constant/GlobalIcon'
@@ -117,9 +118,8 @@ export default class MineInfoSetting extends Component {
                 if (result && result.code == 1) {
                     // console.log('用户中心', result);
                     toastShort('更改成功，请重新登录！');
-                    this.timer = setTimeout(() => {
-                        this.removeLoginState();
-                    }, 1000);
+                    this.removeLoginState();
+                    this.deleteAlias();
                 } else {
                     toastShort(result.msg);
                     // console.log(result.msg);
@@ -157,8 +157,18 @@ export default class MineInfoSetting extends Component {
                 ]
             });
             this.props.navigation.dispatch(resetAction)
-        }, 500)
+        }, 1000)
     };
+
+    deleteAlias = () => {
+        JPushModule.deleteAlias(map => {
+            if (map.errorCode === 0) {
+                console.log('delete alias succeed')
+            } else {
+                console.log('delete alias failed, errorCode: ', map.errorCode)
+            }
+        })
+    }
 
     sendSMS = (phone) => {
         // phone = 15066660000;
