@@ -311,11 +311,11 @@ export default class MineInfoSetting extends Component {
                             </View>
                             <View style={[GlobalStyles.horLine, styles.horLine]} />
                             <View style={styles.infoItemView}>
-                                <Text style={styles.infoItemTitle}>服务点名称：</Text>
+                                <Text style={styles.infoItemTitle}>门店名称：</Text>
                                 <TextInput
                                     style = {styles.inputItemCon}
                                     editable = {isStore}
-                                    placeholder = "请输入服务点名称"
+                                    placeholder = "请输入门店名称"
                                     defaultValue = {name}
                                     placeholderTextColor = '#888'
                                     underlineColorAndroid = {'transparent'}

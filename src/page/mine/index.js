@@ -76,8 +76,9 @@ export default class Mine extends Component {
 
     loadNetData = () => {
         let {store} = this.state;
-        let url = NetApi.mine + store.sid;
-        this.netRequest.fetchGet(url, true)
+        // console.log(store);
+        let url = NetApi.mine + store.sid + '/uid/' + store.uid;
+        this.netRequest.fetchGet(url)
             .then(result => {
                 if (result && result.code == 1) {
                     this.setState({
@@ -146,9 +147,9 @@ export default class Mine extends Component {
     deleteAlias = () => {
         JPushModule.deleteAlias(map => {
             if (map.errorCode === 0) {
-                console.log('delete alias succeed')
+                // console.log('delete alias succeed')
             } else {
-                console.log('delete alias failed, errorCode: ', map.errorCode)
+                // console.log('delete alias failed, errorCode: ', map.errorCode)
             }
         })
     }
@@ -186,12 +187,12 @@ export default class Mine extends Component {
                     </View>
                 </View>
                 <View style={styles.mineNavigatorContainer}>
-                    {store.isStore == 1 && store.is_online && <NavigatorItem
+                    {store.isStore == 1 && storeData.is_online && <NavigatorItem
                         leftIcon = {GlobalIcons.icon_mine_crash}
                         leftTitle = {'保证金'}
                         onPushNavigator = {() => this.onPushNavigator('保证金', 'MineDepositIndex')}
                     />}
-                    {store.isStore == 1 && store.is_online && <View style={[GlobalStyles.horLine, styles.horLine]} />}
+                    {store.isStore == 1 && storeData.is_online && <View style={[GlobalStyles.horLine, styles.horLine]} />}
                     <NavigatorItem
                         leftIcon = {GlobalIcons.icon_mine_userinfo}
                         leftTitle = {'门店信息'}

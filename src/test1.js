@@ -53,7 +53,7 @@ export default class App extends Component {
   }
 
   jumpSecondActivity () {
-    console.log('jump to SecondActivity')
+    // console.log('jump to SecondActivity')
     // JPushModule.jumpToPushActivityWithParams('SecondActivity', {
     //   hello: 'world'
     // })
@@ -66,12 +66,12 @@ export default class App extends Component {
 
   onStopPress () {
     JPushModule.stopPush()
-    console.log('Stop push press')
+    // console.log('Stop push press')
   }
 
   onResumePress () {
     JPushModule.resumePush()
-    console.log('Resume push press')
+    // console.log('Resume push press')
   }
 
   onGetRegistrationIdPress () {
@@ -89,48 +89,48 @@ export default class App extends Component {
        */
       JPushModule.setTags(this.state.tag.split(','), map => {
         if (map.errorCode === 0) {
-          console.log('Tag operate succeed, tags: ' + map.tags)
+          // console.log('Tag operate succeed, tags: ' + map.tags)
         } else {
-          console.log('error code: ' + map.errorCode)
+          // console.log('error code: ' + map.errorCode)
         }
       })
     }
   }
 
   addTag = () => {
-    console.log('Adding tag: ' + this.state.tag)
+    // console.log('Adding tag: ' + this.state.tag)
     JPushModule.addTags(this.state.tag.split(','), map => {
       if (map.errorCode === 0) {
-        console.log('Add tags succeed, tags: ' + map.tags)
+        // console.log('Add tags succeed, tags: ' + map.tags)
       } else {
-        console.log('Add tags failed, error code: ' + map.errorCode)
+        // console.log('Add tags failed, error code: ' + map.errorCode)
       }
     })
   }
 
   deleteTags = () => {
-    console.log('Deleting tag: ' + this.state.tag)
+    // console.log('Deleting tag: ' + this.state.tag)
     JPushModule.deleteTags(this.state.tag.split(','), map => {
       if (map.errorCode === 0) {
-        console.log('Delete tags succeed, tags: ' + map.tags)
+        // console.log('Delete tags succeed, tags: ' + map.tags)
       } else {
-        console.log('Delete tags failed, error code: ' + map.errorCode)
+        // console.log('Delete tags failed, error code: ' + map.errorCode)
       }
     })
   }
 
   checkTag = () => {
-    console.log('Checking tag bind state, tag: ' + this.state.tag)
+    // console.log('Checking tag bind state, tag: ' + this.state.tag)
     JPushModule.checkTagBindState(this.state.tag, map => {
       if (map.errorCode === 0) {
-        console.log(
+        // console.log(
           'Checking tag bind state, tag: ' +
             map.tag +
             ' bindState: ' +
             map.bindState
         )
       } else {
-        console.log(
+        // console.log(
           'Checking tag bind state failed, error code: ' + map.errorCode
         )
       }
@@ -140,9 +140,9 @@ export default class App extends Component {
   getAllTags = () => {
     JPushModule.getAllTags(map => {
       if (map.errorCode === 0) {
-        console.log('Get all tags succeed, tags: ' + map.tags)
+        // console.log('Get all tags succeed, tags: ' + map.tags)
       } else {
-        console.log('Get all tags failed, errorCode: ' + map.errorCode)
+        // console.log('Get all tags failed, errorCode: ' + map.errorCode)
       }
     })
   }
@@ -150,9 +150,9 @@ export default class App extends Component {
   cleanAllTags = () => {
     JPushModule.cleanTags(map => {
       if (map.errorCode === 0) {
-        console.log('Clean all tags succeed')
+        // console.log('Clean all tags succeed')
       } else {
-        console.log('Clean all tags failed, errorCode: ' + map.errorCode)
+        // console.log('Clean all tags failed, errorCode: ' + map.errorCode)
       }
     })
   }
@@ -161,21 +161,21 @@ export default class App extends Component {
     if (this.state.alias !== undefined) {
       JPushModule.setAlias(this.state.alias, map => {
         if (map.errorCode === 0) {
-          console.log('set alias succeed')
+          // console.log('set alias succeed')
         } else {
-          console.log('set alias failed, errorCode: ' + map.errorCode)
+          // console.log('set alias failed, errorCode: ' + map.errorCode)
         }
       })
     }
   }
 
   deleteAlias = () => {
-    console.log('Deleting alias')
+    // console.log('Deleting alias')
     JPushModule.deleteAlias(map => {
       if (map.errorCode === 0) {
-        console.log('delete alias succeed')
+        // console.log('delete alias succeed')
       } else {
-        console.log('delete alias failed, errorCode: ' + map.errorCode)
+        // console.log('delete alias failed, errorCode: ' + map.errorCode)
       }
     })
   }
@@ -183,9 +183,9 @@ export default class App extends Component {
   getAlias = () => {
     JPushModule.getAlias(map => {
       if (map.errorCode === 0) {
-        console.log('Get alias succeed, alias: ' + map.alias)
+        // console.log('Get alias succeed, alias: ' + map.alias)
       } else {
-        console.log('Get alias failed, errorCode: ' + map.errorCode)
+        // console.log('Get alias failed, errorCode: ' + map.errorCode)
       }
     })
   }
@@ -233,25 +233,25 @@ export default class App extends Component {
       this.setState({
         pushMsg: map.message
       })
-      console.log('extras: ' + map.extras)
+      // console.log('extras: ' + map.extras)
     })
 
     JPushModule.addReceiveNotificationListener(map => {
-      console.log('alertContent: ' + map.alertContent)
-      console.log('extras: ' + map.extras)
+      // console.log('alertContent: ' + map.alertContent)
+      // console.log('extras: ' + map.extras)
       // var extra = JSON.parse(map.extras);
       // console.log(extra.key + ": " + extra.value);
     })
 
     JPushModule.addReceiveOpenNotificationListener(map => {
-      console.log('Opening notification!')
-      console.log('map.extra: ' + map.extras)
+      // console.log('Opening notification!')
+      // console.log('map.extra: ' + map.extras)
       this.jumpSecondActivity()
       // JPushModule.jumpToPushActivity("SecondActivity");
     })
 
     JPushModule.addGetRegistrationIdListener(registrationId => {
-      console.log('Device register succeed, registrationId ' + registrationId)
+      // console.log('Device register succeed, registrationId ' + registrationId)
     })
 
     // var notification = {
@@ -273,7 +273,7 @@ export default class App extends Component {
     JPushModule.removeReceiveNotificationListener(receiveNotificationEvent)
     JPushModule.removeReceiveOpenNotificationListener(openNotificationEvent)
     JPushModule.removeGetRegistrationIdListener(getRegistrationIdEvent)
-    console.log('Will clear all notifications')
+    // console.log('Will clear all notifications')
     JPushModule.clearAllNotifications()
   }
 

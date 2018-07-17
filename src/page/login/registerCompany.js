@@ -178,40 +178,41 @@ export default class RegisterCompany extends Component {
                         store: store
                     });
 
-                    storage.save({
-                        key: 'loginState',
-                        data: {
-                            isStore: store.is_store,
-                            uid: store.uid,
-                            sid: store.sid,
-                            storeName: store.name,
-                            storeLogo: store.logo,
-                            status: store.status,
-                            token: 'token',
-                        },
-                    });
+                    // storage.save({
+                    //     key: 'loginState',
+                    //     data: {
+                    //         isStore: store.is_store,
+                    //         uid: store.uid,
+                    //         sid: store.sid,
+                    //         storeName: store.name,
+                    //         storeLogo: store.logo,
+                    //         status: store.status,
+                    //         token: 'token',
+                    //     },
+                    // });
 
-                    global.store = {
-                        loginState: true,
-                        storeData: {
-                            isStore: store.is_store,
-                            uid: store.uid,
-                            sid: store.sid,
-                            storeName: store.name,
-                            storeLogo: store.logo,
-                            status: store.status,
-                            token: 'token',
-                        }
-                    };
+                    // global.store = {
+                    //     loginState: true,
+                    //     storeData: {
+                    //         isStore: store.is_store,
+                    //         uid: store.uid,
+                    //         sid: store.sid,
+                    //         storeName: store.name,
+                    //         storeLogo: store.logo,
+                    //         status: store.status,
+                    //         token: 'token',
+                    //     }
+                    // };
 
                     this.timer = setTimeout(() => {
-                        const resetAction = NavigationActions.reset({
-                            index: 0,
-                            actions: [
-                                NavigationActions.navigate({ routeName: 'TabNavScreen'})
-                            ]
-                        })
-                        this.props.navigation.dispatch(resetAction)
+                        // const resetAction = NavigationActions.reset({
+                        //     index: 0,
+                        //     actions: [
+                        //         NavigationActions.navigate({ routeName: 'TabNavScreen'})
+                        //     ]
+                        // })
+                        // this.props.navigation.dispatch(resetAction)
+                        this.props.navigation.navigate('Login');
                     }, 500);
                 } else {
                     toastShort(result.msg);

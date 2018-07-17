@@ -38,7 +38,7 @@ export default class Cooperate extends Component {
     }
 
     componentDidMount(){
-        console.log(this.state.url);
+        // console.log(this.state.url);
         this.loadNetData();
         this.backTimer = setTimeout(() => {
             this.setState({

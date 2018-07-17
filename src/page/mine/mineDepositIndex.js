@@ -78,7 +78,7 @@ export default class MineDepositIndex extends Component {
 
     loadNetData = () => {
         let url = NetApi.mineDeposit + this.state.store.sid;
-        this.netRequest.fetchGet(url, true)
+        this.netRequest.fetchGet(url)
             .then(result => {
                 // console.log(result);
                 this.setState({

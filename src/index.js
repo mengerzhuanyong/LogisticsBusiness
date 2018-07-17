@@ -82,7 +82,7 @@ export default class Index extends Component {
         //     // this.setState({
         //     //     pushMsg: map.message
         //     // })
-        //     console.log('extras: ' + map.extras)
+        //     // console.log('extras: ' + map.extras)
         // })
 
         JPushModule.addReceiveNotificationListener(map => {

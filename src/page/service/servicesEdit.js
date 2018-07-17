@@ -107,7 +107,7 @@ export default class ServiceEdit extends Component {
 
     loadNetData = () => {
         let url = NetApi.storeServices;
-        this.netRequest.fetchGet(url, true)
+        this.netRequest.fetchGet(url)
             .then(result => {
                 if (result && result.code == 1) {
                     this.updateState({

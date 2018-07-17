@@ -53,7 +53,7 @@ module.exports = {
 
     storeServices: 'home/service/service_type',
 
-    orderList: 'home/order/index/sid/',
+    orderList: 'home/order/index/',
     orderDetail: 'home/order/detail/id/',
     orderCancel: 'user/order/cancelOrder/oid/',
     orderAccept: 'home/order/orderAccept/oid/',

@@ -62,6 +62,7 @@ export default class Home extends Component {
             isRefreshing: false,
             bannerData: [],
             hotNewsData: [],
+            has_new_order: false,
         };
         this.netRequest = new NetRequest();
     }
@@ -96,18 +97,18 @@ export default class Home extends Component {
 
     setAlias = (alias) => {
         alias = 'store_id_' + alias;
-        console.log(alias);
+        // console.log(alias);
         getAlias = () => {
             JPushModule.getAlias(map => {
                 if (map.errorCode === 0) {
-                    console.log('Get alias succeed, alias: ' + map.alias)
+                    // console.log('Get alias succeed, alias: ' + map.alias)
                 } else {
                     // console.log('Get alias failed, errorCode: ' + map.errorCode)
                     JPushModule.setAlias(alias, map => {
                         if (map.errorCode === 0) {
-                            console.log('set alias succeed', map)
+                            // console.log('set alias succeed', map)
                         } else {
-                            console.log('set alias failed, errorCode: ', map.errorCode)
+                            // console.log('set alias failed, errorCode: ', map.errorCode)
                         }
                     })
                 }
@@ -193,6 +194,7 @@ export default class Home extends Component {
                 // console.log(result);
                 if (result && result.code == 1) {
                     this.setState({
+                        has_new_order: result.data.has_new_order,
                         status: result.data.storeStatus,
                         workStatus: result.data.storeStatus == 1 ? true : false,
                         audited: result.data.audited,
@@ -317,7 +319,7 @@ export default class Home extends Component {
     };
 
     render(){
-        const { ready, bannerData, hotNewsData, refreshing, companyListData, modalShow, isRefreshing, store } = this.state;
+        const { ready, bannerData, hotNewsData, refreshing, companyListData, modalShow, isRefreshing, store, has_new_order } = this.state;
         return (
             <View style={styles.container}>
                 <NavigationBar
@@ -360,6 +362,7 @@ export default class Home extends Component {
                         />
                         <NavigatorItem
                             navigatorName = {"订单管理"}
+                            showBadge={has_new_order}
                             navigatorIcon = {GlobalIcons.icon_orders}
                             onPushNavigator = {() => this.onPushNavigator('订单管理', 'Order')}
                         />

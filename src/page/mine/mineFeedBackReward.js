@@ -77,7 +77,7 @@ export default class MineFeedBackReward extends Component {
                 this.updateState({
                     url: result.data.link
                 })
-                consoleLog('登录', result);
+                // consoleLog('登录', result);
             })
             .catch( error => {
                 // consoleLog('登录出错', error);

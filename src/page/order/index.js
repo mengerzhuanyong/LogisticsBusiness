@@ -23,6 +23,7 @@ import GlobalIcons from '../../constant/GlobalIcon'
 import NavigationBar from '../../component/common/NavigationBar'
 import UtilsView from '../../util/utilsView'
 import {toastShort, consoleLog} from '../../util/utilsToast'
+import FlatListView from '../../component/common/flatListView'
 
 import ActivityIndicatorItem from '../../component/common/ActivityIndicatorItem'
 import EmptyComponent from '../../component/common/EmptyComponent'
@@ -44,7 +45,7 @@ export default class Order extends Component {
             ready: false,
             loadMore: false,
             refreshing: false,
-            companyListData: [],
+            listData: [],
             isRefreshing: false,
             navigations: [
                 {name: '待接单订单', status: '1'},
@@ -57,6 +58,16 @@ export default class Order extends Component {
             canBack: false,
         }
         this.netRequest = new NetRequest();
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        // console.log(this.state.navigations === nextState.navigations);
+        if (this.state.navigations == nextState.navigations) {
+            // console.log(1);
+            return false;
+        }
+        // console.log(2);
+        return true;
     }
 
     componentDidMount(){
@@ -99,63 +110,13 @@ export default class Order extends Component {
                 if (result && result.code == 1) {
                     this.setState({
                         audited: result.data.audited,
-                        // navigations: result.data.navigations,
+                        navigations: result.data.orderNavigations,
                     })
                 }
             })
             .catch(error => {
                 toastShort('error');
             })
-    }
-
-    dropLoadMore = async () => {
-        // let result = await this.loadNetData(0);
-        // if (result && result.code == 1) {
-        //     this.setState({
-        //         serviceListData: result.data.service
-        //     })
-        // } else {
-        //     toastShort(result.msg);
-        // }
-    };
-
-    freshNetData = async () => {
-        // let result = await this.loadNetData(0);
-        // if (result && result.code == 1) {
-        //     this.setState({
-        //         orderListData: result.data.order
-        //     })
-        // } else {
-        //     toastShort(result.msg);
-        // }
-    };
-
-    renderCompanyItem = (item) => {
-        return (
-            <BusinessItem
-                item = {item}
-                onPushToBusiness = {()=> this.onPushToBusiness()}
-            />
-        )
-    }
-    renderHeaderView = () => {
-        return (
-            <View style={styles.shopListViewTitle}>
-                <View style={[GlobalStyles.horLine, styles.horLine]} />
-                <Text style={styles.titleName}>推荐</Text>
-                <View style={[GlobalStyles.horLine, styles.horLine]} />
-            </View>
-        )
-    }
-    renderFooterView = () => {
-        return this.state.loadMore && <ActivityIndicatorItem />;
-    }
-    renderEmptyView = () => {
-        return this.state.loadMore && <ActivityIndicatorItem />;
-    }
-
-    renderSeparator = () => {
-        return <View style={GlobalStyles.horLine} />;
     }
 
     onPushToBusiness = () => {
@@ -206,15 +167,16 @@ export default class Order extends Component {
 
     render(){
         // status 0 未付款 1 待接单 2 运输中 3 待评价 4 已完成 5 退款申请中 6 退款成功 7 等待取货 8 待收货 9 已关闭
-        const { ready, refreshing, companyListData, isRefreshing, navigations } = this.state;
+        const { ready, refreshing, listData, isRefreshing, navigations } = this.state;
         return (
             <View style={styles.container}>
                 <NavigationBar
                     title = {'订单管理'}
                 />
-                {navigations.length > 0 ?
+                {navigations && navigations.length > 0 ?
                     <ScrollableTabView
                         initialPage={0}
+                        onChangeTab = {this.loadNetData}
                         tabBarInactiveTextColor = "#333"
                         tabBarActiveTextColor = {GlobalStyles.themeColor}
                         tabBarUnderlineStyle = {GlobalStyles.tabBarUnderline}
@@ -242,12 +204,14 @@ export class OrderDetailTab extends Component {
             ready: false,
             loadMore: false,
             refreshing: false,
-            orderListData: [],
+            listData: [],
             emptyTips: '对不起，当前暂无相关订单',
             audited: '0',
             canBack: false,
+            showFoot: 0,
         }
         this.netRequest = new NetRequest();
+        this.pageSize = 20;
     }
 
     componentDidMount(){
@@ -261,10 +225,13 @@ export class OrderDetailTab extends Component {
 
     componentWillUnmount(){
         this.timer && clearTimeout(this.timer);
+        this.timer1 && clearTimeout(this.timer1);
+        this.timer2 && clearTimeout(this.timer2);
+        this.backTimer && clearTimeout(this.backTimer);
     }
 
     componentWillReceiveProps(nextProps){
-        consoleLog('首页轮播', nextProps);
+        // consoleLog('首页轮播', nextProps);
         this.setState({
             audited: nextProps.audited
         })
@@ -299,52 +266,6 @@ export class OrderDetailTab extends Component {
             })
     }
 
-    loadNetData = (page) => {
-        // status 0 未付款 1 待接单 2 运输中 3 待评价 4 已完成 5 退款申请中 6 退款成功 7 等待取货 8 待收货 9 已关闭
-        let {sid, status} = this.state;
-        let url = NetApi.orderList + sid + '/status/' + status + '/page/' + page;
-        return this.netRequest.fetchGet(url)
-            .then(result => {
-                // console.log(result);
-                return result;
-            })
-            .catch(error => {
-                // console.log(error);
-                toastShort('error');
-            })
-    };
-
-    dropLoadMore = async () => {
-        // let result = await this.loadNetData(0);
-        // if (result && result.code == 1) {
-        //     this.setState({
-        //         serviceListData: result.data.service
-        //     })
-        // } else {
-        //     toastShort(result.msg);
-        // }
-    };
-
-    freshNetData = async () => {
-        let result = await this.loadNetData(0);
-        if (result && result.code == 1 && this.state.audited == '1') {
-            this.setState({
-                orderListData: result.data.order
-            })
-        } else if (this.state.audited == '0') {
-            this.setState({
-                orderListData: [],
-                emptyTips: '对不起，您的账号还未通过审核，暂时无法使用该功能！',
-            })
-        } else {
-            toastShort(result.msg);
-        }
-    };
-
-    onSubmitSearch = () => {
-
-    }
-
     onPushNavigator = (webTitle, component) => {
         const { navigate } = this.props.navigation;
         // console.log(123);
@@ -354,7 +275,75 @@ export class OrderDetailTab extends Component {
         })
     }
 
-    renderServiceItem = (item) => {
+    loadNetData = (page) => {
+        // status 0 未付款 1 待接单 2 运输中 3 待评价 4 已完成 5 退款申请中 6 退款成功 7 等待取货 8 待收货 9 已关闭
+        let {sid, status} = this.state;
+        let url = NetApi.orderList;
+        let data = {
+            status: status,
+            page,
+            sid,
+            pageSize: this.pageSize
+        };
+        return this.netRequest.fetchPost(url, data)
+            .then(result => {
+                return result;
+            })
+            .catch(error => {
+                // toastShort('error');
+            })
+    };
+
+    freshNetData = async () => {
+        let {listData} = this.state;
+        let result = await this.loadNetData(0);
+        this.timer1 = setTimeout(() => {
+            this.page = 1;
+            this.setState();
+            // 调用停止刷新
+            this.flatList && this.flatList.stopRefresh()
+        }, 600);
+        if (!result) {
+            return;
+        }
+        this.setState({
+            ready: true,
+            listData: result.data.order,
+        });
+    };
+
+    dropLoadMore = async () => {
+        let {listData} = this.state;
+        let result = await this.loadNetData(this.page);
+        if (!result) {
+            return;
+        }
+        let totalPage = result.data.totalPage;
+        this.timer2 = setTimeout(() => {
+            let dataTemp = listData;
+            //模拟数据加载完毕,即page > 0,
+            if (this.page < totalPage) {
+                this.setState({
+                    listData: dataTemp.concat(result.data.order),
+                });
+            }
+            this.flatList && this.flatList.stopEndReached({
+                allLoad: this.page === totalPage
+            });
+            this.page++;
+            // console.log('page, totalPage',this.page, totalPage)
+        }, 600);
+    };
+
+    _captureRef = (v) => {
+        this.flatList = v
+    };
+
+    _keyExtractor = (item, index) => {
+        return `item_${index}`;
+    };
+
+    renderListItem = (item) => {
         return (
             <OrderItem
                 item = {item}
@@ -362,59 +351,30 @@ export class OrderDetailTab extends Component {
                 reloadData = {() => this.freshNetData()}
                 onPushToBusiness = {()=> this.onPushToBusiness()}
             />
-        )
-    }
-
-    renderHeaderView = () => {
-        return (
-            <View style={styles.shopListViewTitle}>
-                <Text style={styles.titleName}>为您找到的物流公司</Text>
-                <View style={styles.sortView}>
-                    <Text style={styles.sortTips}>排序</Text>
-                </View>
-            </View>
-        )
-    }
-
-    renderFooterView = () => {
-        // return this.state.loadMore && <ActivityIndicatorItem />;
-        return (
-            <TouchableOpacity
-                style = {GlobalStyles.listAddBtnView}
-                onPress = {() => this.onPushNavigator('添加服务', 'MineEmployeeAdd')}
-            >
-                <Image source={GlobalIcons.icon_add} style={GlobalStyles.listAddBtnIcon} />
-            </TouchableOpacity>
-        )
-    }
-
-    renderEmptyView = () => {
-        return <EmptyComponent emptyTips={this.state.emptyTips} />;
-    }
+        );
+    };
 
     renderSeparator = () => {
         return <View style={GlobalStyles.horLine} />;
     }
 
     render(){
-        const { ready, refreshing, orderListData } = this.state;
+        const { ready, refreshing, listData } = this.state;
         const { params } = this.props.navigation.state;
+        // console.log(ready, listData);
         return (
             <View style={styles.container}>
-                {ready ?
-                    <FlatList
-                        style = {styles.shopListView}
-                        keyExtractor = { item => item.id}
-                        data = {orderListData}
-                        extraData = {this.state}
-                        renderItem = {(item) => this.renderServiceItem(item)}
-                        onEndReachedThreshold = {0.1}
-                        onEndReached = {(info) => this.dropLoadMore(info)}
-                        onRefresh = {this.freshNetData}
-                        refreshing = {refreshing}
+                {ready && listData ?
+                    <FlatListView
+                        ref={this._captureRef}
+                        data={listData}
+                        style={styles.shopListView}
+                        renderItem={this.renderListItem}
+                        keyExtractor={this._keyExtractor}
+                        onEndReached={this.dropLoadMore}
+                        onRefresh={this.freshNetData}
                         ItemSeparatorComponent={this.renderSeparator}
-                        // ListHeaderComponent = {this.renderHeaderView}
-                        // ListFooterComponent = {this.renderFooterView}
+                        ListHeaderComponent = {this.renderHeaderView}
                         ListEmptyComponent = {this.renderEmptyView}
                     />
                     : <ActivityIndicatorItem />

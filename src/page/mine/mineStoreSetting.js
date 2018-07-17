@@ -92,7 +92,7 @@ export default class MineStoreSetting extends Component {
         this.setState({
             canPress: false
         });
-        this.netRequest.fetchPost(url, data, true)
+        this.netRequest.fetchPost(url, data)
             .then( result => {
                 if (result && result.code === 1) {
                     if (submit === 1) {
@@ -164,7 +164,7 @@ export default class MineStoreSetting extends Component {
                     <View style={[GlobalStyles.horLine, styles.horLine]} />
                     <View style = {styles.paymentMethodItem}>
                         <View style={styles.paymentMethodTitleView}>
-                            <Text style={styles.paymentMethodTitle}>送件费</Text>
+                            <Text style={styles.paymentMethodTitle}>{obj.name}</Text>
                         </View>
                         <View style={styles.paymentMethodTitleView}>
                             <TextInput

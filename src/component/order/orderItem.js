@@ -131,7 +131,10 @@ export default class OrderItem extends Component {
                     onPress = {() => this.onPushToDetail(item)}
                 >
                     <Text style={styles.orderRouter}>订单号: {item.code}</Text>
-                    <Text style={styles.orderNumber}>{item.service}</Text>
+                    <View style={styles.orderInfoView}>
+                        <Text style={styles.orderNumber}>{item.service}</Text>
+                        <Text style={styles.orderNumber}>{item.createtime}</Text>
+                    </View>
                 </TouchableOpacity>
                 {showModal &&
                     <ModalView
@@ -172,9 +175,18 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         justifyContent: 'space-between',
     },
+    orderInfoItem: {
+        flex: 1,
+    },
     orderRouter: {
         fontSize: 14,
         color: '#333',
+    },
+    orderInfoView: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
     },
     orderNumber: {
         fontSize: 13,

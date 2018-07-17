@@ -92,7 +92,7 @@ export default class MineInfoSetting extends Component {
 
     submitChange = () => {
         let { store, uid, newMobile, code, origin_password, password, repassword } = this.state;
-        console.log(store);
+        // console.log(store);
         let url = NetApi.mineEditPwd;
         let data = {
             sid: store.sid,
@@ -113,7 +113,7 @@ export default class MineInfoSetting extends Component {
             toastShort('请再次输入新密码');
             return;
         }
-        this.netRequest.fetchPost(url, data, true)
+        this.netRequest.fetchPost(url, data)
             .then(result => {
                 if (result && result.code == 1) {
                     // console.log('用户中心', result);
@@ -163,9 +163,9 @@ export default class MineInfoSetting extends Component {
     deleteAlias = () => {
         JPushModule.deleteAlias(map => {
             if (map.errorCode === 0) {
-                console.log('delete alias succeed')
+                // console.log('delete alias succeed')
             } else {
-                console.log('delete alias failed, errorCode: ', map.errorCode)
+                // console.log('delete alias failed, errorCode: ', map.errorCode)
             }
         })
     }

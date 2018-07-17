@@ -47,7 +47,7 @@ export default class HomeNavigatorItem extends Component {
     }
 
     render(){
-        const { onPushNavigator, navigatorName, navigatorIcon } = this.props;
+        const { onPushNavigator, navigatorName, navigatorIcon, showBadge} = this.props;
         return (
             <TouchableOpacity
                 style = {styles.navigationItemView}
@@ -55,6 +55,7 @@ export default class HomeNavigatorItem extends Component {
             >
                 <Image source={GlobalIcons.images_bg_homeButton} style={styles.navigationBack} />
                 <Image source={navigatorIcon} style={styles.navigationIcon} />
+                {showBadge && <View style={styles.badgeStyle}/> }
                 <Text style={styles.navigationName}>{navigatorName}</Text>
             </TouchableOpacity>
         );
@@ -87,4 +88,14 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginVertical: 10,
     },
+    badgeStyle: {
+        width: 10,
+        height: 10,
+        borderRadius: 10,
+        backgroundColor: '#f00',
+        position: 'absolute',
+        top: __IOS__ ? 20 : 18,
+        right: '50%',
+        marginRight: -20,
+    }
 });

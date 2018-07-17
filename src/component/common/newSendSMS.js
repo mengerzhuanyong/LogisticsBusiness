@@ -70,7 +70,7 @@ export default class SendSMS extends Component {
         // this.countDownTimer();
         // console.log(url, data);
         // return;
-        this.netRequest.fetchPost(url, data, true)
+        this.netRequest.fetchPost(url, data)
             .then( result => {
                 if (result && result.code == 1) {
                     this.countDownTimer();

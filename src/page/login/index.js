@@ -89,9 +89,9 @@ export default class Login extends Component {
         // console.log(alias);
         JPushModule.setAlias(alias, map => {
             if (map.errorCode === 0) {
-                console.log('set alias succeed')
+                // console.log('set alias succeed')
             } else {
-                console.log('set alias failed, errorCode: ', map.errorCode)
+                // console.log('set alias failed, errorCode: ', map.errorCode)
             }
         })
     }
@@ -124,7 +124,7 @@ export default class Login extends Component {
         this.setState({
             canPress: false,
         })
-        this.netRequest.fetchPost(url, data, true)
+        this.netRequest.fetchPost(url, data)
             .then( result => {
                 // console.log('登录', result);
                 if (result && result.code == '1') {

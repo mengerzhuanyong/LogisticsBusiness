@@ -75,7 +75,7 @@ export default class UserContact extends Component {
     };
 
     loadNetData = () => {
-        let {contact, } = this.state;
+        let {contact, store} = this.state;
         let url = NetApi.contact;
         let data = {
             sid: store.sid,

@@ -217,7 +217,7 @@ export default class OrderDetal extends Component {
 
     loadNetData = () => {
         let url = NetApi.orderDetail + this.state.orderId;
-        this.netRequest.fetchGet(url, true)
+        this.netRequest.fetchGet(url)
             .then(result => {
                 if (result && result.code == 1) {
                     this.setState({
