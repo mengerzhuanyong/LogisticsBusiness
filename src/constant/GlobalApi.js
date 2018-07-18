@@ -20,8 +20,8 @@ module.exports = {
     navigation: 'home/navigation/index',                                                               // 导航
     workStatus: 'home/index/open/id/',
     getBanner: 'home/index/banner',                                                                     // 首页
-    contact: 'home/index/address_list',
-    contactAdd: 'home/index/set_address_list',
+    contact: 'home/index/contact_list',
+    contactAdd: 'home/index/set_contact_list',
 
     loginIn: 'home/login/index',                                                                        // 登录
     logOut: 'home/login/logout',                                                                        // 登录

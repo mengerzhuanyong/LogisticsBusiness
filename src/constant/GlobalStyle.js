@@ -103,7 +103,7 @@ module.exports = {
     },
 
     bannerContainer: {
-        height: 210,
+        height: width / 2,
     },
     bannerViewWrap: {
         flex: 1,
@@ -111,8 +111,8 @@ module.exports = {
     },
     bannerImg: {
         width: width,
-        height: 210,
-        resizeMode: 'cover'
+        height: width / 2,
+        resizeMode: 'contain'
     },
     bannerDot: {
         width: 8,

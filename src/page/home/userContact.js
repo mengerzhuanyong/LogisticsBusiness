@@ -41,17 +41,20 @@ export default class UserContact extends Component {
         this.state =  {
             store: global.store.storeData,
             volumeViewCount: 1,
-            contact: [{username: '', mobile: '', remark: ''}],
+            contact: [],
+            // contact: [{username: '', mobile: '', remark: ''}],
             canPress: true,
         };
         this.netRequest = new NetRequest();
     }
 
-    contact = [{
-        username: '',
-        mobile: '',
-        remark: '',
-    }];
+    contact = [];
+
+    // contact = [{
+    //     username: '',
+    //     mobile: '',
+    //     remark: '',
+    // }];
 
     componentDidMount(){
         this.loadNetData();
@@ -80,7 +83,7 @@ export default class UserContact extends Component {
         let data = {
             sid: store.sid,
         };
-        this.netRequest.fetchPost(url, data)
+        this.netRequest.fetchPost(url, data, true)
             .then(result => {
                 if (result && result.code === 1) {
                     this.setState({
@@ -100,6 +103,9 @@ export default class UserContact extends Component {
     renderVolumeView = () => {
         let { volumeViewCount, contact } = this.state;
         let views = [];
+        if (!contact || contact.length < 1) {
+            return;
+        }
         for ( let i = 0; i < volumeViewCount; i++) {
             views.push(
                 <View key={i}>

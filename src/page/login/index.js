@@ -34,9 +34,9 @@ export default class Login extends Component {
     constructor(props) {
         super(props);
         this.state =  {
-            mobile: '15066886007', // '15066886007',
-            password: '123123', // '123123',
-            code: '123123', // '123123',
+            mobile: '', // '15066886007',
+            password: '', // '123123',
+            code: '', // '123123',
             loginState: '',
             canPress: true,
         };
