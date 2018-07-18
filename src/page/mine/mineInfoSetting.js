@@ -57,7 +57,9 @@ export default class MineInfoSetting extends Component {
         let {params} = this.props.navigation.state;
         this.state =  {
             store: global.store ? global.store.storeData : '',
+            item: params.item ? params.item : '',
             id: params.item ? params.item.id : '',
+            company: params.item ? params.item.company : '',
             name: params.item ? params.item.name : '',
             realname: params.item ? params.item.realname : '',
             mobile: params.item ? params.item.mobile : '',
@@ -223,10 +225,11 @@ export default class MineInfoSetting extends Component {
     }
 
     submit = () => {
-        let {id, name, realname, mobile, logo, banner, area, address, reminder} = this.state;
+        let {id, company, name, item, realname, mobile, logo, banner, area, address, reminder} = this.state;
         let url = NetApi.mineStoreEdit;
         let data = {
             id: id,
+            company: company,
             name: name,
             realname: realname,
             mobile: mobile,
@@ -236,6 +239,10 @@ export default class MineInfoSetting extends Component {
             address: address,
             reminder: reminder,
         };
+        if (item.style == 1 && !company) {
+            toastShort('请输入公司名称');
+            return;
+        }
         if (!name) {
             toastShort('请输入门店名称');
             return;
@@ -294,9 +301,9 @@ export default class MineInfoSetting extends Component {
     }
 
     render(){
-        const { store, area, ready, refreshing, companyListData, mobile, name, realname, address, logo, banner, reminder, canPress } = this.state;
+        const { store, item, area, ready, refreshing, companyListData, mobile, name, company, realname, address, logo, banner, reminder, canPress } = this.state;
         let isStore = store.isStore == 1 ? true : false;
-        // console.log(isStore);
+        console.log(this.state);
         return (
             <View style={styles.container}>
                 <NavigationBar
@@ -304,11 +311,27 @@ export default class MineInfoSetting extends Component {
                     leftButton = {UtilsView.getLeftButton(() => { this.state.canBack && this.onBack()})}
                 />
                 <KeyboardAwareScrollView>
-                    <CustomKeyboard.AwareCusKeyBoardScrollView>
                         <View style={[styles.addressAddItemView, {marginTop: 10,}]}>
                             <View style={[styles.titleView]}>
                                 <Text style={styles.titleViewCon}>基本信息</Text>
                             </View>
+                            {item.style == 1 && <View style={[GlobalStyles.horLine, styles.horLine]} />}
+                            {item.style == 1 && <View style={styles.infoItemView}>
+                                <Text style={styles.infoItemTitle}>公司名称：</Text>
+                                <TextInput
+                                    style = {styles.inputItemCon}
+                                    editable = {isStore}
+                                    placeholder = "请输入公司名称"
+                                    defaultValue = {company}
+                                    placeholderTextColor = '#888'
+                                    underlineColorAndroid = {'transparent'}
+                                    onChangeText = {(text)=>{
+                                        this.setState({
+                                            company: text
+                                        })
+                                    }}
+                                />
+                            </View>}
                             <View style={[GlobalStyles.horLine, styles.horLine]} />
                             <View style={styles.infoItemView}>
                                 <Text style={styles.infoItemTitle}>门店名称：</Text>
@@ -346,14 +369,15 @@ export default class MineInfoSetting extends Component {
                             <View style={[GlobalStyles.horLine, styles.horLine]} />
                             <View style={styles.infoItemView}>
                                 <Text style={styles.infoItemTitle}>联系电话：</Text>
-                                <CustomKeyboard.CustomTextInput
+                                <TextInput
                                     style = {styles.inputItemCon}
                                     editable = {isStore}
                                     placeholder = "请输入联系电话"
                                     defaultValue = {mobile}
                                     maxLength = {11}
+                                    keyboardType={'numeric'}
                                     placeholderTextColor = '#888'
-                                    customKeyboardType = "numberKeyBoard"
+                                    // customKeyboardType = "numberKeyBoard"
                                     underlineColorAndroid = {'transparent'}
                                     onChangeText = {(text)=>{
                                         this.setState({
@@ -414,7 +438,7 @@ export default class MineInfoSetting extends Component {
                             <TouchableOpacity
                                 activeOpacity = {0.8}
                                 style = {styles.uploadItemView}
-                                onPress = {() => store.isStore == 1 && this.handleOpenImagePicker('2', GlobalStyles.width * 0.95, 220)}
+                                onPress = {() => store.isStore == 1 && this.handleOpenImagePicker('2', GlobalStyles.width * 0.95, GlobalStyles.width * 0.95 / 2)}
                             >
                                 {banner == '' ?
                                     <Image source={GlobalIcons.images_bg_upload} style={styles.uploadBtn} />
@@ -451,7 +475,6 @@ export default class MineInfoSetting extends Component {
                                 <Text style={GlobalStyles.btnItem}>立即修改</Text>
                             </TouchableOpacity>
                         </View>}
-                    </CustomKeyboard.AwareCusKeyBoardScrollView>
                 </KeyboardAwareScrollView>
             </View>
         );
@@ -552,10 +575,10 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
     },
     uploadImages: {
-        width: GlobalStyles.width - 30,
         // flex: 1,
-        height: 220,
         resizeMode: 'contain',
+        width: GlobalStyles.width - 30,
+        height: (GlobalStyles.width - 30) / 2,
     },
     uploadImagesLogo: {
         width: 220,

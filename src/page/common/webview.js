@@ -41,6 +41,12 @@ export default class CommonWebView extends Component {
 
     componentDidMount(){
         this.loadNetData();
+        this.backTimer = setTimeout(() => {
+            this.setState({
+                loading: false,
+                canBack: true
+            })
+        }, 1000);
     }
 
     componentWillUnmount(){
@@ -82,7 +88,7 @@ export default class CommonWebView extends Component {
     freshNetData = async () => {};
 
     render(){
-        let {url} = this.state;
+        let {canPress, loading, url} = this.state;
         let {params} = this.props.navigation.state;
         let pageTitle = (params && params.pageTitle) ? params.pageTitle : '详情';
         return (
@@ -90,13 +96,16 @@ export default class CommonWebView extends Component {
                 <NavigationBar
                     title = {pageTitle}
                     leftButton = {UtilsView.getLeftButton(() => this.onBack())}
-                />                
-                <WebView
-                    ref={WEBVIEW_REF}
-                    startInLoadingState={true}
-                    source={{uri: url}}
-                    style={styles.webContainer}
-                />
+                /> 
+                {!loading ?               
+                    <WebView
+                        ref={WEBVIEW_REF}
+                        startInLoadingState={true}
+                        source={{uri: url}}
+                        style={styles.webContainer}
+                    />
+                    : <SpinnerLoading isVisible={loading}/>
+                }
             </View>
         );
     }

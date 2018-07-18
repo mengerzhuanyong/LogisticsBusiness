@@ -491,10 +491,10 @@ export default class OrderDetal extends Component {
                                         <Text style={styles.orderCompanyInfoTitle}>订单状态：</Text>
                                         <Text style={[styles.orderCompanyInfoCon, styles.orderStatus]}>{orderInfo.statusName}</Text>
                                     </View>
-                                    {1 > 2 && <View style={styles.orderCompanyInfoItem}>
-                                        <Text style={styles.orderCompanyInfoTitle}>包车状态：</Text>
-                                        <Text style={[styles.orderCompanyInfoCon, {alignItems: 'flex-start'}]} numberOfLines={2}>{orderInfo.is_car == 1 ? '包车' : '不包车'}</Text>
-                                    </View>}
+                                    <View style={styles.orderCompanyInfoItem}>
+                                        <Text style={styles.orderCompanyInfoTitle}>订单类型：</Text>
+                                        <Text style={[styles.orderCompanyInfoCon, {alignItems: 'flex-start'}]} numberOfLines={2}>{orderInfo.style}</Text>
+                                    </View>
                                     <View style={styles.orderCompanyInfoItem}>
                                         <Text style={styles.orderCompanyInfoTitle}>物流订单号：</Text>
                                         <Text style={styles.orderCompanyInfoCon}>{orderInfo.code}</Text>
@@ -588,7 +588,7 @@ export default class OrderDetal extends Component {
                             </View>}
                             <View style={[GlobalStyles.horLine, styles.horLine]} />
                             <View style={styles.orderMoneyInfoItem}>
-                                <Text style={styles.orderMoneyInfoTitle}>实付金额：</Text>
+                                <Text style={styles.orderMoneyInfoTitle}>订单金额：</Text>
                                 <Text style={styles.orderMoneyInfoConNum}>¥ {parseFloat(orderInfo.relprice).toFixed(2)}</Text>
                             </View>
                         </View>
@@ -762,7 +762,7 @@ const styles = StyleSheet.create({
     },
     orderCargoInfoConText: {
         // flex: 1,
-        fontSize: 14,
+        fontSize: 13,
         color: '#666',
         lineHeight: 25,
     },

@@ -77,7 +77,7 @@ export default class Index extends Component {
                 if (resultCode === 0) {}
             })
         }
-
+        __IOS__ && this.setBadge();
         // JPushModule.addReceiveCustomMsgListener(map => {
         //     // this.setState({
         //     //     pushMsg: map.message

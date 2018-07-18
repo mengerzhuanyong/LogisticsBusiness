@@ -58,6 +58,7 @@ export default class RegisterCompany extends Component {
             password: '',
             rePassword: '',
             code: '',
+            storeName: '',
             companyName: '',
             style: '1',
             idcard: '',
@@ -100,7 +101,7 @@ export default class RegisterCompany extends Component {
     loadNetData = () => {}
 
     doRegister = () => {
-        let { mobile, password, rePassword, code, style, companyName,
+        let { mobile, password, rePassword, code, style, companyName, storeName,
             idcard, obverseIdcard, license, address, area, agree } = this.state;
         let url = NetApi.register;
         let data = {
@@ -108,7 +109,8 @@ export default class RegisterCompany extends Component {
             password: password,
             repassword: rePassword,
             code: code,
-            name: companyName,
+            name: storeName,
+            company: companyName,
             style: style,
             idcard: idcard,
             obverseIdcard: obverseIdcard,
@@ -151,6 +153,10 @@ export default class RegisterCompany extends Component {
         }
         if (!companyName) {
             toastShort('请输入公司名称');
+            return;
+        }
+        if (!storeName) {
+            toastShort('请输入门店名称');
             return;
         }
         if (!area) {
@@ -360,21 +366,21 @@ export default class RegisterCompany extends Component {
             .then(result => {
                 if (type == 0) {
                     this.setState({
-                        idcard: source,
+                        idcard: result.data,
                         uploading: false,
                     })
                 } else if (type == 1) {
                     this.setState({
-                        obverseIdcard: source,
+                        obverseIdcard: result.data,
                         uploading: false,
                     })
                 } else {
                     this.setState({
-                        license: source,
+                        license: result.data,
                         uploading: false,
                     })
                 }
-                // console.log(result);
+                console.log(type, result);
             })
             .catch(error => {
                 // console.log(error);
@@ -491,6 +497,21 @@ export default class RegisterCompany extends Component {
                                 onChangeText = {(text)=>{
                                     this.setState({
                                         companyName: text
+                                    })
+                                }}
+                            />
+                        </View>
+                        <View style={GlobalStyles.horLine} />
+                        <View style={styles.signItem}>
+                            <Text style={styles.inputItemTitle}>门店名称</Text>
+                            <TextInput
+                                style = {styles.inputItemCon}
+                                placeholder = "请输入请输入门店名称"
+                                placeholderTextColor = '#888'
+                                underlineColorAndroid = {'transparent'}
+                                onChangeText = {(text)=>{
+                                    this.setState({
+                                        storeName: text
                                     })
                                 }}
                             />

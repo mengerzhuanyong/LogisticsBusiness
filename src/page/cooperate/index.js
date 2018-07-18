@@ -27,7 +27,21 @@ export default class Cooperate extends Component {
         }
     }
 
+    componentDidMount(){
+        this.backTimer = setTimeout(() => {
+            this.setState({
+                loading: false,
+                canBack: true
+            })
+        }, 1000);
+    }
+
+    componentWillUnmount(){
+        this.timer && clearTimeout(this.timer);
+    }
+
     render() {
+        let {canPress, loading} = this.state;
         return (
             <View style={styles.container}>
                 <NavigationBar
@@ -41,12 +55,15 @@ export default class Cooperate extends Component {
                     translucent = {true}
                     barStyle = {'default'}
                 />
-                <WebView
-                    ref={WEBVIEW_REF}
-                    startInLoadingState={true}
-                    source={{uri: this.state.url}}
-                    style={styles.webContainer}
-                />
+                {!loading ?
+                    <WebView
+                        ref={WEBVIEW_REF}
+                        startInLoadingState={true}
+                        source={{uri: this.state.url}}
+                        style={styles.webContainer}
+                    />
+                    : <SpinnerLoading isVisible={loading}/>
+                }
             </View>
         );
     }

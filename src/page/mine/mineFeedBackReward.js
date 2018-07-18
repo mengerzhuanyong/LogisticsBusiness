@@ -25,6 +25,7 @@ import NavigationBar from '../../component/common/NavigationBar'
 import UtilsView from '../../util/utilsView'
 import {toastShort, consoleLog} from '../../util/utilsToast'
 import { checkPhone } from '../../util/utilsRegularMatch'
+import SpinnerLoading from '../../component/common/SpinnerLoading'
 
 export default class MineFeedBackReward extends Component {
 
@@ -34,6 +35,7 @@ export default class MineFeedBackReward extends Component {
             sid: global.store ? global.store.storeData.sid : '',
             canPress: true,
             canBack: false,
+            loading: true,
             url: '',
         }
         this.netRequest = new NetRequest();
@@ -48,6 +50,7 @@ export default class MineFeedBackReward extends Component {
         }
         this.backTimer = setTimeout(() => {
             this.setState({
+                loading: false,
                 canBack: true
             })
         }, 1000);
@@ -84,24 +87,23 @@ export default class MineFeedBackReward extends Component {
             })
     }
 
-    componentWillUnmount(){
-        this.timer&&clearTimeout(this.timer);
-    }
-
     render(){
-        let {canPress} = this.state;
+        let {canPress, loading} = this.state;
         return (
             <View style={styles.container}>
                 <NavigationBar
                     title = {'有奖建议'}
                     leftButton = {UtilsView.getLeftButton(() => { this.state.canBack && this.onBack()})}
                 />
-                <WebView
-                    ref={(webView) => {this.webview = webView}}
-                    startInLoadingState={true}
-                    source={{uri: this.state.url}}
-                    style={styles.webContainer}
-                />
+                {!loading ?
+                    <WebView
+                        ref={(webView) => {this.webview = webView}}
+                        startInLoadingState={true}
+                        source={{uri: this.state.url}}
+                        style={styles.webContainer}
+                    />
+                    : <SpinnerLoading isVisible={loading}/>
+                }
             </View>
         );
     }

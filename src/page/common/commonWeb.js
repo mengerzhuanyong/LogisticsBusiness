@@ -42,6 +42,7 @@ export default class Cooperate extends Component {
         this.loadNetData();
         this.backTimer = setTimeout(() => {
             this.setState({
+                loading: false,
                 canBack: true
             })
         }, 1000);
@@ -68,6 +69,7 @@ export default class Cooperate extends Component {
     };
 
     render() {
+        let {canPress, loading} = this.state;
         let {params} = this.props.navigation.state;
         let pageTitle = (params && params.pageTitle) ? params.pageTitle : '详情页';
         return (
@@ -76,12 +78,15 @@ export default class Cooperate extends Component {
                     title = {pageTitle}
                     leftButton = {UtilsView.getLeftButton(() => { this.state.canBack && this.onBack()})}
                 />
-                <WebView
-                    ref={WEBVIEW_REF}
-                    startInLoadingState={true}
-                    source={{uri: this.state.url}}
-                    style={styles.webContainer}
-                />
+                {!loading ?
+                    <WebView
+                        ref={WEBVIEW_REF}
+                        startInLoadingState={true}
+                        source={{uri: this.state.url}}
+                        style={styles.webContainer}
+                    />
+                    : <SpinnerLoading isVisible={loading}/>
+                }
             </View>
         );
     }
