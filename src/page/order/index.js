@@ -358,6 +358,12 @@ export class OrderDetailTab extends Component {
         return <View style={GlobalStyles.horLine} />;
     }
 
+    renderEmptyView = () => {
+        return <View style={GlobalStyles.emptyView}>
+            <Text style={GlobalStyles.emptyText}>暂无相关订单</Text>
+        </View>;
+    }
+
     render(){
         const { ready, refreshing, listData } = this.state;
         const { params } = this.props.navigation.state;

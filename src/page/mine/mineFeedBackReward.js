@@ -98,7 +98,7 @@ export default class MineFeedBackReward extends Component {
                 {!loading ?
                     <WebView
                         ref={(webView) => {this.webview = webView}}
-                        startInLoadingState={true}
+                        startInLoadingState={false}
                         source={{uri: this.state.url}}
                         style={styles.webContainer}
                     />

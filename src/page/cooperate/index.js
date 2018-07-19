@@ -15,6 +15,7 @@ import {
     StatusBar,
     TouchableOpacity
 } from 'react-native';
+import SpinnerLoading from '../../component/common/SpinnerLoading'
 
 const WEBVIEW_REF = 'webview';
 
@@ -24,6 +25,7 @@ export default class Cooperate extends Component {
         super(props);
         this.state={
             url: 'https://m.baidu.com',
+            loading: true,
         }
     }
 
@@ -46,19 +48,13 @@ export default class Cooperate extends Component {
             <View style={styles.container}>
                 <NavigationBar
                     title = {'Test'}
+                    // statusBar = {{barStyle: 'dark-content',}}
                     leftButton = {UtilsView.getLeftButton(() => { this.state.canBack && this.onBack()})}
-                />
-                <StatusBar
-                    animated = {true}
-                    hidden = {false}
-                    backgroundColor = {'#42b3ff'}
-                    translucent = {true}
-                    barStyle = {'default'}
                 />
                 {!loading ?
                     <WebView
                         ref={WEBVIEW_REF}
-                        startInLoadingState={true}
+                        startInLoadingState={false}
                         source={{uri: this.state.url}}
                         style={styles.webContainer}
                     />

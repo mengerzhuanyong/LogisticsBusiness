@@ -20,6 +20,7 @@ import JPushModule from 'jpush-react-native'
 import NetApi from '../../constant/GlobalApi'
 import GlobalStyles from '../../constant/GlobalStyle'
 import GlobalIcons from '../../constant/GlobalIcon'
+import { NavigationActions } from 'react-navigation'
 import NavigationBar from '../../component/common/NavigationBar'
 import UtilsView from '../../util/utilsView'
 import { toastShort, consoleLog } from '../../util/utilsToast'
@@ -146,8 +147,8 @@ export default class MineInfoSetting extends Component {
         storage.remove({
             key: 'loginState',
         });
-        global.user.loginState = false;
-        global.user.userData = '';
+        global.store.loginState = false;
+        global.store.storeData = '';
 
         this.timerLogout = setTimeout(() => {
             const resetAction = NavigationActions.reset({
@@ -157,7 +158,7 @@ export default class MineInfoSetting extends Component {
                 ]
             });
             this.props.navigation.dispatch(resetAction)
-        }, 1000)
+        }, 1000);
     };
 
     deleteAlias = () => {

@@ -276,4 +276,13 @@ module.exports = {
         resizeMode: 'cover',
         position: 'absolute',
     },
+    emptyView: {
+        marginTop: 60,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    emptyText: {
+        fontSize: 15,
+        color: '#888',
+    },
 };

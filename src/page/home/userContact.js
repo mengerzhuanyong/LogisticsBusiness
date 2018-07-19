@@ -131,10 +131,12 @@ export default class UserContact extends Component {
                             </View>
                             <View style={[GlobalStyles.verLine, styles.verLine]} />
                             <View style={[styles.orderMoneyInfoItem]}>
-                                <CustomKeyboard.CustomTextInput
-                                        customKeyboardType = "numberKeyBoardWithDot"
+                                <TextInput
+                                    // customKeyboardType = "numberKeyBoardWithDot"
                                     style = {[styles.inputItemCon, styles.volumeInput]}
                                     placeholder = "请输入电话"
+                                    keyboardType={'numeric'}
+                                    maxLength={11}
                                     editable = {store.isStore != 1}
                                     placeholderTextColor = '#888'
                                     underlineColorAndroid = {'transparent'}
@@ -225,17 +227,15 @@ export default class UserContact extends Component {
                     <Text style={[styles.orderMoneyInfoTitle, {flex: 3}]}>备注</Text>
                 </View>
                 <KeyboardAwareScrollView style={[styles.scrollViewContainer]}>
-                    <CustomKeyboard.AwareCusKeyBoardScrollView>
-                        <View style={[styles.containerItemView]}>
-                            {this.renderVolumeView()}
-                        </View>
-                        {store.isStore == 1 && <TouchableOpacity
-                            style = {[GlobalStyles.listAddBtnView, {marginBottom: 20,}]}
-                            onPress = {() => this.addVolumeView()}
-                        >
-                            <Image source={GlobalIcons.icon_add} style={GlobalStyles.listAddBtnIcon} />
-                        </TouchableOpacity>}
-                    </CustomKeyboard.AwareCusKeyBoardScrollView>
+                    <View style={[styles.containerItemView]}>
+                        {this.renderVolumeView()}
+                    </View>
+                    {store.isStore == 1 && <TouchableOpacity
+                        style = {[GlobalStyles.listAddBtnView, {marginBottom: 20,}]}
+                        onPress = {() => this.addVolumeView()}
+                    >
+                        <Image source={GlobalIcons.icon_add} style={GlobalStyles.listAddBtnIcon} />
+                    </TouchableOpacity>}
                 </KeyboardAwareScrollView>
             </View>
         );
@@ -257,10 +257,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     horLine: {
-        marginVertical: 2,
+        marginVertical: 3,
     },
     verLine: {
         height: 20,
+        marginHorizontal: 5,
         backgroundColor: '#ddd',
     },
     contactTitleView: {
@@ -282,6 +283,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         // borderBottomWidth: 1,
         // borderColor: '#f60',
+        // backgroundColor: '#f60',
         textAlignVertical: 'bottom',
     },
     orderMoneyInfoItemView: {

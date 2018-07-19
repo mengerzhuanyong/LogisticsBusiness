@@ -22,6 +22,7 @@ import GlobalIcons from '../../constant/GlobalIcon'
 import NavigationBar from '../../component/common/NavigationBar'
 import UtilsView from '../../util/utilsView'
 import { toastShort, consoleLog } from '../../util/utilsToast'
+import SpinnerLoading from '../../component/common/SpinnerLoading'
 
 const WEBVIEW_REF = 'webview';
 
@@ -33,6 +34,7 @@ export default class Cooperate extends Component {
         this.state = {
             url: params && params.url ? params.url : '',
             canBack: false,
+            loading: true,
         };
         this.netRequest = new NetRequest();
     }
@@ -81,7 +83,7 @@ export default class Cooperate extends Component {
                 {!loading ?
                     <WebView
                         ref={WEBVIEW_REF}
-                        startInLoadingState={true}
+                        startInLoadingState={false}
                         source={{uri: this.state.url}}
                         style={styles.webContainer}
                     />

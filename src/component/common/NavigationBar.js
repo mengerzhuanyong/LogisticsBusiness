@@ -72,7 +72,7 @@ export default class NavigationBar extends Component {
 
     static defaultProps = {
         statusBar: {
-            barStyle: 'default',
+            barStyle: 'light-content',
             hidden: false,
             translucent: false,
             animated: false,
@@ -127,7 +127,7 @@ export default class NavigationBar extends Component {
 	    let backGroundImage = this.props.backgroundImage && <Image source={GlobalIcons.images_bg_navigation} style={styles.backgroundImage} />;
         let statusBar = !this.props.statusBar.hidden ?
             <View style={styles.statusBar}>
-                <StatusBar {...this.props.statusBar} barStyle= "light-content" backgroundColor="transparent"  translucent={true}  style={styles.statusBar}/>
+                <StatusBar {...this.props.statusBar} barStyle={this.props.statusBar.barStyle ? this.props.statusBar.barStyle : "light-content"} backgroundColor="transparent"  translucent={true}  style={styles.statusBar}/>
             </View>: null;
         let titleView = this.props.titleView ?  this.props.titleView :
             <Text style={[styles.title,{color:"#fff"},this.props.titleStyle]} ellipsizeMode="tail" numberOfLines={1} >{this.props.title}</Text>;

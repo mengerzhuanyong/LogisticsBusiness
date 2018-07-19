@@ -24,6 +24,7 @@ import NetRequest from '../../util/utilsRequest'
 import GlobalIcons from '../../constant/GlobalIcon'
 import GlobalStyles from '../../constant/GlobalStyle'
 import {toastShort, consoleLog} from '../../util/utilsToast'
+import SpinnerLoading from '../../component/common/SpinnerLoading'
 
 const WEBVIEW_REF = 'webview';
 
@@ -35,6 +36,7 @@ export default class CommonWebView extends Component {
         this.state = {
             api: params && params.api ? params.api : '',
             url: '',
+            loading: true,
         };
         this.netRequest = new NetRequest();
     }
@@ -100,7 +102,7 @@ export default class CommonWebView extends Component {
                 {!loading ?               
                     <WebView
                         ref={WEBVIEW_REF}
-                        startInLoadingState={true}
+                        startInLoadingState={false}
                         source={{uri: url}}
                         style={styles.webContainer}
                     />

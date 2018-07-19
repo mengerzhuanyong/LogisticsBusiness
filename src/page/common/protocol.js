@@ -22,6 +22,7 @@ import GlobalIcons from '../../constant/GlobalIcon'
 import NavigationBar from '../../component/common/NavigationBar'
 import UtilsView from '../../util/utilsView'
 import { toastShort, consoleLog } from '../../util/utilsToast'
+import SpinnerLoading from '../../component/common/SpinnerLoading'
 
 const WEBVIEW_REF = 'webview';
 
@@ -31,6 +32,7 @@ export default class Protocol extends Component {
         super(props);
         this.state = {
             url: '',
+            loading: true,
             canBack: false,
         }
         this.netRequest = new NetRequest();
@@ -90,7 +92,7 @@ export default class Protocol extends Component {
                 {!loading ?
                     <WebView
                         ref={WEBVIEW_REF}
-                        startInLoadingState={true}
+                        startInLoadingState={false}
                         source={{uri: this.state.url}}
                         style={styles.webContainer}
                     />
