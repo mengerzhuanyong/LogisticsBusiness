@@ -350,6 +350,13 @@ export default class ServiceAdd extends Component {
             toastShort('请输入服务价格');
             return;
         }
+        for (var i = 0; i < prices.length - 1; i++) {
+            let item = prices[i]
+            if (item.volmon === '') {
+                toastShort('请输入服务价格');
+                return;
+            }
+        }
         // console.log(data);
         // return;
         this.setState({
@@ -405,7 +412,10 @@ export default class ServiceAdd extends Component {
                     leftButton = {UtilsView.getLeftButton(() => { this.state.canBack && this.onBack()})}
                     rightButton = {<NavigationButton icon={GlobalIcons.icon_help} iconStyle={{tintColor: '#fff'}} type={'right'} submitFoo={() => this.onPushToNextPage('服务示例', 'WebViewPage', {api: NetApi.serviceHelp})} />}
                 />
-                <KeyboardAwareScrollView style={[GlobalStyles.hasFixedContainer, styles.scrollViewContainer]}>
+                <ScrollView
+                    keyboardShouldPersistTaps={'handled'}
+                    style={[GlobalStyles.hasFixedContainer, styles.scrollViewContainer]}
+                >
                     
                         <View style={[styles.searchView, styles.containerItemView]}>
                             <View style={styles.searchInputView}>
@@ -640,7 +650,7 @@ export default class ServiceAdd extends Component {
                             <Text style={{fontSize: 15, color: '#333', marginBottom: 5,}}>{prices_tips_title}</Text>
                             {this.renderPricesTips(prices_tips)}
                         </View>
-                </KeyboardAwareScrollView>
+                </ScrollView>
                 <View style={[GlobalStyles.fixedBtnView, styles.orderDetailBtnView]}>
                     <TouchableOpacity
                         style = {styles.orderDetailBtnItem}

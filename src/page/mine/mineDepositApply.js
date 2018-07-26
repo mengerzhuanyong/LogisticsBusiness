@@ -288,7 +288,9 @@ export default class MineDeposit extends Component {
                         <Text style={styles.mineAccountInfoCon}>{item.money}元</Text>
                     </View>
                 </View>
-                <ScrollView>
+                <ScrollView
+                    keyboardShouldPersistTaps={'handled'}
+                >
                     <View style={[styles.addressAddItemView, {marginTop: 10,}]}>
                         <View style={[styles.titleView]}>
                             <Text style={styles.titleViewCon}>联系信息</Text>

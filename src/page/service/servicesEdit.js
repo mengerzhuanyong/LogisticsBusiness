@@ -102,7 +102,7 @@ export default class ServiceEdit extends Component {
         });
     };
     loadNetData = () => {
-        let url = NetApi.storeServices;
+        let url = NetApi.storeServices + '/seid/' + this.state.item.id;
         this.netRequest.fetchGet(url, true)
             .then(result => {
                 if (result && result.code == 1) {
@@ -343,12 +343,19 @@ export default class ServiceEdit extends Component {
             toastShort('请输入服务价格');
             return;
         }
+        for (var i = 0; i < prices.length - 1; i++) {
+            let item = prices[i]
+            if (item.volmon === '') {
+                toastShort('请输入服务价格');
+                return;
+            }
+        }
         // console.log(data);
         // return;
         this.setState({
             canPress: false,
         });
-        this.netRequest.fetchPost(url, data)
+        this.netRequest.fetchPost(url, data, true)
             .then(result => {
                 // console.log(result);
                 if (result && result.code == 1) {
@@ -418,7 +425,7 @@ export default class ServiceEdit extends Component {
                         submitFoo={() => this.onPushToNextPage('服务示例', 'WebViewPage', {api: NetApi.serviceHelp})}/>}
                 />
                 <ScrollView
-                    keyboardDismissMode={'none'}
+                    keyboardShouldPersistTaps={'handled'}
                     style={[GlobalStyles.hasFixedContainer, styles.scrollViewContainer]}
                 >
                     <View style={[styles.searchView, styles.containerItemView]}>
