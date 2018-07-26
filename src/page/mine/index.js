@@ -189,8 +189,8 @@ export default class Mine extends Component {
                 <View style={styles.mineNavigatorContainer}>
                     {store.isStore == 1 && storeData.is_online && <NavigatorItem
                         leftIcon = {GlobalIcons.icon_mine_crash}
-                        leftTitle = {'保证金'}
-                        onPushNavigator = {() => this.onPushNavigator('保证金', 'MineDepositIndex')}
+                        leftTitle = {'增值业务'}
+                        onPushNavigator = {() => this.onPushNavigator('增值业务', 'MineDepositIndex')}
                     />}
                     {store.isStore == 1 && storeData.is_online && <View style={[GlobalStyles.horLine, styles.horLine]} />}
                     <NavigatorItem

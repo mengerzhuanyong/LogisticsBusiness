@@ -46,8 +46,8 @@ export default class MineStoreSetting extends Component {
                 {name: '集装箱', value: '0'},
             ],
             deliveryFee: [
-                {name: '取件费', value: ''},
-                {name: '送件费', value: ''},
+                {name: '同城上门取货', value: ''},
+                {name: '同城送货上门', value: ''},
             ],
             canBack: false,
         };
@@ -205,13 +205,13 @@ export default class MineStoreSetting extends Component {
                             <Text style={styles.contentItemTitle}>门店服务特色</Text>
                         </View>
                         {this.renderFeatures(features)}
+                        {this.renderDeliveryFee(deliveryFee)}
                     </View>
-                    <View style={[styles.paymentMethodView]}>
+                    {1 > 2 && <View style={[styles.paymentMethodView]}>
                         <View style={styles.contentItemTitleView}>
                             <Text style={styles.contentItemTitle}>小件取送费</Text>
                         </View>
-                        {this.renderDeliveryFee(deliveryFee)}
-                    </View>
+                    </View>}
                     {store.isStore == 1 && <TouchableOpacity
                         style = {[GlobalStyles.btnView, styles.btnView]}
                         onPress = {()=>this.submit(1)}

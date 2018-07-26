@@ -105,7 +105,7 @@ export default class ServiceAdd extends Component {
 
     loadNetData = () => {
         let url = NetApi.storeServices;
-        this.netRequest.fetchGet(url)
+        this.netRequest.fetchGet(url, true)
             .then(result => {
                 if (result && result.code == 1) {
                     this.updateState({
@@ -113,6 +113,7 @@ export default class ServiceAdd extends Component {
                         prices_tips: result.data.prices_tips,
                         prices_tips_example: result.data.prices_tips_example,
                         prices_tips_title: result.data.prices_tips_title,
+                        prices: result.data.volmon,
                     });
                 }
             })
@@ -253,9 +254,9 @@ export default class ServiceAdd extends Component {
     }
 
     renderVolumeView = () => {
-        let { volumeViewCount, prices } = this.state;
+        let {prices} = this.state;
         let views = [];
-        for ( let i = 0; i < volumeViewCount; i++) {
+        for ( let i = 0; i < prices.length; i++) {
             views.push(
                 <View key={i}>
                     <View style={[GlobalStyles.horLine, styles.horLine]} />
@@ -263,37 +264,9 @@ export default class ServiceAdd extends Component {
                         <View style={styles.orderMoneyInfoItem}>
                             <View style={styles.orderMoneyInfoItem}>
                                 <Text style={styles.orderMoneyInfoTitle}>体积：</Text>
-                                <TextInput
-                                    // customKeyboardType = "numberKeyBoardWithDot"
-                                    keyboardType = {'numeric'}
-                                    style = {[styles.inputItemCon, styles.volumeInput]}
-                                    placeholder = "请输入"
-                                    placeholderTextColor = '#888'
-                                    underlineColorAndroid = {'transparent'}
-                                    onChangeText = {(text)=> {
-                                        prices[i].min = text;
-                                        this.setState({
-                                            prices: prices
-                                        })
-                                        // console.log(prices);
-                                    }}
-                                />
+                                <Text style={[styles.orderMoneyInfoCon]}>{prices[i].min}</Text>
                                 <Text style={styles.orderMoneyInfoConNum}>至</Text>
-                                <TextInput
-                                    // customKeyboardType = "numberKeyBoardWithDot"
-                                    keyboardType = {'numeric'}
-                                    style = {[styles.inputItemCon, styles.volumeInput]}
-                                    placeholder = "请输入"
-                                    placeholderTextColor = '#888'
-                                    underlineColorAndroid = {'transparent'}
-                                    onChangeText = {(text)=> {
-                                        prices[i].max = text;
-                                        this.setState({
-                                            prices: prices
-                                        })
-                                        // console.log(prices);
-                                    }}
-                                />
+                                <Text style={[styles.orderMoneyInfoCon]}>{prices[i].max}</Text>
                                 <Text style={styles.orderMoneyInfoConNum}>m³</Text>
                             </View>
                             <View style={[GlobalStyles.verLine, styles.verLine]} />
@@ -661,31 +634,26 @@ export default class ServiceAdd extends Component {
                                 </View>}
                             {this.renderVolumeView()}
                         </View>
-                        <TouchableOpacity
-                            style = {[GlobalStyles.listAddBtnView, {marginBottom: 20, position: 'absolute', right: 10, bottom: 30, zIndex: 99}]}
-                            onPress = {() => this.addVolumeView()}
-                        >
-                            <Image source={GlobalIcons.icon_add} style={GlobalStyles.listAddBtnIcon} />
-                        </TouchableOpacity>
+
                         <View style={{padding: 20,}}>
                             <Text style={{fontSize: 15, color: '#333', marginBottom: 5,}}>{prices_tips_example}</Text>
                             <Text style={{fontSize: 15, color: '#333', marginBottom: 5,}}>{prices_tips_title}</Text>
                             {this.renderPricesTips(prices_tips)}
                         </View>
                 </KeyboardAwareScrollView>
-                <View style={[GlobalStyles.fixedBtnView, styles.orderDetalBtnView]}>
+                <View style={[GlobalStyles.fixedBtnView, styles.orderDetailBtnView]}>
                     <TouchableOpacity
-                        style = {styles.orderDetalBtnItem}
+                        style = {styles.orderDetailBtnItem}
                         onPress = {() => this.onBack()}
                     >
-                        <Text style={styles.orderDetalBtnName}>取消</Text>
+                        <Text style={styles.orderDetailBtnName}>取消</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        style = {[styles.orderDetalBtnItem, styles.orderDetalBtnItemCurrent]}
+                        style = {[styles.orderDetailBtnItem, styles.orderDetailBtnItemCurrent]}
                         onPress = {() => {canPress && this.submit()}}
                     >
                         <Image source={GlobalIcons.images_bg_btn} style={GlobalStyles.buttonImage} />
-                        <Text style={[styles.orderDetalBtnName, styles.orderDetalBtnNameCurrent]}>确认</Text>
+                        <Text style={[styles.orderDetailBtnName, styles.orderDetailBtnNameCurrent]}>确认</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -720,7 +688,8 @@ const styles = StyleSheet.create({
         marginVertical: 15,
     },
     verLine: {
-        height: 40,
+        height: 35,
+        marginHorizontal: 15,
     },
     horLine: {
         marginVertical: 10,
@@ -841,14 +810,17 @@ const styles = StyleSheet.create({
         height: 40,
     },
     volumeInput: {
-        width: GlobalStyles.width > 320 ? 60 : 50,
+        flex: 1,
         fontSize: 14,
         color: '#555',
         fontWeight: '600',
         textAlign: 'center',
+        // backgroundColor: '#123',
     },
+    orderRemarkInfoView: {},
     orderMoneyInfoItem: {
         height: 40,
+        flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -864,7 +836,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#f60',
     },
-    orderDetalBtnView: {
+    orderDetailBtnView: {
         height: 80,
         padding: 15,
         flexDirection: 'row',
@@ -874,7 +846,7 @@ const styles = StyleSheet.create({
         // backgroundColor: '#123',
         justifyContent: 'space-between',
     },
-    orderDetalBtnItem: {
+    orderDetailBtnItem: {
         height: 50,
         borderWidth: 1,
         borderRadius: 5,
@@ -886,14 +858,14 @@ const styles = StyleSheet.create({
         borderColor: GlobalStyles.themeColor,
         width: (GlobalStyles.width - 100) / 2,
     },
-    orderDetalBtnItemCurrent: {
+    orderDetailBtnItemCurrent: {
         borderWidth: 0,
     },
-    orderDetalBtnName: {
+    orderDetailBtnName: {
         fontSize: 14,
         color: GlobalStyles.themeColor,
     },
-    orderDetalBtnNameCurrent: {
+    orderDetailBtnNameCurrent: {
         color: '#fff',
     },
     serviceTypeBtnView: {

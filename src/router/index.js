@@ -60,6 +60,7 @@ import MineFinanceWithdrawSuccess from '../page/mine/mineFinanceWithdrawSuccess'
 import MineDepositIndex from '../page/mine/mineDepositIndex'
 import MineDeposit from '../page/mine/mineDeposit'
 import MineDeposit2 from '../page/mine/mineDeposit2'
+import MineDepositApply from '../page/mine/mineDepositApply'
 import MineDiscount from '../page/mine/mineDiscount'
 import MineStoreNote from '../page/mine/mineStoreNote'
 import MineStoreSetting from '../page/mine/mineStoreSetting'
@@ -251,6 +252,9 @@ const App = StackNavigator(
         },
         MineDeposit2: {
             screen: MineDeposit2,
+        },
+        MineDepositApply: {
+            screen: MineDepositApply,
         },
         MineDiscount: {
             screen: MineDiscount,

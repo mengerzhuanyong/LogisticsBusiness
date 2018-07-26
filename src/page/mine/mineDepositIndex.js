@@ -43,9 +43,10 @@ export default class MineDepositIndex extends Component {
             store: global.store.storeData,
             deposit: {name: '保证金', money: '', status: '', style: '1'},
             topDeposit: {name: '扶持费用', money: '', status: '', style: '2'},
-            // rankDeposit: {name: '评级费用', money: '', status: '', style: '3'},
+            rankDeposit: {name: '申请优质商家', money: '', status: '', style: '4'},
             canBack: false,
             remark: '',
+            tips: '',
         };
         this.netRequest = new NetRequest();
     }
@@ -83,6 +84,7 @@ export default class MineDepositIndex extends Component {
                 // console.log(result);
                 this.setState({
                     remark: result.data.remark,
+                    tips: result.data.tips || '',
                     deposit: result.data.deposit,
                     topDeposit: result.data.topDeposit,
                     rankDeposit: result.data.rankDeposit,
@@ -91,7 +93,7 @@ export default class MineDepositIndex extends Component {
     };
 
     onPushNavigator = (webTitle, compent, item) => {
-        const { navigate } = this.props.navigation;
+        const {navigate} = this.props.navigation;
         // console.log(navigate);
         webTitle = '交纳' + webTitle;
         // item.status = 1;
@@ -99,16 +101,17 @@ export default class MineDepositIndex extends Component {
             webTitle: webTitle,
             item: item,
             remark: this.state.remark,
+            tips: this.state.tips,
             reloadData: () => this.loadNetData(),
         })
-    }
+    };
 
     render(){
         const { ready, refreshing, companyListData, deposit, topDeposit, rankDeposit } = this.state;
         return (
             <View style={styles.container}>
                 <NavigationBar
-                    title = {'保证金'}
+                    title = {'增值业务'}
                     leftButton = {UtilsView.getLeftButton(() => { this.state.canBack && this.onBack()})}
                 />
                 <View style={styles.mineNavigatorContainer}>
@@ -125,13 +128,14 @@ export default class MineDepositIndex extends Component {
                         // rightText = {topDeposit.status == 1 ? '已交' : '未交'}
                         onPushNavigator = {() => this.onPushNavigator(topDeposit.name, 'MineDeposit', topDeposit)}
                     />
-                    {1 > 2 && <NavigatorItem
+                    <View style={[GlobalStyles.horLine, styles.horLine]} />
+                    <NavigatorItem
                         // <View style={[GlobalStyles.horLine, styles.horLine]} />
                         leftIcon = {false}
                         leftTitle = {rankDeposit.name}
                         // rightText = {rankDeposit.status == 1 ? '已交' : '未交'}
-                        onPushNavigator = {() => this.onPushNavigator(rankDeposit.name, 'MineDeposit', rankDeposit)}
-                    />}
+                        onPushNavigator = {() => this.onPushNavigator(rankDeposit.name, 'MineDepositApply', rankDeposit)}
+                    />
                 </View>
             </View>
         );
