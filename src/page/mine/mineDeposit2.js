@@ -51,7 +51,7 @@ export default class MineDeposit2 extends Component {
     constructor(props) {
         super(props);
         let {params} = this.props.navigation.state;
-        this.state =  {
+        this.state = {
             store: global.store.storeData,
             ready: false,
             loadMore: false,
@@ -70,7 +70,7 @@ export default class MineDeposit2 extends Component {
         this.netRequest = new NetRequest();
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.loadNetData();
         this.backTimer = setTimeout(() => {
             this.setState({
@@ -79,7 +79,7 @@ export default class MineDeposit2 extends Component {
         }, 1000);
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         this.backTimer && clearTimeout(this.backTimer);
         this.onBack();
         this.timer && clearTimeout(this.timer);
@@ -91,7 +91,7 @@ export default class MineDeposit2 extends Component {
         this.props.navigation.goBack();
     }
 
-    updateState= (state) => {
+    updateState = (state) => {
         if (!this) {
             return;
         }
@@ -126,12 +126,14 @@ export default class MineDeposit2 extends Component {
             })
     }
 
-    dropLoadMore = () => {}
+    dropLoadMore = () => {
+    }
 
-    freshNetData = () => {}
+    freshNetData = () => {
+    }
 
     onPushNavigator = (webTitle, compent) => {
-        const { navigate } = this.props.navigation;
+        const {navigate} = this.props.navigation;
         // console.log(navigate);
         navigate(compent, {
             webTitle: webTitle
@@ -139,7 +141,7 @@ export default class MineDeposit2 extends Component {
     }
 
     submit = () => {
-        let { store, item, paymentType, agree} = this.state;
+        let {store, item, paymentType, agree} = this.state;
 
         let data = {
             sid: store.sid,
@@ -153,17 +155,17 @@ export default class MineDeposit2 extends Component {
         if (paymentType == 1) {
             wechat.isWXAppInstalled()
                 .then((isInstalled) => {
-                    if(isInstalled) {
+                    if (isInstalled) {
                         let url = NetApi.wechatPay;
                         this.netRequest.fetchPost(url, data)
-                            .then( result => {
+                            .then(result => {
                                 // console.log(result);
                                 this.submitWechatPay(result.data);
                             })
-                            .catch( error => {
+                            .catch(error => {
                                 // console.log('首页推荐', error);
                             })
-                    }else{
+                    } else {
                         toastShort('没有安装微信软件，请您安装微信之后再试');
                     }
                 })
@@ -173,13 +175,13 @@ export default class MineDeposit2 extends Component {
         } else {
             let url = NetApi.mineDepositPay;
             this.netRequest.fetchPost(url, data)
-                .then( result => {
+                .then(result => {
                     // console.log(result);
                     if (result && result.code == 1) {
                         this.submitAlipay(result.data);
                     }
                 })
-                .catch( error => {
+                .catch(error => {
                     // console.log('首页推荐', error);
                 })
         }
@@ -205,7 +207,7 @@ export default class MineDeposit2 extends Component {
     submitAlipay = (signed) => {
         const {navigate, state, goBack} = this.props.navigation;
         Alipay.pay(signed)
-            .then(function(data) {
+            .then(function (data) {
                 toastShort('付款成功');
                 this.timer2 = setTimeout(() => {
                     // this.onBack();
@@ -213,7 +215,7 @@ export default class MineDeposit2 extends Component {
                     goBack();
                 }, 500);
                 // console.log(data);
-            }, function(err) {
+            }, function (err) {
                 // console.log(err);
                 toastShort(err.domain);
             });
@@ -274,140 +276,158 @@ export default class MineDeposit2 extends Component {
         return tipsView;
     };
 
-    render(){
-        const { ready, refreshing, item, paymentType, canPress, modalShow, depositType, depositTips, mobile, link } = this.state;
-        const { params } = this.props.navigation.state;
+    render() {
+        const {ready, refreshing, item, paymentType, canPress, modalShow, depositType, depositTips, mobile, link} = this.state;
+        const {params} = this.props.navigation.state;
         let depositStatus = item.name == '保证金' && item.status == 1;
         let tips = depositStatus ? '已交纳' : '交纳';
         return (
             <View style={styles.container}>
                 <NavigationBar
-                    title = {tips + params.webTitle}
-                    style = {{
+                    title={tips + params.webTitle}
+                    style={{
                         zIndex: 2,
                     }}
-                    leftButton = {UtilsView.getLeftButton(() => { this.state.canBack && this.onBack()})}
+                    leftButton={UtilsView.getLeftButton(() => {
+                        this.state.canBack && this.onBack()
+                    })}
                 />
-                <View style={styles.mineTopContainer}>
-                    <TouchableOpacity
-                        style = {[styles.mineAccountInfoView, depositType === 1 && styles.mineAccountInfoViewCur]}
-                        onPress = {() => {
-                            this.setState({
-                                depositType: 1,
-                            })
-                        }}
-                    >
-                        <Text style={[styles.mineAccountInfoCon, depositType === 1 && styles.mineAccountInfoConCur]}>一颗钻石</Text>
-                        <Text style={[styles.mineAccountInfoTitle, depositType === 1 && styles.mineAccountInfoTitleCur]}>{item.money}元</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style = {[styles.mineAccountInfoView, depositType === 2 && styles.mineAccountInfoViewCur]}
-                        onPress = {() => {
-                            this.setState({
-                                depositType: 2,
-                            })
-                        }}
-                    >
-                        <Text style={[styles.mineAccountInfoCon, depositType === 2 && styles.mineAccountInfoConCur]}>二颗钻石</Text>
-                        <Text style={[styles.mineAccountInfoTitle, depositType === 2 && styles.mineAccountInfoTitleCur]}>10000.00元</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style = {[styles.mineAccountInfoView, depositType === 3 && styles.mineAccountInfoViewCur]}
-                        onPress = {() => {
-                            this.setState({
-                                depositType: 3,
-                            })
-                        }}
-                    >
-                        <Text style={[styles.mineAccountInfoCon, depositType === 3 && styles.mineAccountInfoConCur]}>三颗钻石</Text>
-                        <Text style={[styles.mineAccountInfoTitle, depositType === 3 && styles.mineAccountInfoTitleCur]}>60000.00元</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style = {[styles.mineAccountInfoView, depositType === 4 && styles.mineAccountInfoViewCur]}
-                        onPress = {() => {
-                            this.setState({
-                                depositType: 4,
-                            })
-                        }}
-                    >
-                        <Text style={[styles.mineAccountInfoCon, depositType === 4 && styles.mineAccountInfoConCur]}>四颗钻石</Text>
-                        <Text style={[styles.mineAccountInfoTitle, depositType === 4 && styles.mineAccountInfoTitleCur]}>100000.00元</Text>
-                    </TouchableOpacity>
-                </View>
-                {!depositStatus && depositType === 1 && <View style={styles.mineNavigatorContainer}>
-                    <TouchableOpacity
-                        style = {styles.paymentMethodItem}
-                        onPress = {() => {
-                            this.setState({
-                                paymentType: '2',
-                            })
-                        }}
-                    >
-                        <View style={styles.paymentMethodTitleView}>
-                            <Image source={GlobalIcons.icon_alipay} style={styles.paymentMethodIcon} />
-                            <Text style={styles.cargoAttributesTitle}>支付宝支付</Text>
-                        </View>
-                        <Image source={paymentType == '2' ? selectedIcon : selectIcon} style={GlobalStyles.checkedIcon} />
-                    </TouchableOpacity>
-                </View>}
-                {!depositStatus && depositType === 1 && <View style={[styles.containerItemView, styles.flowProtocolView]}>
-                    <TouchableOpacity
-                        style={styles.flowProtocolBtnView}
-                        onPress={() => {
-                            let state = this.state.agree == '1' ? 0 : 1;
-                            this.setState({
-                                agree: state,
-                            })
-                        }}
-                    >
-                        <Image source={this.state.agree == '1' ? selectedIcon : selectIcon}
-                               style={GlobalStyles.checkedIcon}/>
-                        <Text style={styles.flowProtocolBtnCon}>我已阅读并同意</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.flowProtocolBtnView}
-                        onPress={() => this.onPushToNextPage('保证金协议', 'CommonWeb', {url: link})}
-                    >
-                        <Text style={styles.flowProtocolName}>《保证金协议》</Text>
-                    </TouchableOpacity>
-                </View>}
-                {depositType !== 1 &&
+                <ScrollView keyboardShouldPersistTaps={'handled'}>
+                    <View style={styles.mineTopContainer}>
+                        <TouchableOpacity
+                            style={[styles.mineAccountInfoView, depositType === 1 && styles.mineAccountInfoViewCur]}
+                            onPress={() => {
+                                this.setState({
+                                    depositType: 1,
+                                })
+                            }}
+                        >
+                            <Text
+                                style={[styles.mineAccountInfoCon, depositType === 1 && styles.mineAccountInfoConCur]}>一颗钻石</Text>
+                            <Text
+                                style={[styles.mineAccountInfoTitle, depositType === 1 && styles.mineAccountInfoTitleCur]}>{item.money}元</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[styles.mineAccountInfoView, depositType === 2 && styles.mineAccountInfoViewCur]}
+                            onPress={() => {
+                                this.setState({
+                                    depositType: 2,
+                                })
+                            }}
+                        >
+                            <Text
+                                style={[styles.mineAccountInfoCon, depositType === 2 && styles.mineAccountInfoConCur]}>二颗钻石</Text>
+                            <Text
+                                style={[styles.mineAccountInfoTitle, depositType === 2 && styles.mineAccountInfoTitleCur]}>10000.00元</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[styles.mineAccountInfoView, depositType === 3 && styles.mineAccountInfoViewCur]}
+                            onPress={() => {
+                                this.setState({
+                                    depositType: 3,
+                                })
+                            }}
+                        >
+                            <Text
+                                style={[styles.mineAccountInfoCon, depositType === 3 && styles.mineAccountInfoConCur]}>三颗钻石</Text>
+                            <Text
+                                style={[styles.mineAccountInfoTitle, depositType === 3 && styles.mineAccountInfoTitleCur]}>60000.00元</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[styles.mineAccountInfoView, depositType === 4 && styles.mineAccountInfoViewCur]}
+                            onPress={() => {
+                                this.setState({
+                                    depositType: 4,
+                                })
+                            }}
+                        >
+                            <Text
+                                style={[styles.mineAccountInfoCon, depositType === 4 && styles.mineAccountInfoConCur]}>四颗钻石</Text>
+                            <Text
+                                style={[styles.mineAccountInfoTitle, depositType === 4 && styles.mineAccountInfoTitleCur]}>100000.00元</Text>
+                        </TouchableOpacity>
+                    </View>
+                    {!depositStatus && depositType === 1 && <View style={styles.mineNavigatorContainer}>
+                        <TouchableOpacity
+                            style={styles.paymentMethodItem}
+                            onPress={() => {
+                                this.setState({
+                                    paymentType: '2',
+                                })
+                            }}
+                        >
+                            <View style={styles.paymentMethodTitleView}>
+                                <Image source={GlobalIcons.icon_alipay} style={styles.paymentMethodIcon}/>
+                                <Text style={styles.cargoAttributesTitle}>支付宝支付</Text>
+                            </View>
+                            <Image source={paymentType == '2' ? selectedIcon : selectIcon}
+                                   style={GlobalStyles.checkedIcon}/>
+                        </TouchableOpacity>
+                    </View>}
+                    {!depositStatus && depositType === 1 &&
+                    <View style={[styles.containerItemView, styles.flowProtocolView]}>
+                        <TouchableOpacity
+                            style={styles.flowProtocolBtnView}
+                            onPress={() => {
+                                let state = this.state.agree == '1' ? 0 : 1;
+                                this.setState({
+                                    agree: state,
+                                })
+                            }}
+                        >
+                            <Image source={this.state.agree == '1' ? selectedIcon : selectIcon}
+                                   style={GlobalStyles.checkedIcon}/>
+                            <Text style={styles.flowProtocolBtnCon}>我已阅读并同意</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.flowProtocolBtnView}
+                            onPress={() => this.onPushToNextPage('保证金协议', 'CommonWeb', {url: link})}
+                        >
+                            <Text style={styles.flowProtocolName}>《保证金协议》</Text>
+                        </TouchableOpacity>
+                    </View>}
+                    {depositType !== 1 &&
                     <View style={styles.depositTipsView}>
                         {this.renderTipsView(depositTips)}
                         {1 > 2 && <TouchableOpacity
-                            style = {styles.phoneView}
-                            onPress = {() => this.makeCall(mobile)}
+                            style={styles.phoneView}
+                            onPress={() => this.makeCall(mobile)}
                         >
                             <Text style={styles.depositTipsCon}>联系电话：</Text>
                             <Text style={styles.phone}>{mobile}</Text>
                         </TouchableOpacity>}
                     </View>
-                }
-                {depositType === 1 && <View style={styles.mineBtnView}>
-                    {depositStatus ?                        
-                        <TouchableOpacity
-                            style = {[GlobalStyles.btnView, {backgroundColor: '#ccc'}]}
-                            onPress = {() => {canPress && this.showModalView()}}
-                        >
-                            <Text style={[GlobalStyles.btnItem, {color: '#555'}]}>退回保证金</Text>
-                        </TouchableOpacity>
-                        :
-                        <TouchableOpacity
-                            style = {GlobalStyles.btnView}
-                            onPress = {() => {canPress && this.submit()}}
-                        >
-                            <Text style={GlobalStyles.btnItem}>立即交纳</Text>
-                        </TouchableOpacity>
                     }
-                </View>}
+                    {depositType === 1 && <View style={styles.mineBtnView}>
+                        {depositStatus ?
+                            <TouchableOpacity
+                                style={[GlobalStyles.btnView, {backgroundColor: '#ccc'}]}
+                                onPress={() => {
+                                    canPress && this.showModalView()
+                                }}
+                            >
+                                <Text style={[GlobalStyles.btnItem, {color: '#555'}]}>退回保证金</Text>
+                            </TouchableOpacity>
+                            :
+                            <TouchableOpacity
+                                style={GlobalStyles.btnView}
+                                onPress={() => {
+                                    canPress && this.submit()
+                                }}
+                            >
+                                <Text style={GlobalStyles.btnItem}>立即交纳</Text>
+                            </TouchableOpacity>
+                        }
+                    </View>}
+                </ScrollView>
                 {modalShow && <ModalView
-                    show = {modalShow}
-                    title = {MODAL_CONFIG.title}
-                    contentText = {MODAL_CONFIG.modalText}
-                    cancelBtnName = {MODAL_CONFIG.cancelBtnName}
-                    confirmBtnName = {MODAL_CONFIG.confirmBtnName}
-                    cancelFoo = {() => this.showModalView()}
-                    confirmFoo = {() => this.submitReturn()}
+                    show={modalShow}
+                    title={MODAL_CONFIG.title}
+                    contentText={MODAL_CONFIG.modalText}
+                    cancelBtnName={MODAL_CONFIG.cancelBtnName}
+                    confirmBtnName={MODAL_CONFIG.confirmBtnName}
+                    cancelFoo={() => this.showModalView()}
+                    confirmFoo={() => this.submitReturn()}
                 />}
             </View>
         );
@@ -497,8 +517,7 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontWeight: '800',
     },
-    userInfoSetting: {
-    },
+    userInfoSetting: {},
     userInfoSettingName: {
         fontSize: 14,
         color: '#fff',
@@ -530,9 +549,7 @@ const styles = StyleSheet.create({
         color: '#666',
         lineHeight: 30,
     },
-    emptyTipsBtnCon: {
-
-    },
+    emptyTipsBtnCon: {},
 
     paymentMethodItem: {
         marginTop: 5,

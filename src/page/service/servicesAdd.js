@@ -48,22 +48,23 @@ export default class ServiceAdd extends Component {
             beginTime: '',
             endTime: '',
             duration: '',
-            prices: [{min: '', max: '', volmon: ''}],
             carPrices: '',
             canPress: true,
-            serviceType: '1',
+            serviceType: '', // '4',
             storeServices: [],
-            selectedServicesName: '当日达',
+            selectedServicesName: '', // '物流发货',
             prices_tips: '',
             prices_tips_example: '',
             prices_tips_title: '',
+            prices: [
+                {price: '', volmon: ''},
+            ],
         };
         this.netRequest = new NetRequest();
     }
 
     prices = [{
-        min: '',
-        max: '',
+        price: '',
         volmon: '',
     }];
 
@@ -114,6 +115,8 @@ export default class ServiceAdd extends Component {
                         prices_tips_example: result.data.prices_tips_example,
                         prices_tips_title: result.data.prices_tips_title,
                         prices: result.data.volmon,
+                        serviceType: result.data.default_cate_name,
+                        selectedServicesName: result.data.default_cate_value,
                     });
                 }
             })
@@ -264,9 +267,7 @@ export default class ServiceAdd extends Component {
                         <View style={styles.orderMoneyInfoItem}>
                             <View style={styles.orderMoneyInfoItem}>
                                 <Text style={styles.orderMoneyInfoTitle}>体积：</Text>
-                                <Text style={[styles.orderMoneyInfoCon]}>{prices[i].min}</Text>
-                                <Text style={styles.orderMoneyInfoConNum}>至</Text>
-                                <Text style={[styles.orderMoneyInfoCon]}>{prices[i].max}</Text>
+                                <Text style={[styles.orderMoneyInfoCon]}>{prices[i].volmon}</Text>
                                 <Text style={styles.orderMoneyInfoConNum}>m³</Text>
                             </View>
                             <View style={[GlobalStyles.verLine, styles.verLine]} />
@@ -280,7 +281,7 @@ export default class ServiceAdd extends Component {
                                     placeholderTextColor = '#888'
                                     underlineColorAndroid = {'transparent'}
                                     onChangeText = {(text)=> {
-                                        prices[i].volmon = formatPrice(text);
+                                        prices[i].price = formatPrice(text);
                                         this.setState({
                                             prices: prices
                                         })
@@ -326,6 +327,7 @@ export default class ServiceAdd extends Component {
             sort: serviceSort,
             volmon: prices,
         };
+        console.log(data);
         if (!startArea) {
             toastShort('请输入发货地');
             return;
@@ -414,7 +416,7 @@ export default class ServiceAdd extends Component {
                 />
                 <ScrollView
                     keyboardShouldPersistTaps={'handled'}
-                    style={[GlobalStyles.hasFixedContainer, styles.scrollViewContainer]}
+                    style={[GlobalStyles.hasFixedContainer1, styles.scrollViewContainer]}
                 >
                     
                         <View style={[styles.searchView, styles.containerItemView]}>
@@ -424,8 +426,6 @@ export default class ServiceAdd extends Component {
                                         <Text style={GlobalStyles.placeText}>发</Text>
                                     </View>
                                     <TextInput
-                                        // customKeyboardType = "numberKeyBoardWithDot"
-                                        // keyboardType = {'numeric'}
                                         style = {[styles.inputItemCon, styles.addressDetailItemView]}
                                         placeholder = "请输入出发地"
                                         placeholderTextColor = '#888'
@@ -494,39 +494,7 @@ export default class ServiceAdd extends Component {
                                     />
                                 </View>
                                 <View style={[GlobalStyles.horLine, styles.horLine]} />
-                                {/*<View style={styles.orderMoneyInfoItem}>
-                                    <Text style={styles.orderMoneyInfoTitle}>发车时间：</Text>
-                                    <TextInput
-                                        customKeyboardType = "numberKeyBoardWithDot"
-                                        style = {[styles.inputItemCon, styles.itemRightCon]}
-                                        placeholder = "请输入发车时间"
-                                        placeholderTextColor = '#888'
-                                        underlineColorAndroid = {'transparent'}
-                                        onChangeText = {(text)=> {
-                                            this.setState({
-                                                beginTime: text
-                                            })
-                                        }}
-                                    />
-                                    <Text style={styles.timeUnit}>点</Text>
-                                </View>
-                                <View style={[GlobalStyles.horLine, styles.horLine]} />
-                                <View style={styles.orderMoneyInfoItem}>
-                                    <Text style={styles.orderMoneyInfoTitle}>抵达时间：</Text>
-                                    <TextInput
-                                        customKeyboardType = "numberKeyBoardWithDot"
-                                        style = {[styles.inputItemCon, styles.itemRightCon]}
-                                        placeholder = "请输入抵达时间"
-                                        placeholderTextColor = '#888'
-                                        underlineColorAndroid = {'transparent'}
-                                        onChangeText = {(text)=> {
-                                            this.setState({
-                                                endTime: text
-                                            })
-                                        }}
-                                    />
-                                    <Text style={styles.timeUnit}>点</Text>
-                                </View>*/}
+
                                 <TouchableOpacity
                                     style = {styles.orderMoneyInfoItem}
                                     onPress = {() => this.showTimePicker('start')}
@@ -578,43 +546,7 @@ export default class ServiceAdd extends Component {
                                             selectedServicesName: item.name
                                         })}
                                     />
-                                    {/*
-                                        // 暂存
-                                        <View style={styles.serviceTypeBtnView}>
-                                        <TouchableOpacity
-                                            style = {styles.serviceTypeBtnItem}
-                                            onPress = {() => {
-                                                this.setState({
-                                                    serviceType: '1'
-                                                })
-                                            }}
-                                        >
-                                            <Text style={styles.serviceTypeBtnName}>当日达</Text>
-                                            <Image source={serviceType == '1' ? checkedIcon : checkIcon} style={GlobalStyles.checkedIcon} />
-                                        </TouchableOpacity>
-                                        <TouchableOpacity
-                                            style = {styles.serviceTypeBtnItem}
-                                            onPress = {() => {
-                                                this.setState({
-                                                    serviceType: '2'
-                                                })
-                                            }}
-                                        >
-                                            <Text style={styles.serviceTypeBtnName}>次日达</Text>
-                                            <Image source={serviceType == '2' ? checkedIcon : checkIcon} style={GlobalStyles.checkedIcon} />
-                                        </TouchableOpacity>
-                                        <TouchableOpacity
-                                            style = {styles.serviceTypeBtnItem}
-                                            onPress = {() => {
-                                                this.setState({
-                                                    serviceType: '3'
-                                                })
-                                            }}
-                                        >
-                                            <Text style={styles.serviceTypeBtnName}>航空</Text>
-                                            <Image source={serviceType == '3' ? checkedIcon : checkIcon} style={GlobalStyles.checkedIcon} />
-                                        </TouchableOpacity>
-                                    </View>*/}
+
                                 </View>
                             </View>
                         </View>
@@ -623,25 +555,7 @@ export default class ServiceAdd extends Component {
                             <View style={styles.orderInfoItemView}>
                                 <Text style={styles.orderCompanyInfoTitle}>价格设定</Text>
                             </View>
-                            {1 > 2 && <View style={styles.orderMoneyInfoItem}>
-                                <View style={[GlobalStyles.horLine, styles.horLine]} />
-                                    <Text style={styles.orderMoneyInfoTitle}>包车价格：</Text>
-                                    <TextInput
-                                        // customKeyboardType = "numberKeyBoardWithDot"
-                                        keyboardType = {'numeric'}
-                                        style = {[styles.inputItemCon, styles.itemRightCon]}
-                                        placeholder = "请输入包车价格"
-                                        placeholderTextColor = '#888'
-                                        underlineColorAndroid = {'transparent'}
-                                        onChangeText = {(text)=> {
-                                            price = formatPrice(text);
-                                            this.setState({
-                                                carPrices: price
-                                            })
-                                        }}
-                                    />
-                                    <Text style={styles.timeUnit}>元</Text>
-                                </View>}
+                            
                             {this.renderVolumeView()}
                         </View>
 
@@ -650,22 +564,24 @@ export default class ServiceAdd extends Component {
                             <Text style={{fontSize: 15, color: '#333', marginBottom: 5,}}>{prices_tips_title}</Text>
                             {this.renderPricesTips(prices_tips)}
                         </View>
+                    <View style={[GlobalStyles.fixedBtnView2, styles.orderDetailBtnView]}>
+                        <TouchableOpacity
+                            style={styles.orderDetailBtnItem}
+                            onPress={() => this.onBack()}
+                        >
+                            <Text style={styles.orderDetailBtnName}>取消</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[styles.orderDetailBtnItem, styles.orderDetailBtnItemCurrent]}
+                            onPress={() => {
+                                canPress && this.submit()
+                            }}
+                        >
+                            <Image source={GlobalIcons.images_bg_btn} style={GlobalStyles.buttonImage}/>
+                            <Text style={[styles.orderDetailBtnName, styles.orderDetailBtnNameCurrent]}>确认</Text>
+                        </TouchableOpacity>
+                    </View>
                 </ScrollView>
-                <View style={[GlobalStyles.fixedBtnView, styles.orderDetailBtnView]}>
-                    <TouchableOpacity
-                        style = {styles.orderDetailBtnItem}
-                        onPress = {() => this.onBack()}
-                    >
-                        <Text style={styles.orderDetailBtnName}>取消</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style = {[styles.orderDetailBtnItem, styles.orderDetailBtnItemCurrent]}
-                        onPress = {() => {canPress && this.submit()}}
-                    >
-                        <Image source={GlobalIcons.images_bg_btn} style={GlobalStyles.buttonImage} />
-                        <Text style={[styles.orderDetailBtnName, styles.orderDetailBtnNameCurrent]}>确认</Text>
-                    </TouchableOpacity>
-                </View>
             </View>
         );
     }
@@ -677,7 +593,7 @@ const styles = StyleSheet.create({
         backgroundColor: GlobalStyles.bgColor,
     },
     scrollViewContainer: {
-        marginBottom: 80,
+        // marginBottom: 80,
     },
     containerItemView: {
         padding: 15,
@@ -853,7 +769,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderTopWidth: 1,
         borderColor: '#ddd',
-        // backgroundColor: '#123',
+        backgroundColor: '#fff',
         justifyContent: 'space-between',
     },
     orderDetailBtnItem: {

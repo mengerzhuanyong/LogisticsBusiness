@@ -66,7 +66,7 @@ export default class MineDeposit extends Component {
         this.netRequest = new NetRequest();
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.loadNetData();
         this.backTimer = setTimeout(() => {
             this.setState({
@@ -75,7 +75,7 @@ export default class MineDeposit extends Component {
         }, 1000);
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         this.backTimer && clearTimeout(this.backTimer);
         this.onBack();
         this.timer && clearTimeout(this.timer);
@@ -87,7 +87,7 @@ export default class MineDeposit extends Component {
         this.props.navigation.goBack();
     }
 
-    updateState= (state) => {
+    updateState = (state) => {
         if (!this) {
             return;
         }
@@ -104,13 +104,15 @@ export default class MineDeposit extends Component {
 
     }
 
-    dropLoadMore = () => {}
+    dropLoadMore = () => {
+    }
 
-    freshNetData = () => {}
+    freshNetData = () => {
+    }
 
     renderListItem = (item) => {
         return (
-            <FinanceItem item = {item} />
+            <FinanceItem item={item}/>
         )
     }
     renderHeaderView = () => {
@@ -121,7 +123,7 @@ export default class MineDeposit extends Component {
         )
     }
     renderFooterView = () => {
-        return this.state.loadMore && <ActivityIndicatorItem />;
+        return this.state.loadMore && <ActivityIndicatorItem/>;
     }
     renderEmptyView = () => {
         return (
@@ -132,11 +134,11 @@ export default class MineDeposit extends Component {
     }
 
     renderSeparator = () => {
-        return <View style={GlobalStyles.horLine} />;
+        return <View style={GlobalStyles.horLine}/>;
     }
 
     onPushNavigator = (webTitle, compent) => {
-        const { navigate } = this.props.navigation;
+        const {navigate} = this.props.navigation;
         // console.log(navigate);
         navigate(compent, {
             webTitle: webTitle
@@ -144,7 +146,7 @@ export default class MineDeposit extends Component {
     }
 
     submit = () => {
-        let { store, item, paymentType } = this.state;
+        let {store, item, paymentType} = this.state;
 
         let data = {
             sid: store.sid,
@@ -154,17 +156,17 @@ export default class MineDeposit extends Component {
         if (paymentType == 1) {
             wechat.isWXAppInstalled()
                 .then((isInstalled) => {
-                    if(isInstalled) {
+                    if (isInstalled) {
                         let url = NetApi.wechatPay;
                         this.netRequest.fetchPost(url, data)
-                            .then( result => {
+                            .then(result => {
                                 // console.log(result);
                                 this.submitWechatPay(result.data);
                             })
-                            .catch( error => {
+                            .catch(error => {
                                 // console.log('首页推荐', error);
                             })
-                    }else{
+                    } else {
                         toastShort('没有安装微信软件，请您安装微信之后再试');
                     }
                 })
@@ -174,13 +176,13 @@ export default class MineDeposit extends Component {
         } else {
             let url = NetApi.mineDepositPay;
             this.netRequest.fetchPost(url, data)
-                .then( result => {
+                .then(result => {
                     // console.log(result);
                     if (result && result.code == 1) {
                         this.submitAlipay(result.data);
                     }
                 })
-                .catch( error => {
+                .catch(error => {
                     // console.log('首页推荐', error);
                 })
         }
@@ -206,7 +208,7 @@ export default class MineDeposit extends Component {
     submitAlipay = (signed) => {
         const {navigate, state, goBack} = this.props.navigation;
         Alipay.pay(signed)
-            .then(function(data) {
+            .then(function (data) {
                 toastShort('付款成功');
                 this.timer2 = setTimeout(() => {
                     // this.onBack();
@@ -214,7 +216,7 @@ export default class MineDeposit extends Component {
                     goBack();
                 }, 500);
                 // console.log(data);
-            }, function(err) {
+            }, function (err) {
                 // console.log(err);
                 toastShort(err.domain);
             });
@@ -254,48 +256,52 @@ export default class MineDeposit extends Component {
             return;
         }
         let content = data.map((item, index) => {
-            return <Text key={'rule'+item.id} style={styles.rulesContext}>{item.value}</Text>;
+            return <Text key={'rule' + item.id} style={styles.rulesContext}>{item.value}</Text>;
         });
         return content;
     };
 
-    render(){
-        const { ready, refreshing, item, paymentType, canPress, modalShow, remark } = this.state;
-        const { params } = this.props.navigation.state;
+    render() {
+        const {ready, refreshing, item, paymentType, canPress, modalShow, remark} = this.state;
+        const {params} = this.props.navigation.state;
         let depositStatus = item.name == '保证金' && item.status == 1;
         let tips = depositStatus ? '已交纳' : '交纳';
         return (
             <View style={styles.container}>
                 <NavigationBar
-                    title = {tips + params.webTitle}
-                    style = {{
+                    title={tips + params.webTitle}
+                    style={{
                         zIndex: 2,
                     }}
-                    backgroundImage = {false}
-                    leftButton = {UtilsView.getLeftButton(() => { this.state.canBack && this.onBack()})}
+                    backgroundImage={false}
+                    leftButton={UtilsView.getLeftButton(() => {
+                        this.state.canBack && this.onBack()
+                    })}
                 />
                 <View style={styles.mineTopContainer}>
-                    <Image style={styles.backgroundImages} source={GlobalIcons.images_bg_finance} />
+                    <Image style={styles.backgroundImages} source={GlobalIcons.images_bg_finance}/>
                     <View style={styles.mineAccountInfoView}>
                         <Text style={styles.mineAccountInfoCon}>{item.money}元</Text>
                     </View>
                 </View>
-                {!depositStatus && <View style={styles.mineNavigatorContainer}>
-                    <TouchableOpacity
-                        style = {styles.paymentMethodItem}
-                        onPress = {() => {
-                            this.setState({
-                                paymentType: '2',
-                            })
-                        }}
-                    >
-                        <View style={styles.paymentMethodTitleView}>
-                            <Image source={GlobalIcons.icon_alipay} style={styles.paymentMethodIcon} />
-                            <Text style={styles.cargoAttributesTitle}>支付宝支付</Text>
-                        </View>
-                        <Image source={paymentType == '2' ? selectedIcon : selectIcon} style={GlobalStyles.checkedIcon} />
-                    </TouchableOpacity>
-                    {/*<View style={[GlobalStyles.horLine, styles.horLine]} />
+                <ScrollView keyboardShouldPersistTaps={'handled'}>
+                    {!depositStatus && <View style={styles.mineNavigatorContainer}>
+                        <TouchableOpacity
+                            style={styles.paymentMethodItem}
+                            onPress={() => {
+                                this.setState({
+                                    paymentType: '2',
+                                })
+                            }}
+                        >
+                            <View style={styles.paymentMethodTitleView}>
+                                <Image source={GlobalIcons.icon_alipay} style={styles.paymentMethodIcon}/>
+                                <Text style={styles.cargoAttributesTitle}>支付宝支付</Text>
+                            </View>
+                            <Image source={paymentType == '2' ? selectedIcon : selectIcon}
+                                   style={GlobalStyles.checkedIcon}/>
+                        </TouchableOpacity>
+                        {/*<View style={[GlobalStyles.horLine, styles.horLine]} />
                     <TouchableOpacity
                         style = {styles.paymentMethodItem}
                         onPress = {() => {
@@ -310,36 +316,41 @@ export default class MineDeposit extends Component {
                         </View>
                         <Image source={paymentType == '1' ? selectedIcon : selectIcon} style={GlobalStyles.checkedIcon} />
                     </TouchableOpacity>*/}
-                </View>}
-                <View style={styles.mineBtnView}>
-                    {depositStatus ?                        
-                        <TouchableOpacity
-                            style = {[GlobalStyles.btnView, {backgroundColor: '#ccc'}]}
-                            onPress = {() => {canPress && this.showModalView()}}
-                        >
-                            <Text style={[GlobalStyles.btnItem, {color: '#555'}]}>退回保证金</Text>
-                        </TouchableOpacity>
-                        :
-                        <TouchableOpacity
-                            style = {GlobalStyles.btnView}
-                            onPress = {() => {canPress && this.submit()}}
-                        >
-                            <Text style={GlobalStyles.btnItem}>立即交纳</Text>
-                        </TouchableOpacity>
-                    }
-                </View>
-                <View style={styles.rulesContent}>
-                    <Text style={styles.rulesTitle}>{remark.title}</Text>
-                    {this.renderRemarkContent(remark.content)}
-                </View>
+                    </View>}
+                    <View style={styles.mineBtnView}>
+                        {depositStatus ?
+                            <TouchableOpacity
+                                style={[GlobalStyles.btnView, {backgroundColor: '#ccc'}]}
+                                onPress={() => {
+                                    canPress && this.showModalView()
+                                }}
+                            >
+                                <Text style={[GlobalStyles.btnItem, {color: '#555'}]}>退回保证金</Text>
+                            </TouchableOpacity>
+                            :
+                            <TouchableOpacity
+                                style={GlobalStyles.btnView}
+                                onPress={() => {
+                                    canPress && this.submit()
+                                }}
+                            >
+                                <Text style={GlobalStyles.btnItem}>立即交纳</Text>
+                            </TouchableOpacity>
+                        }
+                    </View>
+                    <View style={styles.rulesContent}>
+                        <Text style={styles.rulesTitle}>{remark.title}</Text>
+                        {this.renderRemarkContent(remark.content)}
+                    </View>
+                </ScrollView>
                 {modalShow && <ModalView
-                    show = {modalShow}
-                    title = {MODAL_CONFIG.title}
-                    contentText = {MODAL_CONFIG.modalText}
-                    cancelBtnName = {MODAL_CONFIG.cancelBtnName}
-                    confirmBtnName = {MODAL_CONFIG.confirmBtnName}
-                    cancelFoo = {() => this.showModalView()}
-                    confirmFoo = {() => this.submitReturn()}
+                    show={modalShow}
+                    title={MODAL_CONFIG.title}
+                    contentText={MODAL_CONFIG.modalText}
+                    cancelBtnName={MODAL_CONFIG.cancelBtnName}
+                    confirmBtnName={MODAL_CONFIG.confirmBtnName}
+                    cancelFoo={() => this.showModalView()}
+                    confirmFoo={() => this.submitReturn()}
                 />}
             </View>
         );
@@ -418,8 +429,7 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontWeight: '800',
     },
-    userInfoSetting: {
-    },
+    userInfoSetting: {},
     userInfoSettingName: {
         fontSize: 14,
         color: '#fff',
@@ -451,9 +461,7 @@ const styles = StyleSheet.create({
         color: '#666',
         lineHeight: 30,
     },
-    emptyTipsBtnCon: {
-
-    },
+    emptyTipsBtnCon: {},
 
     paymentMethodItem: {
         marginTop: 5,
