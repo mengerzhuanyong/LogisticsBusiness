@@ -263,7 +263,7 @@ export default class MineDeposit extends Component {
         const { ready, refreshing, item, paymentType, canPress, modalShow, remark } = this.state;
         const { params } = this.props.navigation.state;
         let depositStatus = item.name == '保证金' && item.status == 1;
-        let tips = depositStatus ? '已' : '';
+        let tips = depositStatus ? '已交纳' : '交纳';
         return (
             <View style={styles.container}>
                 <NavigationBar

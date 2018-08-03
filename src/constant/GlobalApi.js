@@ -74,7 +74,7 @@ module.exports = {
     mineDeposit: 'home/capital/deposit/sid/',
     mineDepositTips: 'home/capital/depositTips',
     mineDepositPay: 'home/capital/payDeposit',
-    mineDepositApplyPay: 'home/capital/payDepositGreat',
+    mineDepositApplyPay: 'home/capital/payDeposit',
     mineDepositReturn: 'home/capital/refund/sid/',
 
     withdraw: 'home/capital/withdraw',

@@ -92,12 +92,11 @@ export default class MineDepositIndex extends Component {
             })
     };
 
-    onPushNavigator = (webTitle, compent, item) => {
+    onPushNavigator = (webTitle, component, item) => {
         const {navigate} = this.props.navigation;
         // console.log(navigate);
-        webTitle = '交纳' + webTitle;
         // item.status = 1;
-        navigate(compent, {
+        navigate(component, {
             webTitle: webTitle,
             item: item,
             remark: this.state.remark,
