@@ -161,6 +161,8 @@ export default class MineInfoSetting extends Component {
     };
 
     handleOpenImagePicker = (type, cropW, cropH) => {
+        cropW = parseInt(cropW);
+        cropH = parseInt(cropH);
         SYImagePicker.removeAllPhoto();
         SYImagePicker.showImagePicker({imageCount: 1, isCrop: true, CropW: cropW, CropH: cropH, enableBase64: true}, (err, img) => {
             // console.log(img);
