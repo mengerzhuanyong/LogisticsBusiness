@@ -42,7 +42,7 @@ export default class MineDriverAdd extends Component {
             iscall: '1',
             canPress: true,
             canBack: false,
-        }
+        };
         this.netRequest = new NetRequest();
     }
 
@@ -144,7 +144,7 @@ export default class MineDriverAdd extends Component {
                     title = {'添加司机账号'}
                     leftButton = {UtilsView.getLeftButton(() => { this.state.canBack && this.onBack()})}
                 />
-                <KeyboardAwareScrollView style={[GlobalStyles.hasFixedContainer, styles.scrollViewContainer]}>
+                <KeyboardAwareScrollView style={[GlobalStyles.hasFixedContaine1r, styles.scrollViewContainer]}>
                      <CustomKeyboard.AwareCusKeyBoardScrollView>
                         <View style={styles.signView}>
                             <View style={styles.signItem}>
@@ -244,23 +244,23 @@ export default class MineDriverAdd extends Component {
                             </TouchableOpacity>
                         </View>
 
+                        <View style={[GlobalStyles.fixedBtn1View, styles.orderDetalBtnView]}>
+                            <TouchableOpacity
+                                style = {styles.orderDetalBtnItem}
+                                onPress = {() => this.onBack()}
+                            >
+                                <Text style={styles.orderDetalBtnName}>取消</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style = {[styles.orderDetalBtnItem, styles.orderDetalBtnItemCurrent]}
+                                onPress = {() => {canPress && this.submit()}}
+                            >
+                                <Image source={GlobalIcons.images_bg_btn} style={GlobalStyles.buttonImage} />
+                                <Text style={[styles.orderDetalBtnName, styles.orderDetalBtnNameCurrent]}>确认</Text>
+                            </TouchableOpacity>
+                        </View>
                      </CustomKeyboard.AwareCusKeyBoardScrollView>
                 </KeyboardAwareScrollView>
-                <View style={[GlobalStyles.fixedBtnView, styles.orderDetalBtnView]}>
-                    <TouchableOpacity
-                        style = {styles.orderDetalBtnItem}
-                        onPress = {() => this.onBack()}
-                    >
-                        <Text style={styles.orderDetalBtnName}>取消</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style = {[styles.orderDetalBtnItem, styles.orderDetalBtnItemCurrent]}
-                        onPress = {() => {canPress && this.submit()}}
-                    >
-                        <Image source={GlobalIcons.images_bg_btn} style={GlobalStyles.buttonImage} />
-                        <Text style={[styles.orderDetalBtnName, styles.orderDetalBtnNameCurrent]}>确认</Text>
-                    </TouchableOpacity>
-                </View>
             </View>
         );
     }
@@ -272,7 +272,7 @@ const styles = StyleSheet.create({
         backgroundColor: GlobalStyles.bgColor,
     },
     scrollViewContainer: {
-        marginBottom: 90,
+        // marginBottom: 90,
     },
 
     logoView: {
@@ -475,6 +475,7 @@ const styles = StyleSheet.create({
         color: '#f60',
     },
     orderDetalBtnView: {
+        marginTop: 50,
         height: 80,
         padding: 15,
         flexDirection: 'row',
@@ -489,7 +490,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: 15,
         justifyContent: 'center',
-        backgroundColor: 'transparent',
+        backgroundColor: '#fff',
         borderColor: GlobalStyles.themeColor,
         width: (GlobalStyles.width - 100) / 2,
     },

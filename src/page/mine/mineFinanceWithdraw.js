@@ -93,7 +93,7 @@ export default class MineFinanceWithDraw extends Component {
             money: money,
             name: alipayName,
             aliaccount: alipayAccount,
-        }
+        };
         if (alipayAccount == '') {
             toastShort('请输入支付宝账号');
             return;

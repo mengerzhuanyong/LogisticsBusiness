@@ -145,7 +145,7 @@ export default class MineDriverEdit extends Component {
                     title = {'司机信息编辑'}
                     leftButton = {UtilsView.getLeftButton(() => { this.state.canBack && this.onBack()})}
                 />
-                <KeyboardAwareScrollView style={[GlobalStyles.hasFixedContainer, styles.scrollViewContainer]}>
+                <KeyboardAwareScrollView style={[GlobalStyles.hasFixedConta1iner, styles.scrollViewCon1tainer]}>
                      <CustomKeyboard.AwareCusKeyBoardScrollView>
                         <View style={styles.signView}>
                             <View style={styles.signItem}>
@@ -250,23 +250,25 @@ export default class MineDriverEdit extends Component {
                             </TouchableOpacity>
                         </View>
 
+                        <View style={[GlobalStyles.fixedBt1nView, styles.orderDetalBtnView]}>
+                            <TouchableOpacity
+                                style={styles.orderDetalBtnItem}
+                                onPress={() => this.onBack()}
+                            >
+                                <Text style={styles.orderDetalBtnName}>取消</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={[styles.orderDetalBtnItem, styles.orderDetalBtnItemCurrent]}
+                                onPress={() => {
+                                    canPress && this.submit()
+                                }}
+                            >
+                                <Image source={GlobalIcons.images_bg_btn} style={GlobalStyles.buttonImage}/>
+                                <Text style={[styles.orderDetalBtnName, styles.orderDetalBtnNameCurrent]}>确认</Text>
+                            </TouchableOpacity>
+                        </View>
                      </CustomKeyboard.AwareCusKeyBoardScrollView>
                 </KeyboardAwareScrollView>
-                <View style={[GlobalStyles.fixedBtnView, styles.orderDetalBtnView]}>
-                    <TouchableOpacity
-                        style = {styles.orderDetalBtnItem}
-                        onPress = {() => this.onBack()}
-                    >
-                        <Text style={styles.orderDetalBtnName}>取消</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style = {[styles.orderDetalBtnItem, styles.orderDetalBtnItemCurrent]}
-                        onPress = {() => {canPress && this.submit()}}
-                    >
-                        <Image source={GlobalIcons.images_bg_btn} style={GlobalStyles.buttonImage} />
-                        <Text style={[styles.orderDetalBtnName, styles.orderDetalBtnNameCurrent]}>确认</Text>
-                    </TouchableOpacity>
-                </View>
             </View>
         );
     }
@@ -481,6 +483,7 @@ const styles = StyleSheet.create({
         color: '#f60',
     },
     orderDetalBtnView: {
+        marginTop: 50,
         height: 80,
         padding: 15,
         flexDirection: 'row',
@@ -495,7 +498,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: 15,
         justifyContent: 'center',
-        backgroundColor: 'transparent',
+        backgroundColor: '#fff',
         borderColor: GlobalStyles.themeColor,
         width: (GlobalStyles.width - 100) / 2,
     },
