@@ -101,7 +101,15 @@ export default class MineDeposit extends Component {
         })
     }
     loadNetData = () => {
-
+        let url = NetApi.mineDepositApplyTips;
+        this.netRequest.fetchGet(url, true)
+            .then(result => {
+                if (result && result.code == 1) {
+                    this.setState({
+                        tips: result.data,
+                    })
+                }
+            })
     }
     dropLoadMore = () => {
     }
@@ -143,15 +151,15 @@ export default class MineDeposit extends Component {
         let {store, item, paymentType, address, username, mobile} = this.state;
 
         if (!username) {
-            toastShort('请输入联系人姓名');
+            toastShort('请输入收件人姓名');
             return;
         }
         if (!mobile) {
-            toastShort('请输入联系人手机号');
+            toastShort('请输入收件人手机号');
             return;
         }
         if (!address) {
-            toastShort('请输入联系地址');
+            toastShort('请输入收件地址');
             return;
         }
         let data = {
@@ -291,14 +299,14 @@ export default class MineDeposit extends Component {
                 <ScrollView keyboardShouldPersistTaps={'handled'}>
                     <View style={[styles.addressAddItemView, {marginTop: 10,}]}>
                         <View style={[styles.titleView]}>
-                            <Text style={styles.titleViewCon}>联系信息</Text>
+                            <Text style={styles.titleViewCon}>收件信息</Text>
                         </View>
                         <View style={[GlobalStyles.horLine, styles.horLine]}/>
                         <View style={styles.infoItemView}>
-                            <Text style={styles.infoItemTitle}>联系人姓名：</Text>
+                            <Text style={styles.infoItemTitle}>收件人姓名：</Text>
                             <TextInput
                                 style={styles.inputItemCon}
-                                placeholder="请输入联系人姓名"
+                                placeholder="请输入收件人姓名"
                                 placeholderTextColor='#888'
                                 underlineColorAndroid={'transparent'}
                                 onChangeText={(text) => {
@@ -310,10 +318,10 @@ export default class MineDeposit extends Component {
                         </View>
                         <View style={[GlobalStyles.horLine, styles.horLine]}/>
                         <View style={styles.infoItemView}>
-                            <Text style={styles.infoItemTitle}>联系电话：</Text>
+                            <Text style={styles.infoItemTitle}>收件人电话：</Text>
                             <TextInput
                                 style={styles.inputItemCon}
-                                placeholder="请输入联系电话"
+                                placeholder="请输入收件人电话"
                                 maxLength={11}
                                 keyboardType={'numeric'}
                                 placeholderTextColor='#888'
@@ -328,10 +336,10 @@ export default class MineDeposit extends Component {
                         </View>
                         <View style={[GlobalStyles.horLine, styles.horLine]}/>
                         <View style={styles.infoItemView}>
-                            <Text style={styles.infoItemTitle}>联系地址：</Text>
+                            <Text style={styles.infoItemTitle}>收件地址：</Text>
                             <TextInput
                                 style={styles.inputItemCon}
-                                placeholder="请输入联系地址"
+                                placeholder="请输入收件地址"
                                 placeholderTextColor='#888'
                                 underlineColorAndroid={'transparent'}
                                 onChangeText={(text) => {
@@ -370,7 +378,6 @@ export default class MineDeposit extends Component {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.rulesContent}>
-                        <Text style={styles.rulesTitle}>{tips.title}</Text>
                         {this.renderRemarkContent(tips.content)}
                     </View>
                 </ScrollView>
