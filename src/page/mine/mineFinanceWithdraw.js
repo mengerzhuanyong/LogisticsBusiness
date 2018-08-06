@@ -177,7 +177,7 @@ export default class MineFinanceWithDraw extends Component {
                                 placeholder = "请输入账户姓名"
                                 placeholderTextColor = '#888'
                                 underlineColorAndroid = {'transparent'}
-                                keyboardType = {'numeric'}
+                                // keyboardType = {'numeric'}
                                 onChangeText = {(text)=>{
                                     this.setState({
                                         alipayName: text
