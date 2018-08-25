@@ -39,7 +39,7 @@ export default class Order extends Component {
 
     constructor(props) {
         super(props);
-        this.state =  {
+        this.state = {
             store: global.store.storeData,
             audited: '',
             ready: false,
@@ -56,7 +56,7 @@ export default class Order extends Component {
                 {name: '已取消订单', status: '6'},
             ],
             canBack: false,
-        }
+        };
         this.netRequest = new NetRequest();
     }
 
