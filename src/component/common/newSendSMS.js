@@ -1,6 +1,6 @@
 /**
  * 汇了金融 - SendSMS
- * https://menger.me
+ * http://menger.me
  * @大梦
  */
 

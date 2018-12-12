@@ -1,6 +1,6 @@
 /**
  * 速芽物流商家端 - Cooperate
- * https://menger.me
+ * http://menger.me
  * @Meng
  */
 

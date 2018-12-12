@@ -1,6 +1,6 @@
 /**
  * 速芽物流商家端 - ServiceItem
- * https://menger.me
+ * http://menger.me
  * @大梦
  */
 

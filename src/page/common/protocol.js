@@ -1,6 +1,6 @@
 /**
  * 速芽物流商家端 - Protocol
- * https://menger.me
+ * http://menger.me
  * @Meng
  */
 

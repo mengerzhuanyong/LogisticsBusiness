@@ -1,6 +1,6 @@
 /**
  * 速芽物流商家端 - 公共详情页
- * https://menger.me
+ * http://menger.me
  * @Meng
  */
 
