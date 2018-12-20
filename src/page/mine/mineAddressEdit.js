@@ -61,6 +61,8 @@ export default class MineAddressEdit extends Component {
             address: params.item ? params.item.dress : '',
             logo: params.item ? params.item.logo : '',
             banner: params.item ? params.item.img : '',
+            addressName: params.item ? params.item.address_name : '',
+            longitude: params.item ? params.item.longitude : '',
             ready: false,
             loadMore: false,
             refreshing: false,
@@ -126,6 +128,16 @@ export default class MineAddressEdit extends Component {
             data.push(province);
         }
         return data;
+    };
+
+    onPressSelectAddress = () => {
+        this.props.navigation.navigate('SelectAddressWeb', {
+            onCallBack: (address, longitude, addressName) => this.setState({
+                address,
+                longitude,
+                addressName,
+            })
+        });
     };
 
     showAreaPicker = (type) => {
@@ -206,7 +218,7 @@ export default class MineAddressEdit extends Component {
     }
 
     submit = () => {
-        let {id, name, realname, mobile, logo, banner, area, address} = this.state;
+        let {id, name, realname, mobile, logo, banner, area, longitude, addressName, address} = this.state;
         let url = NetApi.storeEdit;
         let data = {
             id: id,
@@ -217,6 +229,8 @@ export default class MineAddressEdit extends Component {
             banner: banner,
             area: area,
             address: address,
+            longitude,
+            address_name: addressName
         };
         if (!name) {
             toastShort('请输入服务点名称');
@@ -242,12 +256,12 @@ export default class MineAddressEdit extends Component {
         //     toastShort('请上传服务点banner图');
         //     return;
         // }
-        if (!area) {
-            toastShort('请选择服务点所在地');
-            return;
-        }
+        // if (!area) {
+        //     toastShort('请选择服务点所在地');
+        //     return;
+        // }
         if (!address) {
-            toastShort('请输入服务点详细地址');
+            toastShort('请选择服务点所在地');
             return;
         }
         this.setState({
@@ -346,11 +360,11 @@ export default class MineAddressEdit extends Component {
                             <View style={[GlobalStyles.horLine, styles.horLine]} />
                             <TouchableOpacity
                                 style = {styles.inputItemConTextView}
-                                onPress = {() => this.showAreaPicker()}
+                                onPress = {() => this.onPressSelectAddress()}
                             >
-                                <Text style={styles.inputItemConText}>{area.length > 0 ? `${area[0]} - ${area[1]} - ${area[2]}` : '请选择省市区'}</Text>
+                                <Text style={[styles.inputItemConText,]} numberOfLines={2}>{address || '选择地区'}</Text>
                             </TouchableOpacity>
-                            <View style={[GlobalStyles.horLine, styles.horLine]} />
+                            {/*<View style={[GlobalStyles.horLine, styles.horLine]} />
                             <TextInput
                                 style = {styles.inputItemCon}
                                 placeholder = "请输入详细地址"
@@ -362,7 +376,7 @@ export default class MineAddressEdit extends Component {
                                         address: text
                                     })
                                 }}
-                            />
+                            />*/}
                         </View>
                         {/*<View style={[styles.addressAddItemView, {marginTop: 10,}]}>
                             <View style={[styles.titleView]}>
