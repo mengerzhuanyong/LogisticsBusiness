@@ -70,6 +70,7 @@ export default class RegisterUser extends Component {
             canPress: true,
             uploadType: 1,
             agree: 0,
+            longitude: '',
         };
         this.netRequest = new NetRequest();
     }
@@ -101,7 +102,7 @@ export default class RegisterUser extends Component {
     doRegister = () => {
         let {
             mobile, password, rePassword, code, name, style,
-            idcard, obverseIdcard, license, address, area, agree
+            idcard, obverseIdcard, license, address, area, agree, longitude
         } = this.state;
         let url = NetApi.register;
         let data = {
@@ -116,6 +117,7 @@ export default class RegisterUser extends Component {
             license: license,
             address: address,
             area: area,
+            longitude,
         };
 
         if (!mobile) {
@@ -150,12 +152,12 @@ export default class RegisterUser extends Component {
             toastShort('请上传驾驶证照片！');
             return;
         }
-        if (!area) {
-            toastShort('请选择所在地区！');
-            return;
-        }
+        // if (!area) {
+        //     toastShort('请选择所在地区！');
+        //     return;
+        // }
         if (!address) {
-            toastShort('请输入详细地址！');
+            toastShort('请选择所在地');
             return;
         }
         if (agree == 0) {
@@ -284,6 +286,16 @@ export default class RegisterUser extends Component {
             data.push(province);
         }
         return data;
+    };
+
+    onPressSelectAddress = () => {
+        this.props.navigation.navigate('SelectAddressWeb', {
+            onCallBack: (address, longitude, addressName) => this.setState({
+                address,
+                longitude,
+                addressName,
+            })
+        });
     };
 
     showAreaPicker = (type) => {
@@ -418,7 +430,7 @@ export default class RegisterUser extends Component {
 
 
     render(){
-        let { seconds, codeAlreadySend, area, uploading, idcard, obverseIdcard, license, canPress,uploadType } = this.state;
+        let { seconds, codeAlreadySend, area, uploading, address, idcard, obverseIdcard, license, canPress,uploadType } = this.state;
         // console.log(uploading && idcard == '');
         return (
             <KeyboardAwareScrollView>
@@ -549,15 +561,15 @@ export default class RegisterUser extends Component {
                         </View>
                         <View style={GlobalStyles.horLine} />
                         <View style={styles.signItem}>
-                            <Text style={styles.inputItemTitle}>所在省市</Text>
+                            <Text style={styles.inputItemTitle}>所在地</Text>
                             <TouchableOpacity
                                 style = {styles.inputItemConTextView}
-                                onPress = {() => this.showAreaPicker()}
+                                onPress = {() => this.onPressSelectAddress()}
                             >
-                                <Text style={styles.inputItemConText}>{area.length > 0 ? `${area[0]} - ${area[1]} - ${area[2]}` : '请选择所在城市'}</Text>
+                                <Text style={styles.inputItemConText}>{address || '请选择所在地'}</Text>
                             </TouchableOpacity>
                         </View>
-                        <View style={GlobalStyles.horLine} />
+                        {/*<View style={GlobalStyles.horLine} />
                         <View style={styles.signItem}>
                             <Text style={styles.inputItemTitle}>详细地址</Text>
                             <TextInput
@@ -571,7 +583,7 @@ export default class RegisterUser extends Component {
                                     })
                                 }}
                             />
-                        </View>
+                        </View>*/}
                         <View style={GlobalStyles.horLine} />
                         <View style={styles.signItem}>
                             <Text style={styles.inputItemTitle}>密码</Text>

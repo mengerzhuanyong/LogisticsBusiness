@@ -119,6 +119,12 @@ android {
             keyAlias MYAPP_RELEASE_KEY_ALIAS
             keyPassword MYAPP_RELEASE_KEY_PASSWORD
         }
+        debug {
+            storeFile file(MYAPP_RELEASE_STORE_FILE)
+            storePassword MYAPP_RELEASE_STORE_PASSWORD
+            keyAlias MYAPP_RELEASE_KEY_ALIAS
+            keyPassword MYAPP_RELEASE_KEY_PASSWORD
+        }
     }
     splits {
         abi {
@@ -151,6 +157,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-baidu-map')
     compile project(':react-native-syan-image-picker')
     compile project(':react-native-wechat')
     compile project(':react-native-yunpeng-alipay')

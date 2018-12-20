@@ -15,8 +15,8 @@ module.exports = {
     // base: 'http://suya.com/index/',
     // base: 'http://suya.com.192.168.2.174.xip.io/index/',
     // base: 'http://192.168.2.120/',
-
     index: 'home/index/index_list/sid/',                                                                    // 首页
+    postLongitude: 'user/index/navigation',
     navigation: 'home/navigation/index',                                                               // 导航
     workStatus: 'home/index/open/id/',
     getBanner: 'home/index/banner',                                                                     // 首页

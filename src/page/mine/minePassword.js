@@ -102,10 +102,10 @@ export default class MineInfoSetting extends Component {
             password,
             repassword,
         };
-        if (!origin_password) {
-            toastShort('请输入原始密码');
-            return;
-        }
+        // if (!origin_password) {
+        //     toastShort('请输入原始密码');
+        //     return;
+        // }
         if (!password) {
             toastShort('请输入新密码');
             return;

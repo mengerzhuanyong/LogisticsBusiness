@@ -553,7 +553,7 @@ export default class ServiceEdit extends Component {
 
                     <View style={[styles.containerItemView, styles.orderRemarkInfoView]}>
                         <View style={styles.orderInfoItemView}>
-                            <Text style={styles.orderCompanyInfoTitle}>价格设定</Text>
+                            <Text style={styles.orderCompanyInfoTitle}>小件价格设定</Text>
                         </View>
                         {this.renderVolumeView()}
                     </View>

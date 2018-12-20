@@ -18,6 +18,8 @@ import GlobalIcons from './constant/GlobalIcon'
 import NetRequest from './util/utilsRequest'
 import NetApi from './constant/GlobalApi'
 import {toastShort, consoleLog} from './util/utilsToast'
+import {Geolocation} from 'react-native-baidu-map'
+import {checkFloat} from './util/utilsRegularMatch'
 
 const __IOS__ = Platform.OS === 'ios';
 
@@ -26,6 +28,8 @@ export default class Index extends Component {
     constructor(props) {
         super(props);
         this.state =  {
+            lat: '',
+            lng: '',
             loginState: false,
         };
         this.netRequest = new NetRequest();
@@ -39,12 +43,51 @@ export default class Index extends Component {
         }, 3000);
         this.registerKeyBoard();
         this.jpushRelative();
+        this.getLocation();
         wechat.registerApp(NetApi.wechatAppid);
     }
 
     componentWillUnmount() {
         this.timer && clearTimeout(this.timer);
         JPushModule.clearAllNotifications();
+    }
+
+    getLocation = async () => {
+        let data = await Geolocation.getCurrentPosition();
+        console.log('Geolocation---->', data);
+        if (!data) {
+            toastShort('定位失败，请稍后重试');
+            return;
+        }
+        let location = checkFloat(data.latitude);
+        if (location) {
+            global.lat = data.latitude;
+            global.lng = data.longitude;
+            this.setState({
+                lat: data.latitude,
+                lng: data.longitude,
+            });
+            this.postLocation(data.latitude, data.longitude);
+        }
+    };
+
+    postLocation = async (lat = this.state.lat, lng = this.state.lng) => {
+        console.log('lat, lng---->', lat, lng);
+        if (this.state.lat !== '') {
+            lat = this.state.lat;
+            lng = this.state.lng;
+        }
+        let url = NetApi.postLongitude;
+        lng = lng < 0 ? -lng : lng;
+        let data = {
+            lat: lat,
+            lng: lng,
+        };
+        try {
+            let result = this.netRequest.fetchPost(url, data, true);
+        } catch (e) {
+            console.log('e---->', e);
+        }
     }
     
     setBadge() {

@@ -75,6 +75,7 @@ export default class MineInfoSetting extends Component {
             companyListData: [],
             canPress: true,
             canBack: false,
+            longitude: params.item ? params.item.longitude : '',
         }
         this.netRequest = new NetRequest();
     }
@@ -133,6 +134,16 @@ export default class MineInfoSetting extends Component {
             data.push(province);
         }
         return data;
+    };
+
+    onPressSelectAddress = () => {
+        this.props.navigation.navigate('SelectAddressWeb', {
+            onCallBack: (address, longitude, addressName) => this.setState({
+                address,
+                longitude,
+                addressName,
+            })
+        });
     };
 
     showAreaPicker = (type) => {
@@ -227,8 +238,9 @@ export default class MineInfoSetting extends Component {
     }
 
     submit = () => {
-        let {id, company, name, item, realname, mobile, logo, banner, area, address, reminder} = this.state;
+        let {id, company, name, item, realname, mobile, logo, banner, area, longitude, address, reminder} = this.state;
         let url = NetApi.mineStoreEdit;
+        console.log('this.state---->', this.state);
         let data = {
             id: id,
             company: company,
@@ -240,6 +252,7 @@ export default class MineInfoSetting extends Component {
             area: area,
             address: address,
             reminder: reminder,
+            longitude,
         };
         if (item.style == 1 && !company) {
             toastShort('请输入公司名称');
@@ -269,18 +282,18 @@ export default class MineInfoSetting extends Component {
             toastShort('请上传门店banner图');
             return;
         }
-        if (!area) {
+        if (address === '') {
             toastShort('请选择门店所在地');
             return;
         }
-        if (!address) {
-            toastShort('请输入门店详细地址');
-            return;
-        }
+        // if (!address) {
+        //     toastShort('请输入门店详细地址');
+        //     return;
+        // }
         this.setState({
             canPress: false
         })
-        this.netRequest.fetchPost(url, data)
+        this.netRequest.fetchPost(url, data, true)
             .then(result => {
                 toastShort(result.msg);
                     // console.log(result);
@@ -388,17 +401,27 @@ export default class MineInfoSetting extends Component {
                                     }}
                                 />
                             </View>
+                            <View style={[GlobalStyles.horLine, styles.horLine]} />
+                            <View style={styles.infoItemView}>
+                                <Text style={styles.infoItemTitle}>门店地址：</Text>
+                                <TouchableOpacity
+                                    style = {styles.inputItemConView}
+                                    onPress = {() => store.isStore == 1 && this.onPressSelectAddress()}
+                                >
+                                    <Text style={styles.inputItemConText}>{address || '请选择所在地'}</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
-                        <View style={[styles.addressAddItemView, {marginTop: 10,}]}>
+                        {/*<View style={[styles.addressAddItemView, {marginTop: 10,}]}>
                             <View style={[styles.titleView]}>
                                 <Text style={styles.titleViewCon}>门店地址</Text>
                             </View>
                             <View style={[GlobalStyles.horLine, styles.horLine]} />
                             <TouchableOpacity
                                 style = {styles.inputItemConTextView}
-                                onPress = {() => store.isStore == 1 && this.showAreaPicker()}
+                                onPress = {() => store.isStore == 1 && this.onPressSelectAddress()}
                             >
-                                <Text style={styles.inputItemConText}>{area.length > 0 ? `${area[0]} - ${area[1]} - ${area[2]}` : '请选择省市区'}</Text>
+                                <Text style={styles.inputItemConText}>{address || '请选择所在地'}</Text>
                             </TouchableOpacity>
                             <View style={[GlobalStyles.horLine, styles.horLine]} />
                             <TextInput
@@ -414,7 +437,7 @@ export default class MineInfoSetting extends Component {
                                     })
                                 }}
                             />
-                        </View>
+                        </View>*/}
                         <View style={[styles.addressAddItemView, {marginTop: 10,}]}>
                             <View style={[styles.titleView]}>
                                 <Text style={styles.titleViewCon}>门店Logo</Text>
@@ -502,6 +525,12 @@ const styles = StyleSheet.create({
         fontSize: 15,
         color: '#555',
         alignItems: 'center',
+    },
+    inputItemConView: {
+        flex: 1,
+        minHeight: 40,
+        justifyContent: 'center',
+        // backgroundColor: '#f60'
     },
     inputItemMultilineCon: {
         padding: 15,

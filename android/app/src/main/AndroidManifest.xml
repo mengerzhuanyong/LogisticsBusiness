@@ -51,6 +51,9 @@
         <meta-data
             android:name="JPUSH_APPKEY"
             android:value="${JPUSH_APPKEY}" />
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="jnyOwTLAInH57rVb8AkmcyCs9mz0LICo"/>
     </application>
 
 </manifest>

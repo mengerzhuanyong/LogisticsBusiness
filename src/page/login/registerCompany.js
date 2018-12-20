@@ -71,6 +71,7 @@ export default class RegisterCompany extends Component {
             uploading: false,
             uploadType: 1,
             agree: 0,
+            longitude: '',
         };
         this.netRequest = new NetRequest();
     }
@@ -102,7 +103,7 @@ export default class RegisterCompany extends Component {
 
     doRegister = () => {
         let { mobile, password, rePassword, code, style, companyName, storeName,
-            idcard, obverseIdcard, license, address, area, agree } = this.state;
+            idcard, obverseIdcard, license, address, area, agree, longitude } = this.state;
         let url = NetApi.register;
         let data = {
             mobile: mobile,
@@ -117,6 +118,7 @@ export default class RegisterCompany extends Component {
             license: license,
             address: address,
             area: area,
+            longitude,
         };
 
         if (!mobile) {
@@ -159,12 +161,12 @@ export default class RegisterCompany extends Component {
             toastShort('请输入门店名称');
             return;
         }
-        if (!area) {
-            toastShort('请选择所在地区！');
-            return;
-        }
+        // if (!area) {
+        //     toastShort('请选择所在地区！');
+        //     return;
+        // }
         if (!address) {
-            toastShort('请输入详细地址！');
+            toastShort('请选择所在地');
             return;
         }
         if (agree == 0) {
@@ -294,6 +296,16 @@ export default class RegisterCompany extends Component {
         }
         return data;
     }
+
+    onPressSelectAddress = () => {
+        this.props.navigation.navigate('SelectAddressWeb', {
+            onCallBack: (address, longitude, addressName) => this.setState({
+                address,
+                longitude,
+                addressName,
+            })
+        });
+    };
 
     showAreaPicker = (type) => {
         Picker.init({
@@ -583,15 +595,15 @@ export default class RegisterCompany extends Component {
                         </View>
                         <View style={GlobalStyles.horLine} />
                         <View style={styles.signItem}>
-                            <Text style={styles.inputItemTitle}>所在省市</Text>
+                            <Text style={styles.inputItemTitle}>所在地</Text>
                             <TouchableOpacity
                                 style = {styles.inputItemConTextView}
-                                onPress = {() => this.showAreaPicker('end')}
+                                onPress = {() => this.onPressSelectAddress()}
                             >
-                                <Text style={styles.inputItemConText}>{area.length > 0 ? `${area[0]} - ${area[1]} - ${area[2]}` : '请选择所在城市'}</Text>
+                                <Text style={styles.inputItemConText}>{address || '请选择所在地'}</Text>
                             </TouchableOpacity>
                         </View>
-                        <View style={GlobalStyles.horLine} />
+                        {/* <View style={GlobalStyles.horLine} />
                         <View style={styles.signItem}>
                             <Text style={styles.inputItemTitle}>详细地址</Text>
                             <TextInput
@@ -605,7 +617,7 @@ export default class RegisterCompany extends Component {
                                     })
                                 }}
                             />
-                        </View>
+                        </View>*/}
                         <View style={GlobalStyles.horLine} />
                         <View style={styles.signItem}>
                             <Text style={styles.inputItemTitle}>密码</Text>

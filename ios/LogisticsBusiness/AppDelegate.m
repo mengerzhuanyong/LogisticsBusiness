@@ -18,6 +18,7 @@
 #import <React/RCTLinkingManager.h>
 #import "RNSplashScreen.h"
 #import "AlipayModule.h"
+#import "RCTBaiduMapViewManager.h"
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -45,6 +46,7 @@
                                                initialProperties:nil
                                                    launchOptions:launchOptions];
   rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
+  [RCTBaiduMapViewManager initSDK:@"xbUHFFonXDu5LZvjGskHxrCepO5sSiMf"];
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   UIViewController *rootViewController = [UIViewController new];
   rootViewController.view = rootView;
