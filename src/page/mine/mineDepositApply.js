@@ -178,7 +178,11 @@ export default class MineDeposit extends Component {
                         this.netRequest.fetchPost(url, data)
                             .then(result => {
                                 // console.log(result);
-                                this.submitWechatPay(result.data);
+                                if (result.code === 1) {
+                                    this.submitWechatPay(result.data);
+                                } else {
+                                    toastShort(result.msg);
+                                }
                             })
                             .catch(error => {
                                 // console.log('首页推荐', error);
@@ -195,8 +199,10 @@ export default class MineDeposit extends Component {
             this.netRequest.fetchPost(url, data)
                 .then(result => {
                     // console.log(result);
-                    if (result && result.code == 1) {
+                    if (result.code == 1) {
                         this.submitAlipay(result.data);
+                    } else {
+                        toastShort(result.msg);
                     }
                 })
                 .catch(error => {
