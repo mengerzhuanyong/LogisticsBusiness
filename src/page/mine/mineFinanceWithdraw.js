@@ -15,7 +15,7 @@ import {
     StyleSheet,
     TouchableOpacity
 } from 'react-native'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import NetRequest from '../../util/utilsRequest'
 import NetApi from '../../constant/GlobalApi'
 import GlobalStyles from '../../constant/GlobalStyle'
@@ -36,7 +36,7 @@ export default class MineFinanceWithDraw extends Component {
     constructor(props) {
         super(props);
         let {params} = this.props.navigation.state;
-        this.state =  {
+        this.state = {
             store: global.store.storeData,
             money: '',
             alipayName: '',
@@ -48,7 +48,7 @@ export default class MineFinanceWithDraw extends Component {
         this.netRequest = new NetRequest();
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.loadNetData();
         this.backTimer = setTimeout(() => {
             this.setState({
@@ -57,7 +57,7 @@ export default class MineFinanceWithDraw extends Component {
         }, 1000);
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         this.backTimer && clearTimeout(this.backTimer);
         this.timer && clearTimeout(this.timer);
         this.onBack();
@@ -69,7 +69,7 @@ export default class MineFinanceWithDraw extends Component {
         goBack();
     };
 
-    updateState= (state) => {
+    updateState = (state) => {
         if (!this) {
             return;
         }
@@ -85,7 +85,7 @@ export default class MineFinanceWithDraw extends Component {
     };
 
     submitWithdraw = () => {
-        let { store, money, alipayAccount, alipayName, minMoney } = this.state;
+        let {store, money, alipayAccount, alipayName, minMoney} = this.state;
         // console.log(money);
         let url = NetApi.withdraw;
         let data = {
@@ -108,7 +108,7 @@ export default class MineFinanceWithDraw extends Component {
         }
         money = parseFloat(money).toFixed(2);
         minMoney = parseFloat(minMoney).toFixed(2);
-        let status =  money - minMoney;
+        let status = money - minMoney;
         // console.log(money, minMoney, status);
         if (status < 0) {
             let msg = '最低提现金额为' + minMoney + '元，请重新输入';
@@ -122,10 +122,10 @@ export default class MineFinanceWithDraw extends Component {
         // console.log(data);
         // return;
         this.netRequest.fetchPost(url, data)
-            .then( result => {
+            .then(result => {
                 // console.log(result);
                 toastShort(result.msg);
-                if (result && result.code == 1 ) {
+                if (result && result.code == 1) {
                     this.timer = setTimeout(() => {
                         this.props.navigation.navigate('MineFinanceWithdrawSuccess');
                     }, 500)
@@ -135,50 +135,61 @@ export default class MineFinanceWithDraw extends Component {
                     });
                 }
             })
-            .catch( error => {
+            .catch(error => {
                 toastShort('error');
                 this.setState({
                     canPress: true
                 });
             })
     };
+    onPushNavigator = (webTitle, compent) => {
+        const {navigate} = this.props.navigation;
+        // console.log(navigate);
+        navigate(compent, {
+            webTitle: webTitle,
+            minMoney: this.state.minMoney,
+            accountMoney: this.state.accountMoney,
+            reloadData: () => this.freshNetData(),
+        })
+    }
 
-
-    render(){
-        const { money, allMoney, minMoney } = this.state;
+    render() {
+        const {money, allMoney, minMoney} = this.state;
         return (
             <View style={styles.container}>
                 <NavigationBar
-                    title = {'申请提现'}
-                    leftButton = {UtilsView.getLeftButton(() => { this.state.canBack && this.onBack()})}
+                    title={'申请提现'}
+                    leftButton={UtilsView.getLeftButton(() => {
+                        this.state.canBack && this.onBack()
+                    })}
                 />
                 <KeyboardAwareScrollView>
                     <View style={styles.mineTopContainer}>
                         <View style={styles.accountInfoItem}>
                             {/*<Text style={styles.accountTitle}>支付宝账号</Text>*/}
                             <TextInput
-                                style = {[styles.inputItemCon, styles.accountInput]}
-                                placeholder = "请输入支付宝账号"
-                                placeholderTextColor = '#888'
-                                underlineColorAndroid = {'transparent'}
-                                keyboardType = {'email-address'}
-                                onChangeText = {(text)=>{
+                                style={[styles.inputItemCon, styles.accountInput]}
+                                placeholder="请输入支付宝账号"
+                                placeholderTextColor='#888'
+                                underlineColorAndroid={'transparent'}
+                                keyboardType={'email-address'}
+                                onChangeText={(text) => {
                                     this.setState({
                                         alipayAccount: text
                                     })
                                 }}
                             />
                         </View>
-                        <View style={[GlobalStyles.horLine, styles.horLine]} />
+                        <View style={[GlobalStyles.horLine, styles.horLine]}/>
                         <View style={styles.accountInfoItem}>
                             {/*<Text style={styles.accountTitle}>账户姓名</Text>*/}
                             <TextInput
-                                style = {[styles.inputItemCon, styles.accountInput]}
-                                placeholder = "请输入账户姓名"
-                                placeholderTextColor = '#888'
-                                underlineColorAndroid = {'transparent'}
+                                style={[styles.inputItemCon, styles.accountInput]}
+                                placeholder="请输入账户姓名"
+                                placeholderTextColor='#888'
+                                underlineColorAndroid={'transparent'}
                                 // keyboardType = {'numeric'}
-                                onChangeText = {(text)=>{
+                                onChangeText={(text) => {
                                     this.setState({
                                         alipayName: text
                                     })
@@ -187,34 +198,47 @@ export default class MineFinanceWithDraw extends Component {
                         </View>
                     </View>
                     <View style={styles.mineMiddleContainer}>
-                        <Text style={styles.containerTitle}>提现金额</Text>
+                        <View style={styles.txView}>
+                            <Text style={styles.containerTitle}>提现金额</Text>
+
+                            <Text
+                                style={styles.txRule}
+                                onPress={()=>{
+                                    this.onPushNavigator('账户提现', 'TxRule')
+                                }}
+
+                                // onPushNavigator={() =>}
+                            >提现规则</Text>
+
+                        </View>
                         <View style={styles.containerContent}>
                             <Text style={styles.moneyIcon}>¥</Text>
                             <TextInput
-                                value = {money}
-                                style = {styles.inputItemCon}
-                                placeholder = "输入提现金额"
-                                placeholderTextColor = '#fff'
-                                underlineColorAndroid = {'transparent'}
-                                keyboardType = {'numeric'}
-                                onChangeText = {(text)=>{
+                                value={money}
+                                style={styles.inputItemCon}
+                                placeholder="输入提现金额"
+                                placeholderTextColor='#fff'
+                                underlineColorAndroid={'transparent'}
+                                keyboardType={'numeric'}
+                                onChangeText={(text) => {
                                     this.setState({
                                         money: text
                                     });
                                 }}
                             />
                             {money !== '' && <Text
-                                style = {GlobalStyles.clearInputBtn}
-                                onPress = {() => {
+                                style={GlobalStyles.clearInputBtn}
+                                onPress={() => {
                                     this.setState({
                                         money: '',
                                     })
                                 }}
                             >x</Text>}
                         </View>
-                        <View style={[GlobalStyles.horLine, styles.horLine]} />
+                        <View style={[GlobalStyles.horLine, styles.horLine]}/>
                         <View style={styles.containerBotView}>
-                            <Text style={[styles.leftTitle, styles.containerTitle]}>可用余额 {parseFloat(allMoney).toFixed(2)}元</Text>
+                            <Text
+                                style={[styles.leftTitle, styles.containerTitle]}>可用余额 {parseFloat(allMoney).toFixed(2)}元</Text>
                             <TouchableOpacity
                                 onPress={() => {
                                     let status = parseFloat(allMoney).toFixed(2) - parseFloat(minMoney).toFixed(2);
@@ -233,9 +257,9 @@ export default class MineFinanceWithDraw extends Component {
                         </View>
                     </View>
                     <TouchableOpacity
-                        style = {[GlobalStyles.btnView, money == '' && styles.btnItemView]}
-                        onPress = {() => this.submitWithdraw()}
-                        activeOpacity = {money == '' ? 1 : 0.7}
+                        style={[GlobalStyles.btnView, money == '' && styles.btnItemView]}
+                        onPress={() => this.submitWithdraw()}
+                        activeOpacity={money == '' ? 1 : 0.7}
                     >
                         <Text style={[GlobalStyles.btnItem, money == '' && styles.btnItemName]}>立即提交申请</Text>
                     </TouchableOpacity>
@@ -312,5 +336,14 @@ const styles = StyleSheet.create({
     },
     btnItemName: {
         color: '#888'
+    },
+    txView: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+    },
+    txRule: {
+        marginLeft: 10,
+        color: '#e1c896'
     },
 });

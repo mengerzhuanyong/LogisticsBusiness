@@ -413,6 +413,9 @@ export default class MineAddressAdd extends Component {
                                 <Text style={GlobalStyles.btnItem}>立即添加</Text>
                             </TouchableOpacity>
                         </View>
+                        <Text style={styles.btnText}>
+                            因物流公司距离市区普遍较远，平台开通“服务点”功能，类似于阿里的“驿站”商家可自己或者找代理，在市区里设一个点，客户只需要把货放在服务点，然后商家自己或者代理就可以把货物统一送到物流公司。
+                        </Text>
                     </CustomKeyboard.AwareCusKeyBoardScrollView>
                 </KeyboardAwareScrollView>
             </View>
@@ -526,5 +529,8 @@ const styles = StyleSheet.create({
         width: 95,
         fontSize: 14,
         color: '#555',
+    },
+    btnText:{
+        marginHorizontal: 20,
     },
 });

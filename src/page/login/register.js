@@ -143,17 +143,18 @@ export default class Register extends Component {
         const { current } = this.state;
         return (
             <View style={styles.navigationTitleView}>
+
                 <TouchableOpacity
                     style = {[styles.navigationTitleItem, current && styles.navigationTitleItemCurrent]}
                     onPress = {() => this.changeRegisterType(true)}
                 >
-                    <Text style={[styles.navigationTitleName, current && styles.navigationTitleCurrent]}>个人注册</Text>
+                    <Text style={[styles.navigationTitleName, current && styles.navigationTitleCurrent]}>公司注册</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style = {[styles.navigationTitleItem, !current && styles.navigationTitleItemCurrent]}
                     onPress = {() => this.changeRegisterType(false)}
                 >
-                    <Text style={[styles.navigationTitleName, !current && styles.navigationTitleCurrent]}>公司注册</Text>
+                    <Text style={[styles.navigationTitleName, !current && styles.navigationTitleCurrent]}>个人注册</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -169,9 +170,11 @@ export default class Register extends Component {
                     leftButton = {UtilsView.getLeftButton(() => { this.state.canBack && this.onBack()})}
                 />
                 {current ?
-                    <RegisterUser {...this.props} />
-                    :
+
+
                     <RegisterCompany {...this.props} />
+                    :
+                    <RegisterUser {...this.props} />
                 }
             </View>
         );

@@ -80,6 +80,7 @@ import ServicesEdit from '../page/service/servicesEdit'
 // import BusinessDetail from '../page/service/businessDetail'
 
 import Flow from '../page/flow'
+import TxRule from "../page/mine/TxRule";
 
 
 const TabNavScreen = TabNavigator(
@@ -290,6 +291,7 @@ const App = StackNavigator(
         MineStoreSetting: {
             screen: MineStoreSetting,
         },
+        TxRule:{screen:TxRule},
     },
     {
         mode: 'card',

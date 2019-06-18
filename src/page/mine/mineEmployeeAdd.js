@@ -260,6 +260,8 @@ export default class MineEmployeeAdd extends Component {
                             </TouchableOpacity>
                         </View>
                      </CustomKeyboard.AwareCusKeyBoardScrollView>
+                    <Text style={styles.zText}>注：给司机申请的子账号只能看到和操作订单管理，用于对货物进行追踪。</Text>
+
                 </KeyboardAwareScrollView>
             </View>
         );
@@ -541,5 +543,8 @@ const styles = StyleSheet.create({
     },
     paymentMethodTitle: {
         color: '#333',
+    },
+    zText:{
+        marginHorizontal: 40
     },
 });

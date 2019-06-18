@@ -358,7 +358,7 @@ export default class OrderDetal extends Component {
                             onPress = {() => {canPress && this.showModal(7)}}
                         >
                             <Image source={GlobalIcons.images_bg_btn} style={GlobalStyles.buttonImage} />
-                            <Text style={[styles.orderDetailBtnName, styles.orderDetailBtnNameCurrent]}>确认且打印</Text>
+                            <Text style={[styles.orderDetailBtnName, styles.orderDetailBtnNameCurrent]}>确认且收货</Text>
                         </TouchableOpacity>
                     </View>;
                 break;
