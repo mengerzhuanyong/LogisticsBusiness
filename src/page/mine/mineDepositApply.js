@@ -196,7 +196,7 @@ export default class MineDeposit extends Component {
                 });
         } else {
             let url = NetApi.mineDepositApplyPay;
-            this.netRequest.fetchPost(url, data)
+            this.netRequest.fetchPost(url, data, true)
                 .then(result => {
                     // console.log(result);
                     if (result.code == 1) {
@@ -283,7 +283,7 @@ export default class MineDeposit extends Component {
     render() {
         const {ready, refreshing, item, paymentType, canPress, modalShow, tips} = this.state;
         const {params} = this.props.navigation.state;
-        let webTitle = params && params.webTitle ? params.webTitle : '申请优质商家';
+        let webTitle = params && params.webTitle ? params.webTitle : '申请小优商家';
         return (
             <View style={styles.container}>
                 <NavigationBar

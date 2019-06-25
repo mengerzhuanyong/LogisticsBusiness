@@ -7,11 +7,11 @@
             "name": "当日达",
             "navIcon": "require('../../assets/images/icons/icon_delivery_now.png')",
         },
-        {
-            "id": 2,
-            "name": "次日达",
-            "navIcon": "require('../../assets/images/icons/icon_delivery_next.png')",
-        },
+        // {
+        //     "id": 2,
+        //     "name": "次日达",
+        //     "navIcon": "require('../../assets/images/icons/icon_delivery_next.png')",
+        // },
         {
             "id": 3,
             "name": "物流发货",

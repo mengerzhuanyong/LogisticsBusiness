@@ -43,7 +43,7 @@ export default class MineDepositIndex extends Component {
             store: global.store.storeData,
             deposit: {name: '保证金', money: '', status: '', style: '1'},
             topDeposit: {name: '扶持费用', money: '', status: '', style: '2'},
-            rankDeposit: {name: '申请优质商家', money: '', status: '', style: '4'},
+            rankDeposit: {name: '申请小优商家', money: '', status: '', style: '4'},
             canBack: false,
             remark: '',
             tips: '',
