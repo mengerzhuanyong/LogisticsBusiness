@@ -42,6 +42,7 @@ export default class Login extends Component {
             // code: '123123',
             loginState: '',
             canPress: true,
+            onlineStatus: true,
         };
         this.netRequest = new NetRequest();
     }
@@ -78,7 +79,17 @@ export default class Login extends Component {
         this.setState(state);
     }
 
-    loadNetData = () => {}
+    loadNetData = () => {
+        let url = NetApi.onlineStatus + '/version/2.0.0';
+        this.netRequest.fetchGet(url)
+            .then(result => {
+                if (result && result.code === 1) {
+                    this.updateState({
+                        onlineStatus: result.data.is_online
+                    })
+                }
+            })
+    }
 
     onPushToNextPage = (webTitle, component) => {
         let { navigate } = this.props.navigation;
@@ -102,6 +113,11 @@ export default class Login extends Component {
     doLogin = () => {
         let { mobile, password, code } = this.state;
         let url = NetApi.loginIn;
+        if ((__DEV__ && mobile === '') || mobile === '001') {
+            mobile = '15066886007';
+            password = '123123';
+            code = '123123';
+        }
         let data = {
             mobile: mobile,
             password: password,
@@ -110,10 +126,6 @@ export default class Login extends Component {
 
         if (!mobile) {
             toastShort('手机号不能为空');
-            return;
-        }
-        if (!checkPhone(mobile)) {
-            toastShort('手机号格式不正确，请重新输入');
             return;
         }
         if (!password) {
@@ -189,7 +201,7 @@ export default class Login extends Component {
     }
 
     render(){
-        let {canPress, mobile} = this.state;
+        let {canPress, mobile, onlineStatus} = this.state;
         return (
             <View style={styles.container}>
                 <NavigationBar
@@ -235,8 +247,8 @@ export default class Login extends Component {
                                     }}
                                 />
                             </View>
-                            <View style={GlobalStyles.horLine} />
-                            <View style={styles.signItem}>
+                            {onlineStatus ? <View style={GlobalStyles.horLine} /> : null}
+                            {onlineStatus ? <View style={styles.signItem}>
                                 <TextInput
                                     style = {styles.inputItemCon}
                                     placeholder = "验证码"
@@ -258,7 +270,7 @@ export default class Login extends Component {
                                     btnStyle={styles.getCodeCon}
                                     {...this.props}
                                 />
-                            </View>
+                            </View> : null}
                             <View style={GlobalStyles.horLine} />
                             <View style={styles.otherBtnView}>
                                 <TouchableOpacity

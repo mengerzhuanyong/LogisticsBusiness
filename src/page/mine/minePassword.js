@@ -114,7 +114,7 @@ export default class MineInfoSetting extends Component {
             toastShort('请再次输入新密码');
             return;
         }
-        this.netRequest.fetchPost(url, data)
+        this.netRequest.fetchPost(url, data, true)
             .then(result => {
                 if (result && result.code == 1) {
                     // console.log('用户中心', result);

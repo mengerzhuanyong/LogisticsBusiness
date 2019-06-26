@@ -483,7 +483,13 @@ export default class RegisterCompany extends Component {
                             }
                         </View>
                         <View style={GlobalStyles.horLine} />
-                        <Text style={{fontSize:13,marginVertical: 5}}>平台已免费为部分商户注册账号，如手机号被注册可点击忘记密码找回</Text>
+                        <Text style={styles.registerTips}>
+                            平台已免费为部分商户注册账号，如手机号被注册可点击
+                            <Text
+                                style={styles.textStyle}
+                                onPress = {() => {this.onPushToNextPage('密码找回', 'Repassword')}}
+                                >忘记密码找回</Text>
+                        </Text>
                         <View style={GlobalStyles.horLine} />
                         <View style={styles.signItem}>
                             <Text style={styles.inputItemTitle}>验证码</Text>
@@ -842,4 +848,14 @@ const styles = StyleSheet.create({
     flowProtocolName: {
         color: GlobalStyles.themeColor
     },
+    registerTips: {
+        fontSize: 13,
+        color: '#333',
+        lineHeight: 20,
+        marginVertical: 5,
+    },
+    textStyle: {
+        color: GlobalStyles.themeColor,
+        textDecorationLine: 'underline',
+    }
 });

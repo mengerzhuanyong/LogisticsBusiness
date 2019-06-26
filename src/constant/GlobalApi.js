@@ -23,6 +23,8 @@ module.exports = {
     contact: 'home/index/contact_list',
     contactAdd: 'home/index/set_contact_list',
 
+    onlineStatus: 'user/login/index', 
+
     loginIn: 'home/login/index',                                                                        // 登录
     logOut: 'home/login/logout',                                                                        // 登录
     register: 'home/login/register',
