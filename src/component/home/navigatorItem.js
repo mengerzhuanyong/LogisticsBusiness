@@ -47,7 +47,7 @@ export default class HomeNavigatorItem extends Component {
     }
 
     render(){
-        const { onPushNavigator, navigatorName, navigatorIcon, showBadge} = this.props;
+        const { onPushNavigator, navigatorName, navigationSubName, navigatorIcon, showBadge} = this.props;
         return (
             <TouchableOpacity
                 style = {styles.navigationItemView}
@@ -57,6 +57,7 @@ export default class HomeNavigatorItem extends Component {
                 <Image source={navigatorIcon} style={styles.navigationIcon} />
                 {showBadge && <View style={styles.badgeStyle}/> }
                 <Text style={styles.navigationName}>{navigatorName}</Text>
+                {navigationSubName && <Text style={styles.navigationName}>{navigationSubName}</Text>}
             </TouchableOpacity>
         );
     }

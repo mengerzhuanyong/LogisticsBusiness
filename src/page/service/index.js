@@ -185,7 +185,7 @@ export default class Service extends Component {
         return (
             <TouchableOpacity
                 style = {GlobalStyles.listAddBtnView}
-                onPress = {() => this.onPushNavigator('添加服务', 'ServicesAdd')}
+                onPress = {() => this.onPushNavigator('线路添加', 'ServicesAdd')}
             >
                 <Image source={GlobalIcons.icon_add} style={GlobalStyles.listAddBtnIcon} />
             </TouchableOpacity>
@@ -256,7 +256,7 @@ export default class Service extends Component {
                         style = {styles.searchBtnView}
                         onPress = {() => this.freshNetData()}
                     >
-                        <Text style={styles.searchBtnItem}>确认</Text>
+                        <Text style={styles.searchBtnItem}>搜索</Text>
                     </TouchableOpacity>
                 </View>
                 {ready ?

@@ -10,7 +10,7 @@ let toast;
 const loggerTrueColor = 'color: #1ba01b';
 const loggerFalseColor = 'color: #f00';
 
-export const toastShort = (content, position = -100) => {
+export const toastShort = (content, position = 'center') => {
     if (content === 'error') {
         content = '网络请求失败，请稍后重试！';
     }
@@ -39,7 +39,7 @@ export const toastShort = (content, position = -100) => {
     });
 };
 
-export const toastLong = (content, position = -100) => {
+export const toastLong = (content, position = 'center') => {
     if (position === 'center') {
         position = Toast.positions.CENTER;
     }

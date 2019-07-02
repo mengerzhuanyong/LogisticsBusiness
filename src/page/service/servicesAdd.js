@@ -410,9 +410,15 @@ export default class ServiceAdd extends Component {
         return (
             <View style={styles.container}>
                 <NavigationBar
-                    title = {'新增服务信息'}
+                    title = {'新增线路'}
                     leftButton = {UtilsView.getLeftButton(() => { this.state.canBack && this.onBack()})}
-                    rightButton = {<NavigationButton icon={GlobalIcons.icon_help} iconStyle={{tintColor: '#fff'}} type={'right'} submitFoo={() => this.onPushToNextPage('服务示例', 'WebViewPage', {api: NetApi.serviceHelp})} />}
+                    rightButton = {<NavigationButton
+                        // icon={GlobalIcons.icon_help}
+                        // iconStyle={{tintColor: '#fff'}}
+                        title={'示例'}
+                        type={'right'}
+                        submitFoo={() => this.onPushToNextPage('服务示例', 'WebViewPage', {api: NetApi.serviceHelp})}
+                    />}
                 />
                 <ScrollView
                     keyboardShouldPersistTaps={'handled'}

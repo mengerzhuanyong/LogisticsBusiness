@@ -356,9 +356,9 @@ export default class Home extends Component {
                     </View>
                     <View style={styles.homeNavigationCon}>
                         <NavigatorItem
-                            navigatorName = {"服务管理"}
+                            navigatorName = {"线路管理"}
                             navigatorIcon = {GlobalIcons.icon_services}
-                            onPushNavigator = {() => this.onPushNavigator('服务管理', 'SverviceList')}
+                            onPushNavigator = {() => this.onPushNavigator('线路管理', 'SverviceList')}
                         />
                         <NavigatorItem
                             navigatorName = {"订单管理"}
@@ -378,6 +378,7 @@ export default class Home extends Component {
                         />}
                         {store.isStore == 1 && <NavigatorItem
                             navigatorName = {"员工管理"}
+                            navigationSubName={'测试'}
                             navigatorIcon = {GlobalIcons.icon_employee}
                             onPushNavigator = {() => this.onPushNavigator('员工账号添加', 'MineEmployee')}
                         />}
