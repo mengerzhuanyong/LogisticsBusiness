@@ -181,7 +181,7 @@ export default class MineFeedBack extends Component {
                     title = {'建议反馈'}
                     leftButton = {UtilsView.getLeftButton(() => { this.state.canBack && this.onBack()})}
                 />
-                <KeyboardAwareScrollView>
+                <KeyboardAwareScrollView keyboardShouldPersistTaps={'always'}>
                     <CustomKeyboard.AwareCusKeyBoardScrollView>
                         <View style={[styles.feedbackItemView, styles.feedbackContextView]}>
                             <TextInput

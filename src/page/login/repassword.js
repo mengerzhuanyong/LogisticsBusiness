@@ -183,7 +183,7 @@ export default class RePassword extends Component {
                     title = {'找回密码'}
                     leftButton = {UtilsView.getLeftButton(() => { this.state.canBack && this.onBack()})}
                 />
-                <KeyboardAwareScrollView>
+                <KeyboardAwareScrollView keyboardShouldPersistTaps={'always'}>
                     <CustomKeyboard.AwareCusKeyBoardScrollView>
                         <View style={styles.signView}>
                             <View style={styles.signItem}>

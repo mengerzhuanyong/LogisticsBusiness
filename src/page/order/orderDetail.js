@@ -444,9 +444,9 @@ export default class OrderDetal extends Component {
         }
         let cargoInfo = data.map((item, index) => {
             return (
-                <View style={styles.orderCargoInfoCon} key={item.id}>
+                <View style={[styles.orderCargoInfoCon, item.line > 0 && styles.orderCargoInfoConCur]} key={item.id}>
                     <Text style={styles.orderCargoInfoConText}>{item.title}：</Text>
-                    <Text style={styles.orderCargoInfoConText}>{item.value}</Text>
+                    <Text style={[styles.orderCargoInfoConText, {flex: 1}]}>{item.value}</Text>
                 </View>
             );
         })
@@ -505,40 +505,6 @@ export default class OrderDetal extends Component {
                             <View style={[styles.orderCargoInfoView]}>
                                 <View style={styles.orderCargoInfoItem}>
                                     {this.renderOrderCargoInfo(orderInfo.cargo_info)}
-                                    {1 > 2 && <View>
-                                        {orderInfo.cargo_name ? <View style={styles.orderCargoInfoCon}>
-                                            <Text style={styles.orderCargoInfoConText}>货物名称：</Text>
-                                            <Text style={styles.orderCargoInfoConText}>{orderInfo.cargo_name}</Text>
-                                        </View> : null }
-                                        <View style={styles.orderCargoInfoCon}>
-                                            <Text style={styles.orderCargoInfoConText}>路线：</Text>
-                                            <Text style={styles.orderCargoInfoConText}>{orderInfo.service}</Text>
-                                        </View>
-                                        <View style={styles.orderCargoInfoCon}>
-                                            <Text style={styles.orderCargoInfoConText}>班次：</Text>
-                                            <Text style={styles.orderCargoInfoConText}>{orderInfo.time}</Text>
-                                        </View>
-                                        {orderInfo.weight ? <View style={styles.orderCargoInfoCon}>
-                                            <Text style={styles.orderCargoInfoConText}>重量：</Text>
-                                            <Text style={styles.orderCargoInfoConText}>{orderInfo.weight}kg</Text>
-                                        </View> : null}
-                                        {orderInfo.num ? <View style={styles.orderCargoInfoCon}>
-                                            <Text style={styles.orderCargoInfoConText}>数量：</Text>
-                                            <Text style={styles.orderCargoInfoConText}>{orderInfo.num}</Text>
-                                        </View> : null}
-                                        {orderInfo.volume ? <View style={styles.orderCargoInfoCon}>
-                                            <Text style={styles.orderCargoInfoConText}>体积：</Text>
-                                            <Text style={styles.orderCargoInfoConText}>{orderInfo.volume}m³</Text>
-                                        </View> : null}
-                                        {orderInfo.cate ? <View style={styles.orderCargoInfoCon}>
-                                            <Text style={styles.orderCargoInfoConText}>货物类型：</Text>
-                                            <Text style={styles.orderCargoInfoConText}>{orderInfo.cate}</Text>
-                                        </View> : null}
-                                        {orderInfo.carVisible && 1 > 2 &&<View style={styles.orderCargoInfoCon}>
-                                            <Text style={styles.orderCargoInfoConText}>代取/送服务车型：</Text>
-                                            <Text style={styles.orderCargoInfoConText}>{orderInfo.serviceCar}</Text>
-                                        </View>}
-                                    </View>}
                                 </View>
                             </View>
                         </View>
@@ -752,13 +718,16 @@ const styles = StyleSheet.create({
         // backgroundColor: '#123',
         flexWrap: 'wrap',
         flexDirection: 'row',
-        alignItems: 'center',
+        // alignItems: 'center',
         justifyContent: 'space-between',
     },
     orderCargoInfoCon: {
         flexDirection: 'row',
-        alignItems: 'center',
-        width: GlobalStyles.width > 330 ? (GlobalStyles.width - 80) / 2 : GlobalStyles.width,
+        // alignItems: 'center',
+        width: GlobalStyles.width > 330 ? (GlobalStyles.width - 70) / 2 : GlobalStyles.width,
+    },
+    orderCargoInfoConCur: {
+        width: GlobalStyles.width - 30,
     },
     orderCargoInfoConText: {
         // flex: 1,

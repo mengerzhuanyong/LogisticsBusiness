@@ -57,7 +57,7 @@ export default class HomeNavigatorItem extends Component {
                 <Image source={navigatorIcon} style={styles.navigationIcon} />
                 {showBadge && <View style={styles.badgeStyle}/> }
                 <Text style={styles.navigationName}>{navigatorName}</Text>
-                {navigationSubName && <Text style={styles.navigationName}>{navigationSubName}</Text>}
+                {navigationSubName && <Text style={styles.navigationSubName}>({navigationSubName})</Text>}
             </TouchableOpacity>
         );
     }
@@ -88,6 +88,12 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 16,
         marginVertical: 10,
+    },
+    navigationSubName: {
+        color: '#fff',
+        fontSize: 14,
+        position: 'absolute',
+        bottom: (GlobalStyles.width / 6) - 50,
     },
     badgeStyle: {
         width: 10,

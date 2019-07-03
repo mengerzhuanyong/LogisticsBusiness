@@ -452,7 +452,7 @@ export default class RegisterCompany extends Component {
             idcard, obverseIdcard, license, address,
             area, seconds, codeAlreadySend, uploading, uploadType } = this.state;
         return (
-            <KeyboardAwareScrollView>
+            <KeyboardAwareScrollView keyboardShouldPersistTaps={'always'}>
                 <CustomKeyboard.AwareCusKeyBoardScrollView>
                     <View style={styles.signView}>
                         <View style={styles.signItem}>

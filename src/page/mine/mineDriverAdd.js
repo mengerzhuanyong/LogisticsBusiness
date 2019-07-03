@@ -144,7 +144,7 @@ export default class MineDriverAdd extends Component {
                     title = {'添加司机账号'}
                     leftButton = {UtilsView.getLeftButton(() => { this.state.canBack && this.onBack()})}
                 />
-                <KeyboardAwareScrollView style={[GlobalStyles.hasFixedContaine1r, styles.scrollViewContainer]}>
+                <KeyboardAwareScrollView keyboardShouldPersistTaps={'always'} style={[GlobalStyles.hasFixedContaine1r, styles.scrollViewContainer]}>
                      <CustomKeyboard.AwareCusKeyBoardScrollView>
                         <View style={styles.signView}>
                             <View style={styles.signItem}>

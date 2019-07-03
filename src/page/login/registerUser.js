@@ -433,7 +433,7 @@ export default class RegisterUser extends Component {
         let { seconds, codeAlreadySend, area, uploading, address, idcard, obverseIdcard, license, canPress,uploadType } = this.state;
         // console.log(uploading && idcard == '');
         return (
-            <KeyboardAwareScrollView>
+            <KeyboardAwareScrollView keyboardShouldPersistTaps={'always'}>
                 <CustomKeyboard.AwareCusKeyBoardScrollView>
                     <View style={styles.signView}>
                         <View style={styles.signItem}>

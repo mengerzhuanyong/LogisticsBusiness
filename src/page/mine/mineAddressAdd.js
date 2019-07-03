@@ -295,7 +295,7 @@ export default class MineAddressAdd extends Component {
                     title = {'新增服务点信息'}
                     leftButton = {UtilsView.getLeftButton(() => { this.state.canBack && this.onBack()})}
                 />
-                <KeyboardAwareScrollView>
+                <KeyboardAwareScrollView keyboardShouldPersistTaps={'always'}>
                     <CustomKeyboard.AwareCusKeyBoardScrollView>
                         <View style={[styles.addressAddItemView, {marginTop: 10,}]}>
                             <View style={[styles.titleView]}>

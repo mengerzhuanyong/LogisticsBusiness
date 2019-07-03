@@ -9,6 +9,7 @@ import {
     Text,
     View,
     Image,
+    Keyboard,
     TextInput,
     ScrollView,
     StyleSheet,
@@ -191,13 +192,14 @@ export default class UserContact extends Component {
     };
 
     submitFoo = () => {
-        let {contact} = this.state;
+        Keyboard.dismiss();
+        let {contact, store} = this.state;
         let url = NetApi.contactAdd;
         let data = {
-            sid: 1,
-            contact
+            contact,
+            sid: store.sid,
         };
-        this.netRequest.fetchPost(url, data)
+        this.netRequest.fetchPost(url, data, true)
             .then(result => {
                 if (result && result.code === 1) {
                     toastShort('添加成功');
@@ -226,7 +228,10 @@ export default class UserContact extends Component {
                     <View style={[GlobalStyles.verLine, styles.verLine]} />
                     <Text style={[styles.orderMoneyInfoTitle, {flex: 3}]}>备注</Text>
                 </View>
-                <KeyboardAwareScrollView style={[styles.scrollViewContainer]}>
+                <KeyboardAwareScrollView
+                    style={[styles.scrollViewContainer]}
+                    keyboardShouldPersistTaps={'always'}
+                >
                     <View style={[styles.containerItemView]}>
                         {this.renderVolumeView()}
                     </View>

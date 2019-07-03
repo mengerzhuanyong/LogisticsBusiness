@@ -144,7 +144,7 @@ export default class MineEmployeeAdd extends Component {
                     title = {'添加员工账号'}
                     leftButton = {UtilsView.getLeftButton(() => { this.state.canBack && this.onBack()})}
                 />
-                <KeyboardAwareScrollView style={[GlobalStyles.hasFix1edContainer, styles.scrollView1Container]}>
+                <KeyboardAwareScrollView keyboardShouldPersistTaps={'always'} style={[GlobalStyles.hasFix1edContainer, styles.scrollView1Container]}>
                      <CustomKeyboard.AwareCusKeyBoardScrollView>
                         <View style={styles.signView}>
                             <View style={styles.signItem}>

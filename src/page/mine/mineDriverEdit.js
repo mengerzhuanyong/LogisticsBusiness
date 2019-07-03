@@ -145,7 +145,7 @@ export default class MineDriverEdit extends Component {
                     title = {'司机信息编辑'}
                     leftButton = {UtilsView.getLeftButton(() => { this.state.canBack && this.onBack()})}
                 />
-                <KeyboardAwareScrollView style={[GlobalStyles.hasFixedConta1iner, styles.scrollViewCon1tainer]}>
+                <KeyboardAwareScrollView keyboardShouldPersistTaps={'always'} style={[GlobalStyles.hasFixedConta1iner, styles.scrollViewCon1tainer]}>
                      <CustomKeyboard.AwareCusKeyBoardScrollView>
                         <View style={styles.signView}>
                             <View style={styles.signItem}>

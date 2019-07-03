@@ -63,13 +63,21 @@ export default class Home extends Component {
             bannerData: [],
             hotNewsData: [],
             has_new_order: false,
+            navArray: [
+                {title: '线路管理', subtitle: ''},
+                {title: '订单管理', subtitle: ''},
+                {title: '财务管理', subtitle: ''},
+                {title: '服务点管理', subtitle: ''},
+                {title: '员工管理', subtitle: ''},
+                {title: '司机管理', subtitle: ''},
+            ]
         };
         this.netRequest = new NetRequest();
     }
 
     componentDidMount(){
         this.loadNetData();
-        this.getBannerData();
+        // this.getBannerData();
         // this.getCurrentPosition();
         // console.log(global.store.storeData);
         if (global.store && global.store.loginState) {
@@ -186,12 +194,10 @@ export default class Home extends Component {
     }
 
     loadNetData = () => {
-        // console.log(this.state.store);
         this.getBannerData();
         let url = NetApi.index + this.state.store.sid;
-        this.netRequest.fetchGet(url)
+        this.netRequest.fetchGet(url, true)
             .then(result => {
-                // console.log(result);
                 if (result && result.code == 1) {
                     this.setState({
                         has_new_order: result.data.has_new_order,
@@ -199,6 +205,7 @@ export default class Home extends Component {
                         workStatus: result.data.storeStatus == 1 ? true : false,
                         audited: result.data.audited,
                         hotNewsData: result.data.hot_note,
+                        navArray: result.data.indexNavigations,
                     })
                 }
             })
@@ -319,7 +326,7 @@ export default class Home extends Component {
     };
 
     render(){
-        const { ready, bannerData, hotNewsData, refreshing, companyListData, modalShow, isRefreshing, store, has_new_order } = this.state;
+        const { ready, bannerData, hotNewsData, refreshing, navArray, companyListData, modalShow, isRefreshing, store, has_new_order } = this.state;
         return (
             <View style={styles.container}>
                 <NavigationBar
@@ -356,34 +363,39 @@ export default class Home extends Component {
                     </View>
                     <View style={styles.homeNavigationCon}>
                         <NavigatorItem
-                            navigatorName = {"线路管理"}
+                            navigatorName = {navArray[0].title}
+                            navigatorSubName = {navArray[0].subtitle}
                             navigatorIcon = {GlobalIcons.icon_services}
                             onPushNavigator = {() => this.onPushNavigator('线路管理', 'SverviceList')}
                         />
                         <NavigatorItem
-                            navigatorName = {"订单管理"}
+                            navigatorName = {navArray[1].title}
+                            navigatorSubName = {navArray[1].subtitle}
                             showBadge={has_new_order}
                             navigatorIcon = {GlobalIcons.icon_orders}
                             onPushNavigator = {() => this.onPushNavigator('订单管理', 'Order')}
                         />
                         {store.isStore == 1 && <NavigatorItem
-                            navigatorName={"财务管理"}
+                            navigatorName={navArray[2].title}
+                            navigatorSubName={navArray[2].subtitle}
                             navigatorIcon={GlobalIcons.icon_finance}
                             onPushNavigator={() => this.onPushNavigator('财务管理', 'MineFinance')}
                         />}
                         {store.isStore == 1 && <NavigatorItem
-                            navigatorName = {"服务点管理"}
+                            navigatorName = {navArray[3].title}
+                            navigatorSubName = {navArray[3].subtitle}
                             navigatorIcon = {GlobalIcons.icon_serviceAddress}
                             onPushNavigator = {() => this.onPushNavigator('服务点管理', 'MineAddressList')}
                         />}
                         {store.isStore == 1 && <NavigatorItem
-                            navigatorName = {"员工管理"}
-                            navigationSubName={'测试'}
+                            navigatorName = {navArray[4].title}
+                            navigatorSubName = {navArray[4].subtitle}
                             navigatorIcon = {GlobalIcons.icon_employee}
                             onPushNavigator = {() => this.onPushNavigator('员工账号添加', 'MineEmployee')}
                         />}
                         {store.isStore == 1 && <NavigatorItem
-                            navigatorName = {"司机管理"}
+                            navigatorName = {navArray[5].title}
+                            navigatorSubName = {navArray[5].subtitle}
                             navigatorIcon = {GlobalIcons.icon_drivers}
                             onPushNavigator = {() => this.onPushNavigator('司机账号添加', 'MineDriver')}
                             />

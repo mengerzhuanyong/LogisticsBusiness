@@ -103,7 +103,7 @@ export default class ServiceItem extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.shopInfoItem}>
-                    <Text style={styles.shopName}>{item.star} - {item.end}</Text>
+                    <Text style={styles.shopName} numberOfLines={2}>{item.star} - {item.end}</Text>
                 </View>
                 {modalShow && <ModalView
                     show = {modalShow}
@@ -114,7 +114,7 @@ export default class ServiceItem extends Component {
                     cancelFoo = {() => this.showModalView()}
                     confirmFoo = {() => this.deleteService()}
                 />}
-                <View style={styles.shopInfoItem}>
+                <View style={[styles.btnView]}>
                     <TouchableOpacity
                         style = {styles.servicesBtnItem}
                         onPress = {() => this.onPushEdit(item)}
@@ -165,6 +165,14 @@ const styles = StyleSheet.create({
         width: GlobalStyles.width - 120,
     },
     shopInfoItem: {
+        flex: 1,
+        marginVertical: 5,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    },
+    btnView: {
+        width: 90,
         marginVertical: 5,
         flexDirection: 'row',
         alignItems: 'center',

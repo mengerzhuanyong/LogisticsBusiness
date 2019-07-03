@@ -69,7 +69,7 @@ export default class MineInfoSetting extends Component {
                     title = {params.webTitle}
                     leftButton = {UtilsView.getLeftButton(() => { this.state.canBack && this.onBack()})}
                 />
-                <KeyboardAwareScrollView>
+                <KeyboardAwareScrollView keyboardShouldPersistTaps={'always'}>
                     <View style={[styles.mineInfoItemView, styles.mineInfoPhotoView]}>
                         <Text style={[styles.mineInfoItemTitle]}>头像</Text>
                         <Image source={GlobalIcons.images_user_photo} style={styles.userPhoto} />

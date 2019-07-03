@@ -80,7 +80,7 @@ export default class Login extends Component {
     }
 
     loadNetData = () => {
-        let url = NetApi.onlineStatus + '/version/2.0.0';
+        let url = NetApi.onlineStatus + '/version/2.0.0/type/business';
         this.netRequest.fetchGet(url)
             .then(result => {
                 if (result && result.code === 1) {
@@ -211,7 +211,7 @@ export default class Login extends Component {
                     backgroundImage = {false}
                 />
                 <Image source={GlobalIcons.images_bg_sign} style={styles.backgroundImage} />
-                <KeyboardAwareScrollView>
+                <KeyboardAwareScrollView keyboardShouldPersistTaps={'always'}>
                     <CustomKeyboard.AwareCusKeyBoardScrollView>
                         <View style={styles.logoView}>
                             <Image source={GlobalIcons.logo} style={GlobalStyles.logoIcon} />

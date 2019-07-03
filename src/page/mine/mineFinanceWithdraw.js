@@ -163,7 +163,7 @@ export default class MineFinanceWithDraw extends Component {
                         this.state.canBack && this.onBack()
                     })}
                 />
-                <KeyboardAwareScrollView>
+                <KeyboardAwareScrollView keyboardShouldPersistTaps={'always'}>
                     <View style={styles.mineTopContainer}>
                         <View style={styles.accountInfoItem}>
                             {/*<Text style={styles.accountTitle}>支付宝账号</Text>*/}

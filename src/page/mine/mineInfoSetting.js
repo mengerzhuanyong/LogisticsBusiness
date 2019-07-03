@@ -9,6 +9,7 @@ import {
     Text,
     View,
     Image,
+    Keyboard,
     FlatList,
     TextInput,
     ScrollView,
@@ -68,6 +69,7 @@ export default class MineInfoSetting extends Component {
             logo: params.item ? params.item.logo : '',
             banner: params.item ? params.item.img : '',
             reminder: params.item ? params.item.reminder : '',
+            reminder_pic: params.item ? params.item.reminder_pic : '',
             ready: false,
             loadMore: false,
             refreshing: false,
@@ -137,6 +139,7 @@ export default class MineInfoSetting extends Component {
     };
 
     onPressSelectAddress = () => {
+        Keyboard.dismiss();
         this.props.navigation.navigate('SelectAddressWeb', {
             onCallBack: (address, longitude, addressName) => this.setState({
                 address,
@@ -147,6 +150,7 @@ export default class MineInfoSetting extends Component {
     };
 
     showAreaPicker = (type) => {
+        Keyboard.dismiss();
         Picker.init({
             pickerData: this.createAreaData(),
             pickerConfirmBtnText: '确定',
@@ -172,6 +176,7 @@ export default class MineInfoSetting extends Component {
     };
 
     handleOpenImagePicker = (type, cropW, cropH) => {
+        Keyboard.dismiss();
         cropW = parseInt(cropW);
         cropH = parseInt(cropH);
         SYImagePicker.removeAllPhoto();
@@ -186,6 +191,7 @@ export default class MineInfoSetting extends Component {
     };
 
     uploadImages = (type, source) => {
+        Keyboard.dismiss();
         let url = NetApi.uploadImages;
         let data = {
             image: source,
@@ -198,9 +204,14 @@ export default class MineInfoSetting extends Component {
                             logo: result.data,
                             uploading: false,
                         })
-                    } else {
+                    } else if (type == 2) {
                         this.setState({
                             banner: result.data,
+                            uploading: false,
+                        })
+                    } else {
+                        this.setState({
+                            reminder_pic: result.data,
                             uploading: false,
                         })
                     }
@@ -215,6 +226,7 @@ export default class MineInfoSetting extends Component {
     };
 
     pickerImages = (type) => {
+        Keyboard.dismiss();
         ImagePicker.showImagePicker(pickPhotoOptions, (response) => {
 
             // console.log('Response = ', response);
@@ -238,7 +250,8 @@ export default class MineInfoSetting extends Component {
     }
 
     submit = () => {
-        let {id, company, name, item, realname, mobile, logo, banner, area, longitude, address, reminder} = this.state;
+        Keyboard.dismiss();
+        let {id, company, name, item, realname, mobile, logo, banner, area, longitude, address, reminder, reminder_pic} = this.state;
         let url = NetApi.mineStoreEdit;
         console.log('this.state---->', this.state);
         let data = {
@@ -252,6 +265,7 @@ export default class MineInfoSetting extends Component {
             area: area,
             address: address,
             reminder: reminder,
+            reminder_pic: reminder_pic,
             longitude,
         };
         if (item.style == 1 && !company) {
@@ -316,7 +330,7 @@ export default class MineInfoSetting extends Component {
     }
 
     render(){
-        const { store, item, area, ready, refreshing, companyListData, mobile, name, company, realname, address, logo, banner, reminder, canPress } = this.state;
+        const { store, item, area, ready, refreshing, companyListData, mobile, name, company, realname, address, logo, banner, reminder, reminder_pic, canPress } = this.state;
         let isStore = store.isStore == 1 ? true : false;
         console.log(this.state);
         return (
@@ -325,7 +339,7 @@ export default class MineInfoSetting extends Component {
                     title = {'门店信息'}
                     leftButton = {UtilsView.getLeftButton(() => { this.state.canBack && this.onBack()})}
                 />
-                <KeyboardAwareScrollView>
+                <KeyboardAwareScrollView keyboardShouldPersistTaps={'handled'}>
                         <View style={[styles.addressAddItemView, {marginTop: 10,}]}>
                             <View style={[styles.titleView]}>
                                 <Text style={styles.titleViewCon}>基本信息</Text>
@@ -401,7 +415,7 @@ export default class MineInfoSetting extends Component {
                                     }}
                                 />
                             </View>
-                            <View style={[GlobalStyles.horLine, styles.horLine]} />
+                           {/* <View style={[GlobalStyles.horLine, styles.horLine]} />
                             <View style={styles.infoItemView}>
                                 <Text style={styles.infoItemTitle}>门店地址：</Text>
                                 <TouchableOpacity
@@ -410,18 +424,18 @@ export default class MineInfoSetting extends Component {
                                 >
                                     <Text style={styles.inputItemConText}>{address || '请选择所在地'}</Text>
                                 </TouchableOpacity>
-                            </View>
+                            </View>*/}
                         </View>
-                        {/*<View style={[styles.addressAddItemView, {marginTop: 10,}]}>
+                        <View style={[styles.addressAddItemView, {marginTop: 10,}]}>
                             <View style={[styles.titleView]}>
                                 <Text style={styles.titleViewCon}>门店地址</Text>
                             </View>
                             <View style={[GlobalStyles.horLine, styles.horLine]} />
                             <TouchableOpacity
                                 style = {styles.inputItemConTextView}
-                                onPress = {() => store.isStore == 1 && this.onPressSelectAddress()}
+                                onPress = {() => store.isStore == 1 && this.showAreaPicker()}
                             >
-                                <Text style={styles.inputItemConText}>{address || '请选择所在地'}</Text>
+                                <Text style={styles.inputItemConText}>{area.join('-') || '请选择所在地'}</Text>
                             </TouchableOpacity>
                             <View style={[GlobalStyles.horLine, styles.horLine]} />
                             <TextInput
@@ -437,7 +451,7 @@ export default class MineInfoSetting extends Component {
                                     })
                                 }}
                             />
-                        </View>*/}
+                        </View>
                         <View style={[styles.addressAddItemView, {marginTop: 10,}]}>
                             <View style={[styles.titleView]}>
                                 <Text style={styles.titleViewCon}>门店Logo</Text>
@@ -448,7 +462,7 @@ export default class MineInfoSetting extends Component {
                                 style = {styles.uploadItemView}
                                 onPress = {() => store.isStore == 1 && this.handleOpenImagePicker('1', GlobalStyles.width * 0.8, GlobalStyles.width * 0.8)}
                             >
-                                {logo == '' ?
+                                {!logo ?
                                     <Image source={GlobalIcons.images_bg_upload} style={styles.uploadBtn} />
                                     :
                                     <Image source={{uri: logo}} style={styles.uploadImagesLogo} />
@@ -465,7 +479,7 @@ export default class MineInfoSetting extends Component {
                                 style = {styles.uploadItemView}
                                 onPress = {() => store.isStore == 1 && this.handleOpenImagePicker('2', GlobalStyles.width * 0.95, GlobalStyles.width * 0.95 / 2)}
                             >
-                                {banner == '' ?
+                                {!banner ?
                                     <Image source={GlobalIcons.images_bg_upload} style={styles.uploadBtn} />
                                     :
                                     <Image source={{uri: banner}} style={styles.uploadImages} />
@@ -491,6 +505,17 @@ export default class MineInfoSetting extends Component {
                                     })
                                 }}
                             />
+                            <TouchableOpacity
+                                activeOpacity = {0.8}
+                                style = {[styles.uploadItemView]}
+                                onPress = {() => store.isStore == 1 && this.handleOpenImagePicker('3', GlobalStyles.width * 0.95, GlobalStyles.width * 0.95 / 2)}
+                            >
+                                {!reminder_pic ?
+                                    <Image source={GlobalIcons.images_bg_upload} style={styles.uploadBtn} />
+                                    :
+                                    <Image source={{uri: reminder_pic}} style={styles.uploadImages} />
+                                }
+                            </TouchableOpacity>
                         </View>
                         {store.isStore == 1 && <View style={[GlobalStyles.btnView, styles.btnView]}>
                             <TouchableOpacity
@@ -582,7 +607,7 @@ const styles = StyleSheet.create({
     },
     uploadItemView: {
         // width: (GlobalStyles.width - 60) / 2,
-        // height: 120,
+        minHeight: 120,
         // backgroundColor: '#f7f7f7',
         alignItems: 'center',
         justifyContent: 'center',
